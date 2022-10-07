@@ -1,8 +1,9 @@
 import React from 'react';
-import logo from '../../images/logo.svg'
+import logo from '../../images/logo.svg';
 import LoginForm from './LoginForm';
 
 const LoginPageLgo: React.FC = () => {
+
   return (
     <div className='max-w-[1100px] mx-auto py-5 px-4'>
      <div>

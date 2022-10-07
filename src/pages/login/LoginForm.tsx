@@ -1,7 +1,8 @@
 import React from 'react';
-import Photo from '../../images/Rectangle.svg'
+import Photo from '../../images/Rectangle.svg';
 
 const LoginForm: React.FC = () => {
+   
   return (
     <div className='block text-center md:flex items-center justify-around p-3 border mt-5 rounded-md px-4'>
       <div>
@@ -13,19 +14,19 @@ const LoginForm: React.FC = () => {
       </div>
       <div className='flex md:block justify-center'>
         <form 
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={(e: React.SyntheticEvent) => e.preventDefault()}
             className="flex flex-col max-w-[500px] text-center md:text-left mt-5 md:w-full"
         >
-            <label className='text-blue-700'>
-                USERNAME
+            <label>
+                <span className='text-blue-700'>USERNAME</span>
                 <input 
                     type="email" 
                     name="email"
                     className='w-full border border-black mt-2 mb-3 p-1 outline-none rounded-md'
                 />
             </label>
-            <label className='text-blue-700'>
-                PASSWORD
+            <label>
+                <span className='text-blue-700'>PASSWORD</span>
                 <input 
                   type="password" 
                   name="email"
@@ -43,6 +44,6 @@ const LoginForm: React.FC = () => {
       </div>
     </div>
   )
-}
+};
 
 export default LoginForm;

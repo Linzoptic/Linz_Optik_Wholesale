@@ -3,7 +3,7 @@ import LoginPage from './pages/login/LoginPage';
 
 function App() {
   return (
-    <div className="">
+    <div className="container mx-auto">
      <LoginPage/>
     </div>
   );
