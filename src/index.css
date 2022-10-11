@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    button {
+        background-color: blue;
+        padding: 5px 10px;
+        color: white;
+        border-radius: 10px;
+    }
+    input{
+        border: 1px solid gray;
+        padding: 5px 15px;
+        border-radius: 10px;
+    }
+}

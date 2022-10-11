@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Photo from '../../images/Rectangle.svg';
-import { Link, Routes, Route } from 'react-router-dom';
-import UpdatePassword from '../update/UpdatePassword';
 
 const LoginForm: React.FC = () => {
 
@@ -10,22 +9,20 @@ const LoginForm: React.FC = () => {
   const [ userpassword, setUserpassword ] = useState<string>('');
   const [ getdata, setGetdata ] = useState<string[]>([]);
 
-  const BASE_URL: string = 'http://tiknikstyle.com/wp-json/wp/v2/home_page_texts';
-
   useEffect(() => {
-    fetch(BASE_URL)
+    fetch(`${process.env.REACT_APP_BASE_URL}`)
       .then(res => res.json())
       .then((data) => setGetdata(data))
       .catch((error) => `<p>Error ${error}<p>`)
     },[setGetdata]);
-  
+    
   const formHendler = async (event: React.MouseEvent<HTMLButtonElement>) => {
     setUsername('');
     setUserpassword('');
 
     if(username && userpassword) {
       await axios({
-        url: 'http://tiknikstyle.com/wp-json/wp/v2/users',
+        url: `${process.env.REACT_APP_BASE_KEY}`,
         headers: {
           "Content-type": "application/json"
         },
@@ -72,7 +69,7 @@ const LoginForm: React.FC = () => {
               className='w-full border border-black mt-2 p-1 outline-none rounded-md'
             />
           </label>
-          <p className='text-sm mt-1'><Link to="/updatePas">Forgot your Password?</Link></p>
+          <p className='text-sm mt-1'><Link to="/updatePass">Forgot your Password?</Link></p>
           <button 
             type="button"
             disabled={username.length === 0}
@@ -83,9 +80,6 @@ const LoginForm: React.FC = () => {
           </button>
         </form>
       </div>
-    <Routes>
-      <Route path='/updatePass' element={<UpdatePassword/>}/>
-    </Routes>
     </div>
   )
 };
