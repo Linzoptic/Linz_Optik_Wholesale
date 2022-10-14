@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import Photo from '../../images/Rectangle.svg';
 
 const LoginForm: React.FC = () => {
 
+  const BASE_URL: string = (process.env.REACT_APP_BASE_URL as string);
+  const POST_URL: string = (process.env.REACT_APP_POST_URL as string);
+  
   const [ username , setUsername ] = useState<string>('');
   const [ userpassword, setUserpassword ] = useState<string>('');
+  const [ showpassword, setShowpassword ] = useState<boolean>(false);
   const [ getdata, setGetdata ] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BASE_URL}`)
+    fetch(BASE_URL)
       .then(res => res.json())
       .then((data) => setGetdata(data))
       .catch((error) => `<p>Error ${error}<p>`)
@@ -22,7 +27,7 @@ const LoginForm: React.FC = () => {
 
     if(username && userpassword) {
       await axios({
-        url: `${process.env.REACT_APP_BASE_KEY}`,
+        url: POST_URL,
         headers: {
           "Content-type": "application/json"
         },
@@ -33,6 +38,10 @@ const LoginForm: React.FC = () => {
         method: "POST",
       });
     };
+  };
+
+  const changeIcon = () => {
+    setShowpassword(!showpassword);
   };
     
   return (
@@ -54,25 +63,31 @@ const LoginForm: React.FC = () => {
             <input 
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
               value={username}
-              type="email" 
+              type="text" 
               name="email"
               className='w-full border border-black mt-2 mb-3 p-1 outline-none rounded-md'
             />
           </label>
-          <label>
+          <label className='relative'>
             <span className='text-blue-700'>PASSWORD</span>
             <input
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserpassword(e.target.value)}
               value={userpassword}
-              type="password" 
+              type={!showpassword ? "password" : 'text' } 
               name="password"
               className='w-full border border-black mt-2 p-1 outline-none rounded-md'
             />
+            {!showpassword ?<AiOutlineEye 
+              className='absolute right-2 top-10'
+              onClick={changeIcon}
+            /> : <AiOutlineEyeInvisible 
+              className='absolute right-2 top-10'
+              onClick={changeIcon}
+            />}
           </label>
-          <p className='text-sm mt-1'><Link to="/updatePass">Forgot your Password?</Link></p>
+          <p className='text-sm mt-1 underline hover:no-underline'><Link to="/emailPass">Forgot your Password?</Link></p>
           <button 
             type="button"
-            disabled={username.length === 0}
             className='uppercase bg-blue-800 text-white font-bold text-[18px] px-4 py-[8px] mt-3 rounded-md hover:bg-blue-300 hover:text-blue-900 duration-200 cursor-pointer'   
             onClick={formHendler}
           >
