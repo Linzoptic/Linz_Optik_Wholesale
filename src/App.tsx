@@ -1,19 +1,21 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/login/LoginPage';
-import LoginEmailPass from './pages/update/LoginEmailPass';
-import UpdatePassword from './pages/update/UpdatePassword';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./Components/home/HomePage";
+import LoginPage from "./Components/login/LoginPage";
+import LoginEmailPass from "./Components/update/LoginEmailPass";
+import UpdatePassword from "./Components/update/UpdatePassword";
 
 function App() {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <Routes>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/updatePass' element={<UpdatePassword/>}/>
-        <Route path='/emailPass' element={<LoginEmailPass/>}/>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/updatePass" element={<UpdatePassword />} />
+        <Route path="/emailPass" element={<LoginEmailPass />} />
       </Routes>
     </div>
   );
-};
+}
 
 export default App;

@@ -7,10 +7,10 @@ const LoginEmailPass = () => {
     <div className="max-w-[1100px] mx-auto flex h-screen justify-center">
       <div className="w-full">
          <div className="flex justify-center">
-            <img src={logo} alt="/logo" className="w-52 pt-9" />
+            <img src={logo} alt="/logo" className="w-36 md:w-52 pt-9" />
          </div>
-         <div className="border-b-2 border-b-cyan-800 flex justify-between items-center">
-            <h1 className="text-2xl text-sky-800 font-bold pb-2">RESET PASSWORD</h1>
+         <div className="flex justify-between items-center border-b-2 border-b-cyan-800">
+            <h1 className="text-[14px] xs:text-xl md:text-2xl text-sky-800 font-bold pb-2">RESET PASSWORD</h1>
             <p className="underline text-sky-800 font-bold hover:text-sky-400 duration-150"><Link to='/login'>Back to Login</Link></p>
          </div>
          <div className="w-full border p-12 mt-7">
@@ -27,7 +27,7 @@ const LoginEmailPass = () => {
                </label>
                <button 
                   type="submit"
-                  className="bg-sky-800 text-[14px] mt-3 hover:scale-105 duration-150"   
+                  className="bg-sky-800 mt-3 hover:scale-105 duration-150 text-[11px] md:text-[14px]"   
                >
                   RESET PASSWORD
                </button>
