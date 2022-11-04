@@ -3,15 +3,16 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { frames } from "../../home/base";
 
 const Dropdown = () => {
-  const framesArr: string[] = [];
-  const [arr, setArr] = useState<string[]>([frames[0].name]);
 
-  const mouseHandler = (props: string) => {
-    if (framesArr.includes(props)) {
-      return framesArr;
+  const framesProcuct: string[] = [];
+  const [selectedProduct, setSelectedProduct] = useState<string[]>([frames[0].name]);
+
+  const onMouseHandler = (productName: string) => {
+    if (framesProcuct.includes(productName)) {
+      return framesProcuct;
     } else {
-      framesArr.push(props);
-      setArr(framesArr);
+      framesProcuct.push(productName);
+      setSelectedProduct(framesProcuct);
     }
   };
 
@@ -22,7 +23,7 @@ const Dropdown = () => {
           <div key={index} className="flex items-center px-6">
             <p
               className="font-[700] text-[14px] text-[#06509aee] hover:text-[#b1c1ffee] duration-100 cursor-pointer"
-              onMouseOver={() => mouseHandler(elem.name)}
+              onMouseOver={() => onMouseHandler(elem.name)}
             >
               {elem.name}
             </p>
@@ -32,7 +33,7 @@ const Dropdown = () => {
       </div>
       <div className="w-[25%] h-[100px] flex items-center justify-center mt-8">
         <p className="text-[2rem] font-bold text-center text-[#06509aee] drop-shadow-textSh"> 
-          {arr[0]}
+          {selectedProduct[0]}
         </p>
       </div>
     </div>

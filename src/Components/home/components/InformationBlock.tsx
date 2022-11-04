@@ -1,8 +1,8 @@
 import React from "react";
 import ChooseComponent from "../../header/components/ChooseComponent";
-import { productItems, Products } from "../base";
+import { productItems } from "../base";
 
-const PaginationAll = ( {cooseData}: {cooseData:Products[]}) => {
+const InformationBlock = ({selectedDatalength}:{selectedDatalength:number}) => {
   const sortBy: string[] = [
     "ADVERTISING",
     "BESTSELLERS",
@@ -32,7 +32,7 @@ const PaginationAll = ( {cooseData}: {cooseData:Products[]}) => {
         </div>
         <div className=" hidden xs:block ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
           <p className="text-[14px] text-[#094579] font-[700] underline">
-              {cooseData.length}
+              {selectedDatalength}
             <span className="text-[13px] font-[600]"> :ITEMS PER PAGE</span>
           </p>
         </div>
@@ -41,4 +41,4 @@ const PaginationAll = ( {cooseData}: {cooseData:Products[]}) => {
   );
 };
 
-export default PaginationAll;
+export default InformationBlock;

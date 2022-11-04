@@ -6,12 +6,12 @@ import LeftBarMenu from "../leftbar/LeftBarMenu";
 import Navbar from "../header/Navbar";
 import ProductItem from "./ProductItem";
 import NavbarInfo from "../header/NavbarInfo";
-import PaginationAll from "./components/PaginationALL";
+import InformationBlock from "./components/InformationBlock";
 import Pagination from "./components/Pagination";
 
 const HomePage: React.FC = () => {
-  const [data, setData] = useState<Products[]>(productItems);
-  const [cooseData, setCooseData] = useState<Products[]>([]);
+  const [productsData, setProductsDataData] = useState<Products[]>(productItems);
+  const [selectedData, setSelectedData] = useState<Products[]>([]);
 
   // useEffect(()=>{
   //   (async()=>{
@@ -30,15 +30,15 @@ const HomePage: React.FC = () => {
       <Navbar />
       <NavbarInfo/>
       <div className="flex flex-col items-center justify-center">
-        <PaginationAll cooseData={cooseData}/>
-        <Pagination data={data} setData={setData} setCooseData={setCooseData}/>
+        <InformationBlock selectedDatalength={selectedData.length}/>
+        <Pagination productsData={productsData} setSelectedData={setSelectedData}/>
       </div>
       <div className="sm:grid grid-cols-4">
         <div className="col-span-2 md:col-span-1 md:max-w-[300px] mr-0 sm:mr-3">
           <LeftBarMenu />
         </div>
         <div className="flex flex-col items-center flex-wrap  mt-3 sm:mt-0 sm:grid gap-5 grid-cols-1 col-span-2 md:grid-cols-2 lg:grid-cols-3 justify-between  md:col-span-3">
-          {cooseData?.map((item, index) => (
+          {selectedData?.map((item, index) => (
             <ProductItem
               key={index}
               id={item.id}

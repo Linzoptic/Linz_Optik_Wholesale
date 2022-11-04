@@ -26,7 +26,6 @@ const Navbar = () => {
       </div>
       <div className="hidden md:block max-w-[800px] col-span-2">
         <ul className="flex px-4 py-2 bg-[#094570] text-white rounded-md justify-between"
-        
           onMouseOver={() => setDropDown(true)}
         >
           {navbar.map((elem, index) => (
@@ -39,7 +38,7 @@ const Navbar = () => {
           ))}
         </ul>
         <div
-          className={dropDown? "absolute left-0 w-full p-3 bg-white shadow-2xl z-40 flex justify-between": "hidden" }
+          className={dropDown? "absolute left-0 w-full p-3 bg-white shadow-2xl z-40 flex justify-between" : "hidden" }
           onMouseLeave={() => setDropDown(false)}
           >
          <Dropdown/>

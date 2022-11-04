@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdArrowRight, MdOutlineArrowDropDown } from "react-icons/md";
 import { Fillter } from "../../home/base";
 
-const LeftBarItem = ({item, dataList, changeHandler}:{item: Fillter, dataList:string[], changeHandler: (clickProps: string) => void}) => {
+const LeftBarItem = ({item, filterItemList, onChangeHandler}:{item: Fillter, filterItemList:string[], onChangeHandler: (filtersItem: string) => void}) => {
   const [icon, setIcon] = useState(false);
 
   return (
@@ -22,8 +22,8 @@ const LeftBarItem = ({item, dataList, changeHandler}:{item: Fillter, dataList:st
                   <input
                     type="checkbox"
                     className="mr-[5px] accent-black0"
-                    onChange={() => changeHandler(el.filter_name)}
-                    checked={dataList.includes(el.filter_name)}
+                    onChange={() => onChangeHandler(el.filter_name)}
+                    checked={filterItemList.includes(el.filter_name)}
                   />
                   {el.filter_name}
                 </li>

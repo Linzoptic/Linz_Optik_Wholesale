@@ -1,18 +1,18 @@
 import { IoIosClose } from "react-icons/io";
 import { BsSearch } from "react-icons/bs";
 
-const LeftBarInfo = ({dataList , setDataList}:{dataList:string[], setDataList:React.Dispatch<React.SetStateAction<string[]>>}) => {
+const LeftBarInfo = ({filterItemList , setFilterItemList}:{filterItemList:string[], setFilterItemList:React.Dispatch<React.SetStateAction<string[]>>}) => {
   
   const ClearHandler = (elem: string) => {
-     const newDataList = dataList.filter(item => item !== elem)
-     setDataList(newDataList);
+     const newDataList = filterItemList.filter(item => item !== elem)
+     setFilterItemList(newDataList);
   };
 
   return (
     <div className="bg-[#c2c8ce] text-center md:text-left">
       <div className="py-3 px-4">
         <p className="text-2xl font-[600] md:text-[14px] text-[#022e5a] mb-4">YOUR SELECTION</p>
-        {dataList?.map((elem, index) => (
+        {filterItemList?.map((elem, index) => (
           <div
             key={index}
             className="flex items-center justify-between px-3 py-[4px] mb-2 text-gray-200 font-bold bg-[#022e5a] rounded-2xl"
@@ -26,7 +26,7 @@ const LeftBarInfo = ({dataList , setDataList}:{dataList:string[], setDataList:Re
           </div>
         ))}
         <p className="underline text-[16px] md:text-xs pt-4 cursor-pointer hover:text-[#022e5a] duration-150"
-        onClick={() => setDataList([])}
+        onClick={() => setFilterItemList([])}
         >
           clear selection
         </p>

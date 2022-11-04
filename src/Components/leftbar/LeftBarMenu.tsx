@@ -6,20 +6,20 @@ import LeftBarItem from "./components/LeftBarItem";
 
 const LeftBarMenu  = () => {
 
-  const [dataList, setDataList] = useState<string[]>([]);
+  const [filterItemList, setFilterItemList] = useState<string[]>([]);
 
-  const changeHandler = (listItem: string) => {
-    if (dataList.includes(listItem)) {
-      return setDataList(dataList.filter((el) => el !== listItem));
+  const onChangeHandler = (filtersItem: string) => {
+    if (filterItemList.includes(filtersItem)) {
+      return setFilterItemList(filterItemList.filter((el) => el !== filtersItem));
     } else {
-      return setDataList([...dataList, listItem]);
+      return setFilterItemList([...filterItemList, filtersItem]);
     }
   };
 
   return (
     <div>
       <div>
-        <LeftBarInfo dataList={dataList} setDataList={setDataList}/>
+        <LeftBarInfo filterItemList={filterItemList} setFilterItemList={setFilterItemList}/>
         <div className="py-5 px-4 border">
           <h1 className="uppercase text-[#1366a1] text-[14px]">narrow by</h1>
         </div>
@@ -29,8 +29,8 @@ const LeftBarMenu  = () => {
             <LeftBarItem
               key={index}
               item={item}
-              changeHandler={changeHandler}
-              dataList={dataList}
+              onChangeHandler={onChangeHandler}
+              filterItemList={filterItemList}
             />
           ))}
         </div>

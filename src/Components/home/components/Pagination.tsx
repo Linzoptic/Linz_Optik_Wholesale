@@ -4,13 +4,11 @@ import { Products } from "../base";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 
 const Pagination = ({
-  setData,
-  data,
-  setCooseData,
+  productsData,
+  setSelectedData,
 }: {
-  setData: React.Dispatch<React.SetStateAction<Products[]>>,
-  data: Products[],
-  setCooseData:  React.Dispatch<React.SetStateAction<Products[]>>,
+  productsData: Products[],
+  setSelectedData:  React.Dispatch<React.SetStateAction<Products[]>>,
 }) => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -20,15 +18,15 @@ const Pagination = ({
   const indexOfFirstProcuct = indexOfLastProduct - productPerPage;
 
   useEffect(() => {
-     setCooseData(data.slice(indexOfFirstProcuct,indexOfLastProduct));
+    setSelectedData(productsData.slice(indexOfFirstProcuct,indexOfLastProduct));
   },[currentPage]);
   
-  const elements = [];
-  for (let i = 1; i < Math.ceil(data.length / productPerPage); i++) {
-    elements.push(i);
+  const paginationCount = [];
+  for (let i = 1; i < Math.ceil(productsData.length / productPerPage); i++) {
+    paginationCount.push(i);
   };
 
-  const click = (number: number) => {
+  const onChangePagination = (number: number) => {
    setCurrentPage(number);
 };
 
@@ -52,9 +50,9 @@ const Pagination = ({
         <div>
           <nav className="flex items-center justify-center text-[#091852]">
             <AiOutlineArrowLeft size={13}/>
-            {elements.map((number) => (
+            {paginationCount.map((number) => (
               <Link
-                onClick={() => click(number)}
+                onClick={() => onChangePagination(number)}
                 key={number}
                 to="#"
                 aria-current="page"
