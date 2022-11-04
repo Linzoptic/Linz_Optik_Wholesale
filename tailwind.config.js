@@ -5,9 +5,14 @@ module.exports = {
   ],
   plugins: [],
   theme: {
+    extend: {
+      dropShadow: {
+        "textSh": "0 8px 6px"
+      },
+    },
     screens: {
-      'xs': '400px',
-      // => @media (min-width: 400px) { ... }
+      'xs': '480px',
+      // => @media (min-width: 480px) { ... }
 
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
@@ -26,3 +31,5 @@ module.exports = {
     }
   }
 }
+
+

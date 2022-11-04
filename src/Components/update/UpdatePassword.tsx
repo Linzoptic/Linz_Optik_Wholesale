@@ -12,7 +12,8 @@ const UpdatePassword: React.FC = () => {
    const [ password1, setPassword1 ] = useState<string>('');
    const [ password2, setPassword2 ] = useState<string>('');
 
-   const clickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+   const clickHandler = (event: React.SyntheticEvent<HTMLFormElement>) => {
+      event.preventDefault();
       if(password1 === password2) {
          setOpenErrorDiv(false);
          setPassword1('');
@@ -36,7 +37,7 @@ const UpdatePassword: React.FC = () => {
             </div>
             <form 
                className={!openErrorDiv ? 'max-w-[500px] p-5 border border-sky-500 rounded-2xl shadow-2xl shadow-neutral-900' : 'max-w-[500px] p-5 border rounded-2xl shadow-2xl border-red-500' }
-               onSubmit={(e: React.SyntheticEvent) => e.preventDefault()}
+               onSubmit={clickHandler}
             >
                <h1 className='text-[16px] text-right pb-5 text-sky-700 md:text-xl'>Update Password</h1>
                <label className='relative'>
@@ -77,8 +78,8 @@ const UpdatePassword: React.FC = () => {
                </label>
               <div className='block max-w-[500px] px-4 md:flex justify-between'>
                   <button
+                     type='submit'
                      className='w-52 bg-sky-700 hover:scale-105 duration-300 text-[16px] md:text-xl'
-                     onClick={clickHandler}
                   >
                      Update Password
                   </button>

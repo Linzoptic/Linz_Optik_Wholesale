@@ -3,16 +3,15 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 const Header = () => {
-
+  
   const [ search, setSearch ] = useState<string>('')
   
   return (
-    <div className="py-9 px-4 bg-[#1877ba]">
+    <div className="py-9 px-4 bg-[#004f87]">
       <div className="block md:flex  items-center justify-between">
         <div>
-          <h1 className="text-2xl md:text-4xl tracking-[.2rem] md:tracking-[-.2rem] mb-1 font-">
-            Linz<span className="text-blue-900">-</span>
-            <span className="text-orange-900 font-bold text-xl md:text-2xl ">Optik</span>
+          <h1 className="text-2xl md:text-4xl tracking-[.2rem] md:tracking-[-.2rem] mb-1 text-white/40">
+           here will be user info
           </h1>
         </div>
         <div className="max-w-[500px] flex items-center relative">
@@ -31,7 +30,7 @@ const Header = () => {
         </div>
          <div className="flex items-center text-gray-200 text-xl">
             <AiOutlineShoppingCart/>
-            <h1>Cart-()</h1>
+            <h1>Cart-(0)</h1>
          </div>
       </div>
     </div>
