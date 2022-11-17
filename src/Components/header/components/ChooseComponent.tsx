@@ -13,9 +13,9 @@ const ChooseComponent = ({props,title}: {props: string[],title: string}) => {
 
   return (
     <div className="flex items-center relative ">
-      <div className="block text-center md:flex  items-center justify-between">
+      <div className="block text-center md:flex items-center justify-center">
         <div>
-          <p className="text-[#094570] font-[600] text-[10px]  uppercase md:text-[13px]">
+          <p className="text-[#094570] font-[600] text-[10px]  uppercase md:text-[12px]">
             {title}:
           </p>
         </div>
@@ -28,7 +28,7 @@ const ChooseComponent = ({props,title}: {props: string[],title: string}) => {
           </h1>
         </div>
       </div>
-      <AiFillCaretDown size={10} className="absolute right-2 top-6 md:top-1" />
+      <AiFillCaretDown size={10} className="absolute right-2 top-5 md:top-1" />
       <div
         className={show ? "absolute w-full right-[50%] translate-x-[50%] md:right-20 top-10 bg-gray-200 py-3 px-4 text-[12px] rounded-2xl md:top-5" : "hidden"}>
         {props.map((elem, index) => (

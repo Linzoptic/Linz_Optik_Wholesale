@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../images/logo.svg";
-import { navbar } from "../home/base";
+import { navbar } from "../../utils/interface";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Dropdown from "./components/Dropdown";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
   const handleClick = () => {
     setOpendiv(!opendiv);
   };
-
+ 
   return (
     <div className="py-12 flex items-center  relative md:grid grid-cols-3  justify-between">
       <div className="flex items-center col-span-1 ">
@@ -25,7 +25,7 @@ const Navbar = () => {
         </h1>
       </div>
       <div className="hidden md:block max-w-[800px] col-span-2">
-        <ul className="flex px-4 py-2 bg-[#094570] text-white rounded-md justify-between"
+        <ul className="flex px-4 py-2 bg-gradient-to-bl from-cyan-400 to-[#004f87ac] text-white rounded-md justify-between"
           onMouseOver={() => setDropDown(true)}
         >
           {navbar.map((elem, index) => (

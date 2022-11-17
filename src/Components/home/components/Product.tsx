@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-import Header from "../../header/Header";
+
 
 const Product = () => {
   return (
-    <div>
-      <Header/>
+    <div className="max-w-[1200px] mx-auto">
       <div>
         <Link to="/home">go home</Link>
       </div>
     </div>
   )
-}
+};
 
 export default Product;
