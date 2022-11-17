@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import NotFoundPage from "./Components/home/components/NotFoundPage";
 import Product from "./Components/home/components/Product";
 import HomePage from "./Components/home/HomePage";
@@ -14,9 +14,7 @@ function App() {
 
 useEffect(() => {
   (async () => {
-    if(localStorage.getItem("jwt_token")){
-      navigate("/home")
-    }else{
+    if(!localStorage.getItem("jwt_token")){
       navigate("/login")
     }
   })()
@@ -25,9 +23,10 @@ useEffect(() => {
   return (
     <div className="container mx-auto px-4">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/product/:id" element={<Product />} />
+        <Route path="/"  element={<Layout />}>
+          <Route path="/" element={<Navigate to="home"/>} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="product/:id" element={<Product />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
           <Route path="/emailPass" element={<LoginEmailPass />} />

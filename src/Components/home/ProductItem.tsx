@@ -26,13 +26,6 @@ const ProductItem = (props: Products) => {
             {props.sale_price ? `Suggested retail price ${props.sale_price}`: ""}
           </p>
         </div>
-        {/* {props.new && 
-          <div className="absolute w-[150px] top-[-10px] right-[-58px] bg-[#0e75c0] pb-2 pt-5 rotate-45 leading-3 flex flex-col ">
-            {props.new.split(" ").map((el,i) => (
-              <p key={i} className="uppercase font-[650] text-white/80 text-[11px]">{el}</p>
-            ))}
-          </div>
-        } */}
       </div>
     </Link>
   );
