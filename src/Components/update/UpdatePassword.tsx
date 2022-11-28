@@ -16,7 +16,7 @@ const UpdatePassword: React.FC = () => {
     if (password1 === password2 && password1 !== " ") {
       setOpenErrorDiv(true);
     }
-  }, [password1, password2]);
+  },[password1, password2]);
 
   const clickHandler = (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ const UpdatePassword: React.FC = () => {
         <form
           className={
             openErrorDiv
-              ? "w-full p-5 border border-sky-500 rounded-2xl shadow-2xl shadow-neutral-900"
+              ? "w-full p-5 border border-cyan-700 rounded-2xl shadow-[0_10px_15px_0]"
               : "w-full p-5 border rounded-2xl shadow-2xl border-red-500"
           }
           onSubmit={clickHandler}
@@ -55,7 +55,7 @@ const UpdatePassword: React.FC = () => {
               name="password1"
               className={
                 openErrorDiv
-                  ? "w-full outline-none bg-sky-200 placeholder:text-[14px]"
+                  ? "w-full outline-none border border-cyan-800 placeholder:text-[14px]"
                   : "w-full outline-none border border-red-500 placeholder:text-[14px]"
               }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -82,7 +82,7 @@ const UpdatePassword: React.FC = () => {
               name="password2"
               className={
                 openErrorDiv
-                  ? "w-full outline-none  bg-sky-200 my-6 placeholder:text-[14px]"
+                  ? "w-full outline-none border border-cyan-800 my-6 placeholder:text-[14px]"
                   : "w-full outline-none my-6 border border-red-500 placeholder:text-[14px]"
               }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -101,10 +101,10 @@ const UpdatePassword: React.FC = () => {
               />
             )}
           </label>
-          <div className="block max-w-[500px] md:flex justify-between">
+          <div className="block  md:flex justify-between">
             <button
               type="submit"
-              className="w-full xs:w-52 bg-sky-800 hover:scale-100 duration-300 text-[14px] md:text-xl"
+              className="border px-[20px] py-[5px] rounded-lg border-cyan-800 text-cyan-800 font-[700] mt-3 duration-150 text-[14px] md:text-[16px] w-full md:w-[250px] hover:scale-105 hover:text-cyan-700"
             >
               Update Password
             </button>
@@ -128,7 +128,7 @@ const UpdatePassword: React.FC = () => {
             <h1 className="text-xl">*Please enter the correct password*</h1>
           </div>
         </form>
-        <h1 className="px-[6px] py-[3px] bg-sky-800 my-12 text-white text-[12px] rounded-md  shadow-xl shadow-neutral-900 hover:scale-110 duration-300">
+        <h1 className="px-[16px] py-[4px] my-12 text-cyan-800 border border-cyan-800 text-[14px] font-[600]  rounded-lg  shadow-xl shadow-neutral-900 hover:scale-110 duration-300">
           <Link to="/login">Go Back</Link>
         </h1>
       </div>

@@ -38,13 +38,14 @@ const LoginEmailPass = () => {
               <input 
                type="email" 
                name="email" 
+               placeholder='Enter your E-mail'
                onChange={(e:React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
-               className="border w-full mt-2" 
+               className="border border-cyan-600 w-full mt-2 text-[16px] font-[500] outline-none hover:border-cyan-200 duration-100" 
             />
             </label>
             <button
               type="submit"
-              className="bg-sky-800 mt-3 hover:scale-105 duration-150 text-[11px] md:text-[14px]"
+              className="border px-[20px] py-[5px] rounded-lg border-cyan-800 text-cyan-800 font-[700] mt-3 duration-150 text-[11px] md:text-[14px] hover:scale-105 hover:text-cyan-700"
             >
               RESET PASSWORD
             </button>

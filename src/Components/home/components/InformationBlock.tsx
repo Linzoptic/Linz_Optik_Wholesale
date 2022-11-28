@@ -2,11 +2,11 @@ import React from "react";
 import ChooseComponent from "../../header/components/ChooseComponent";
 
 const InformationBlock = ({
-  selectedDatalength,
-  productsDataLength,
+  totolCount,
+  productPerPage,
 }: {
-  selectedDatalength: number;
-  productsDataLength: number;
+  totolCount: number;
+  productPerPage:number,
 }) => {
 
   const sortBy: string[] = [
@@ -32,13 +32,13 @@ const InformationBlock = ({
         </div>
         <div className=" ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
           <p className="text-[10px] text-[#094579] font-[700] underline xs:text-[13px]">
-            {productsDataLength}
+            {totolCount}
             <span className="font-[600]"> :ITEMS</span>
           </p>
         </div>
         <div className=" hidden xs:block ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
           <p className="text-[13px] text-[#094579] font-[700] underline">
-            {selectedDatalength}
+            {productPerPage}
             <span className="text-[13px] font-[600]"> :ITEMS PER PAGE</span>
           </p>
         </div>

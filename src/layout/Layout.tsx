@@ -5,7 +5,7 @@ import NavbarInfo from "../Components/header/NavbarInfo";
 
 const Layout = () => {
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="mx-auto">
       <header>
         <Header />
         <Navbar />

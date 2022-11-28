@@ -15,7 +15,7 @@ const NavbarInfo = () => {
   return (
     <div>
       <div className="flex justify-between pb-8">
-        <div className="">
+        <div>
           <p className="text-[#094570] font-[600] text-[10px] md:text-[13px]">You are here:{">"}{location.pathname}</p>
         </div>
         <div>

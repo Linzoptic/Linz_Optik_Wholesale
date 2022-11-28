@@ -5,9 +5,28 @@ export interface Products {
   image_url: string[];
   regular_price: string;
   sale_price: string;
+  stock_status: string;
+}
+
+/////////////////////////////////////
+
+export interface SingleProducts {
+  id: number;
+  name: string;
+  sku: string;
+  images: {
+    date_created:string;
+    date_modified:string;
+    src:string;
+  }[];
+  regular_price: string;
+  sale_price: string;
+  stock_status: string;
+  quantity: number;
 }
 
 ///////////////////////////////////////////////////////  For Fillter  ///////////////////
+
 
 export interface AttributeCategory {
   term_id: number;
@@ -20,6 +39,22 @@ export interface Attributes {
   name: string;
   name_category: AttributeCategory[];
 }
+
+export interface FiltersItemList {
+  name: string;
+  description: string;
+}
+
+//////////////////////////////////////////////////////
+
+export interface CatchError {
+  response: {
+    data: {
+      message: string;
+    }
+  };
+};
+
 
 //////////////////////////////////////////////////////
 

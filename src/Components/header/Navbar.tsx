@@ -5,6 +5,7 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import Dropdown from "./components/Dropdown";
 
 const Navbar = () => {
+  
   const [opendiv, setOpendiv] = useState<boolean>(true);
   const [dropDown, setDropDown] = useState<boolean>(false);
 
@@ -13,8 +14,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="py-12 flex items-center  relative md:grid grid-cols-3  justify-between">
-      <div className="flex items-center col-span-1 ">
+    <div className="flex items-center justify-between relative md:grid grid-cols-3 py-3 md:py-12 ">
+      <div className="flex items-center  col-span-1 ">
         <img src={logo} alt="logo" className="w-16 md:w-11" />
         <h1 className="hidden md:block text-3xl text-sky-400 mb-1 tracking-[-3px]">
           LiNz
@@ -23,7 +24,7 @@ const Navbar = () => {
           </span>
         </h1>
       </div>
-      <div className="hidden md:block max-w-[800px] col-span-2">
+      <div className="hidden md:block col-span-2">
         <ul
           className="flex px-4 py-2 bg-gradient-to-bl from-cyan-400 to-[#004f87ac] text-white rounded-md justify-between"
           onClick={() => setDropDown(true)}
@@ -45,16 +46,16 @@ const Navbar = () => {
           <Dropdown />
         </div>
       </div>
-      <div className="block cursor-pointer text-[#094570] md:hidden">
+      <div className="block text-[#113753] md:hidden">
         <div onClick={handleClick}>
           {opendiv ? <AiOutlineMenu size={25} /> : <AiOutlineClose size={25} />}
         </div>
         <div
           className={!opendiv ? "absolute w-full left-0  text-center z-20" : "hidden"}
         >
-          <ul className=" bg-[#094570] text-white rounded-md justify-between">
+          <ul className="bg-gradient-to-t to-[#668c91] from-[#3abf9e] text-white rounded-md">
             {navbar.map((elem, index) => (
-              <li key={index} className="text-xl py-7">
+              <li key={index} className="text-[18px] py-5 cursor-pointer">
                 {elem.name}
               </li>
             ))}

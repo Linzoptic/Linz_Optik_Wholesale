@@ -4,47 +4,54 @@ import { AttributeCategory, Attributes } from "../../utils/interface";
 import FillterTitle from "./components/FillterTitle";
 import LeftBarInfo from "./components/LeftBarInfo";
 import LeftBarItem from "./components/LeftBarItem";
+import { FiltersItemList } from "../../utils/interface";
 
 const LeftBarMenu = () => {
+  const BASE_URL: string = process.env.REACT_APP_BASE_URL as string;
+
   const [attributes, setAttributes] = useState<Attributes[]>([]);
-  const [filterItemList, setFilterItemList] = useState<string[]>([]);
+  const [filterItemList, setFilterItemList] = useState<FiltersItemList[]>([]);
 
   useEffect(() => {
     (async () => {
-      const correctData = await axios.get(
-        "https://tiknikstyle.10web.site/wp-json/all/attributes"
-      );
-
+      const correctData = await axios.get(`${BASE_URL}/wholesale/attributes`);
       const attributesArray: Attributes[] = [];
       for (const [key, value] of Object.entries(correctData.data)) {
         attributesArray.push({
           name: key,
-          name_category: (value as AttributeCategory[]).map((e) => {
+          name_category: (value as AttributeCategory[]).map((elem) => {
             return {
-              term_id: e.term_id,
-              name: e.name,
-              taxonomy: e.taxonomy,
-              description: e.description,
+              term_id: elem.term_id,
+              name: elem.name,
+              taxonomy: elem.taxonomy,
+              description: elem.description,
             } as AttributeCategory;
           }),
         });
       }
-      setAttributes(attributesArray);  
+      setAttributes(attributesArray);
     })();
-  }, []);
+  }, [BASE_URL]);
 
-  const onChangeHandler = (filtersItem: string) => {
-    if (filterItemList.includes(filtersItem)) {
-      return setFilterItemList(
-        filterItemList.filter((el) => el !== filtersItem)
-      );
+  const onChangeHandler = (filtersItemNmae: string, filtersItemDes: string) => {
+    let filters = [...filterItemList];
+    const existingFilter = filterItemList.find(
+      (i) => i.name === filtersItemNmae
+    );
+    if (existingFilter) {
+      filters = filters.filter((i) => i.name !== existingFilter.name);
+      setFilterItemList(filters);
     } else {
-      return setFilterItemList([...filterItemList, filtersItem]);
+      filters.push({
+        name: filtersItemNmae,
+        description: filtersItemDes,
+      });
+      setFilterItemList(filters)
     }
   };
 
   return (
-    <div>
+    <div className="w-[100%]">
       <div>
         <LeftBarInfo
           filterItemList={filterItemList}
@@ -58,7 +65,7 @@ const LeftBarMenu = () => {
           {attributes?.map((item, index) => (
             <LeftBarItem
               key={index}
-              name={item.name}
+              filterItems_name={item.name}
               categories={item.name_category}
               onChangeHandler={onChangeHandler}
               filterItemList={filterItemList}

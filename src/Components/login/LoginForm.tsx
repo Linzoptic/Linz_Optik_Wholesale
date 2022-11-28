@@ -5,7 +5,7 @@ import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
 
 const LoginForm: React.FC = () => {
-  const BASE_URL: string = process.env.REACT_APP_BASE_URL as string;
+  const LOGIN_URL: string = process.env.REACT_APP_LOGIN_URL as string;
 
   const Home: string = "home";
 
@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
     setUserpassword("");
 
     const resoult = await axios.post(
-      BASE_URL,
+      `${LOGIN_URL}/api/v1/token`,
       JSON.stringify({
         username: username,
         password: userpassword,

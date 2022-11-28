@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { MdArrowRight, MdOutlineArrowDropDown } from "react-icons/md";
 import { AttributeCategory } from "../../../utils/interface";
+import { FiltersItemList } from "../../../utils/interface";
 
 const LeftBarItem = ({
   categories,
-  name,
+  filterItems_name,
   filterItemList,
   onChangeHandler,
 }: {
   categories: AttributeCategory[];
-  name: string;
-  filterItemList: string[];
-  onChangeHandler: (filtersItem: string) => void;
+  filterItems_name: string;
+  filterItemList: FiltersItemList[];
+  onChangeHandler: (filtersItemName: string, filtersItemDes: string) => void;
 }) => {
   const [icon, setIcon] = useState(false);
 
@@ -24,7 +25,7 @@ const LeftBarItem = ({
           <MdOutlineArrowDropDown size={24} />
         )}
         <h1 className="text-[14px] md:text-[15px] uppercase font-[600] hover:underline  hover:text-[#2286c5] duration-150">
-          {name}
+          {filterItems_name}
         </h1>
       </div>
       <div className={icon ? "block ml-2 duration-150" : "hidden"}>
@@ -32,27 +33,31 @@ const LeftBarItem = ({
           <ul>
             {categories?.map((el, index) => (
               <label key={index}>
-                <li className="text-[13px] flex text-gray-600 items-center cursor-pointer hover:text-[#2286c5]">
+                <li className="text-[13px] flex text-gray-900 items-center cursor-pointer hover:text-[#2286c5]">
                   <div>
                     <input
                       type="checkbox"
-                      className="mr-[5px] accent-black0"
-                      onChange={() => onChangeHandler(el.name)}
-                      checked={filterItemList.includes(el.name)}
+                      className="mr-[8px] accent-black0"
+                      onChange={() => onChangeHandler(el.name, el.description)}
+                      checked={!!filterItemList.find((item) => item.name === el.name)}
                     />
                   </div>
                   <div>
-                    {el.description.includes("https://") ? (
+                    {el.description.includes("https://") && (
                       <img
                         src={el.description}
                         alt="#"
-                        className="h-[12px] px-2"
+                        className="h-[12px] w-[40px] px-2"
                       />
-                    ) : (
-                      ""
                     )}
                   </div>
-                  {el.name}
+                  {filterItems_name.toLowerCase() === "գույն" && (
+                    <div
+                      style={{ backgroundColor: el.name }}
+                      className="w-[15px] h-[15px] mr-1 rounded-full"
+                    ></div>
+                  )}
+                  <div>{el.name}</div>
                 </li>
               </label>
             ))}
