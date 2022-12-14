@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineShoppingCart, AiOutlineClose } from "react-icons/ai";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import CartItem from "../../cart/CartItem";
-import { useAppSelector } from "../../redux/Hook";
+import { AiOutlineSearch } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo.svg";
+import SearchProduct from "./components/SearchProduct";
+import { SingleProducts } from "../../utils/interface";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string>("");
-  const [openCartDiv, SetOpenCartDiv] = useState<boolean>(false);
-  const [, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const selector = useAppSelector((state) => state.AddCart)
+  const [searchProduct, setSearchProduct] = useState<SingleProducts[]>();
 
   const searchHandleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSearchParams({ product: search });
   };
 
   const onLogOutHandler = () => {
     localStorage.removeItem("jwt_token");
     navigate("/login");
   };
+
   useEffect(() => {
     const user = localStorage.getItem("username");
     if (typeof user === "string") {
@@ -29,36 +28,29 @@ const Header = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if(selector.CartList.length === 0){
-      SetOpenCartDiv(false)
-    }
-  },[selector.CartList.length])
-
-  const onRemoveSearch = () => {
-    setSearch("");
-    setSearchParams({ product: "" });
-  };
-
+ 
   return (
-    <div className="py-4 md:py-6  px-2 bg-gradient-to-br from-cyan-400 to-cyan-900">
-      <div className="block text-center md:flex justify-between relative">
-        <div className="flex items-center mb-2 md:mb-0">
-          <div>
+    <div className="py-[20px]  px-2 bg-gray-300 mb-[30px]">
+      <div className="block md:flex justify-between items-center relative">
+        <div className="flex items-center">
+          <div className="">
+            <img src={logo} alt="" />
+          </div>
+          <div className="flex items-center mb-2 md:mb-0">
             <button
-              className="text-[13px] mr-2 px-[16px] py-[4px] mt-[8px] bg-transparent border border-white text-white rounded-xl"
+              className="text-[13px] mr-2 px-[10px] py-[2px] bg-transparent border border-cyan-700 text-cyan-700 rounded-xl"
               onClick={onLogOutHandler}
             >
               Log Out
             </button>
-          </div>
-          <div className="hidden md:block">
-            <h1 className="text-[15px] text-white underline decoration-solid">
-              {userInfo}
-            </h1>
+            <div className="hidden md:flex">
+              <h1 className="text-[15px] text-cyan-800 underline">
+                {userInfo}
+              </h1>
+            </div>
           </div>
         </div>
-        <div>
+        <div className="block md:flex items-center">
           <form
             onSubmit={searchHandleSubmit}
             autoComplete="off"
@@ -69,40 +61,27 @@ const Header = () => {
               name="search"
               placeholder="Search Product"
               value={search}
-              className="w-full outline-none rounded-none rounded-tl-xl rounded-bl-xl py-[4px] md:py-[6px] border placeholder:text-[13px] border-white"
+              className="w-full md:w-[300px] outline-none  rounded-xl py-[2px] px-[30px] border placeholder:text-[13px] border-white relative"
               onChange={(e) => setSearch(e.target.value)}
             />
-            <AiOutlineClose
-              className="absolute right-20 cursor-pointer"
-              onClick={onRemoveSearch}
-            />
-            <input
-              type="submit"
-              value="Search"
-              className="text-white py-[4px] md:py-[6px] rounded-bl-none rounded-tl-none border border-white cursor-pointer"
+            <AiOutlineSearch
+              size={20}
+              className="absolute right-2 text-gray-500"
             />
           </form>
-        </div>
-        <div className="cursor-pointer  absolute top-[6px] right-2 md:relative text-white">
-          <div onClick={() => SetOpenCartDiv(!openCartDiv)}>
-            <div className="flex items-center relative">
-              <AiOutlineShoppingCart />
-              <h1 className="text-[16px] font-mono tracking-[-2px]">
-                Cart-({selector.CartList.length})
-              </h1>
-              <div>
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className={!openCartDiv 
-                    ? "hidden" 
-                    : "absolute top-8 right-[-16px] p-2 z-40 max-h-screen md:max-h-[800px] border-2 overflow-y-auto bg-[#d6d8d9] flex flex-col items-center cursor-default"
-                  }
-                >
-                  {selector.CartList.length ? <CartItem /> : <div className="w-[240px] md:w-[300px]"><h1>Դեռ զամբյուղը դատարկ է</h1></div>}
-                  
-                </div>
-              </div>
-            </div>
+          <div
+            className={
+              search.length !== 0
+                ? "max-h-[700px] overflow-y-auto overflow-x-hidden border border-cyan-400 rounded-lg  scrollbar-thin  scrollbar-thumb-cyan-800 absolute top-[40px]  right-[50%] translate-x-[50%] bg-white z-40 p-2"
+                : "hidden"
+            }
+          >
+            <SearchProduct
+              search={search}
+              setSearch={setSearch}
+              searchProduct={searchProduct}
+              setSearchProduct={setSearchProduct}
+            />
           </div>
         </div>
       </div>

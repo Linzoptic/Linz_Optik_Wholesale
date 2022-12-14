@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { MdArrowRight, MdOutlineArrowDropDown } from "react-icons/md";
 import { AttributeCategory } from "../../../utils/interface";
-import { FiltersItemList } from "../../../utils/interface";
 
 const LeftBarItem = ({
   categories,
   filterItems_name,
-  filterItemList,
+  FilterItemList,
   onChangeHandler,
 }: {
   categories: AttributeCategory[];
   filterItems_name: string;
-  filterItemList: FiltersItemList[];
-  onChangeHandler: (filtersItemName: string, filtersItemDes: string) => void;
+  FilterItemList: AttributeCategory[] | undefined,
+  onChangeHandler: (term_id: number,taxonomy:string) => void;
 }) => {
   const [icon, setIcon] = useState(false);
 
@@ -38,8 +37,8 @@ const LeftBarItem = ({
                     <input
                       type="checkbox"
                       className="mr-[8px] accent-black0"
-                      onChange={() => onChangeHandler(el.name, el.description)}
-                      checked={!!filterItemList.find((item) => item.name === el.name)}
+                      onChange={() => onChangeHandler(el.term_id, el.taxonomy)}
+                      checked={!!FilterItemList?.find((item) => item.term_id === el.term_id)}
                     />
                   </div>
                   <div>
@@ -55,7 +54,8 @@ const LeftBarItem = ({
                     <div
                       style={{ backgroundColor: el.name }}
                       className="w-[15px] h-[15px] mr-1 rounded-full"
-                    ></div>
+                    >
+                    </div>
                   )}
                   <div>{el.name}</div>
                 </li>

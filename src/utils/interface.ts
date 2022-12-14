@@ -3,12 +3,13 @@ export interface Products {
   name: string;
   sku: string;
   image_url: string[];
-  regular_price: string;
-  sale_price: string;
+  regular_price_string: string;
+  sale_price_string: string;
   stock_status: string;
 }
 
-/////////////////////////////////////
+////////////////////////////
+
 
 export interface SingleProducts {
   id: number;
@@ -23,11 +24,24 @@ export interface SingleProducts {
   sale_price: string;
   stock_status: string;
   quantity: number;
+  description?: string | undefined;
+  short_description?: string | undefined;
+  related_ids: number[];
 }
 
-///////////////////////////////////////////////////////  For Fillter  ///////////////////
+//////////////////////////////
 
+export interface Products {
+  id: number;
+  name: string;
+  sku: string;
+  image_url: string[];
+  regular_price_string: string;
+  sale_price_string: string;
+  stock_status: string;
+}
 
+//////////////////////////////
 export interface AttributeCategory {
   term_id: number;
   name: string;
@@ -40,12 +54,7 @@ export interface Attributes {
   name_category: AttributeCategory[];
 }
 
-export interface FiltersItemList {
-  name: string;
-  description: string;
-}
-
-//////////////////////////////////////////////////////
+//////////////////////////////
 
 export interface CatchError {
   response: {
@@ -56,95 +65,4 @@ export interface CatchError {
 };
 
 
-//////////////////////////////////////////////////////
-
-export interface NavbarLi {
-  name: string;
-}
-
-export const navbar: NavbarLi[] = [
-  {
-    name: "FRAMES",
-  },
-  {
-    name: "ACCESSORIES",
-  },
-  {
-    name: "AFTER SALES",
-  },
-  {
-    name: "MY ACCOUNT",
-  },
-];
-
-//////////////////////////////////////////////////
-
-export interface Frames {
-  name: string;
-}
-
-export const frames: Frames[] = [
-  {
-    name: "ALAIN MIKLI",
-  },
-  {
-    name: "BURBERRY",
-  },
-  {
-    name: "BVLGARI",
-  },
-  {
-    name: "DOLCE & GABBANA",
-  },
-  {
-    name: "EMPORIO ARMANI",
-  },
-  {
-    name: "GIORGIO ARMANI",
-  },
-  {
-    name: "MICHAEL KORS",
-  },
-  {
-    name: "MIU MIU",
-  },
-  {
-    name: "OAKLEY",
-  },
-  {
-    name: "PERSOL",
-  },
-  {
-    name: "POLO",
-  },
-  {
-    name: "PRADA",
-  },
-  {
-    name: "PRADA LINEA ROSSA",
-  },
-  {
-    name: "RALPH LAUREN",
-  },
-  {
-    name: "RALPH",
-  },
-  {
-    name: "RAY-BAN",
-  },
-  {
-    name: "SFEROFLEX",
-  },
-  {
-    name: "STARK",
-  },
-  {
-    name: "TIFFANY",
-  },
-  {
-    name: "VERSACE",
-  },
-  {
-    name: "VOGUE",
-  },
-];
+////////////////////////////////

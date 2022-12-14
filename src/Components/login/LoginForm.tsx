@@ -5,7 +5,7 @@ import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
 
 const LoginForm: React.FC = () => {
-  const LOGIN_URL: string = process.env.REACT_APP_LOGIN_URL as string;
+  const LOGIN_URL = process.env.REACT_APP_LOGIN_URL as string;
 
   const Home: string = "home";
 
@@ -26,9 +26,9 @@ const LoginForm: React.FC = () => {
         password: userpassword,
       })
     );
-    localStorage.setItem("jwt_token", JSON.stringify(resoult.data.jwt_token));
-    localStorage.setItem("username", JSON.stringify(username));
     if (resoult) {
+      localStorage.setItem("jwt_token", JSON.stringify(resoult.data.jwt_token));
+      localStorage.setItem("username", JSON.stringify(username));
       navigate(`/${Home}`);
     }
   };

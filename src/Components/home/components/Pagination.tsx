@@ -12,10 +12,8 @@ const Pagination = ({
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
 
-  const paginationCount: number[] = [];
-  for (let i = 0; i < Math.ceil(totolCount / productPerPage); i++) {
-    paginationCount.push(i + 1);
-  }
+  const paginationCount:number[] = Array.from({length: Math.ceil(totolCount/productPerPage)}, (_, i) => i + 1);
+
   const incrementPaginationCount = () => {
     if (currentPage === 1) {
       return false;
