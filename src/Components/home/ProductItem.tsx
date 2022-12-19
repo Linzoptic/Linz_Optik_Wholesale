@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { PAGES } from "../../Product/constants";
 import { Products } from "../../utils/interface";
 
 const ProductItem = (props: Products) => {
   return (
-    <Link to={`/product/${props.id}`}>
+    <Link to={`${PAGES.PRODUCT}/${props.id}`}>
       <div  className="cursor-pointer hover:shadow-[0_20px_40px_1px] hover:scale-[101%] rounded-tl-lg rounded-tr-lg duration-150">
         <div className="flex items-center justify-center rounded-tl-lg rounded-tr-lg bg-gradient-to-b to-[#7f868d65] from-[#056cc67e]  w-full h-[150px] md:h-[300px] sm:h-[200px] ">
           <img 
-            src={props.image_url[0]}
+            src={props?.image_url[0]}
             alt="glasses"
             className="w-full  object-cover"
           />
@@ -16,27 +17,27 @@ const ProductItem = (props: Products) => {
         <div className="text-center p-2 text-cyan-900 shadow-[0_-5px_14px_0] ">
           <div>
             <p className="text-[#02020266] font-[600] text-[8px] md:text-[14px]">
-              {props.sku}
+              {props?.sku}
             </p>
             <h1 className="text-[14px] font-[600] sm:text-[16px] md:text-[18px] uppercase">
-              {props.name}
+              {props?.name}
             </h1>
           </div>
-          {props.sale_price_string ? (
+          {props?.sale_price_string ? (
             <div className="flex justify-around">
               <p className="text-[10px] md:text-[14px] lg:text-[16px] font-[600]">
-                {props.sale_price_string}
+                {props?.sale_price_string}
                 <span className="text-[10px] md:text-[14px] lg:text-[16px]"> AMD</span>
               </p>
               <p className="text-[10px] md:text-[14px] lg:text-[16px] line-through">
-                {props.regular_price_string}
+                {props?.regular_price_string}
                 <span className="text-[10px] md:text-[14px] lg:text-[16px]"> AMD</span>
               </p>
             </div>
           ) : (
             <div className="text-center">
               <p className="text-[10px] md:text-[14px] lg:text-[16px] font-[600]">
-                {props.regular_price_string}
+                {props?.regular_price_string}
                 <span className="text-[10px] md:text-[14px] lg:text-[16px]"> AMD</span>
               </p>
             </div>

@@ -26,11 +26,11 @@ const ReactRangeSlider = ({
       </div>
       <div className="flex justify-between items-center my-4 flex-wrap">
         <div className="flex items-center my-2">
-          <p className="font-[600] mr-[5px] text-[14px]">Min</p>
+          <p className="font-[600] mr-[5px] text-[14px]">Մին</p>
           <h2 className="border py-[5px] md:px-[10px] lg:px-[20px] ">{pricesRange[0].currentPrice}</h2>
         </div>
         <div className="flex items-center">
-          <p className="font-[600] mr-[5px] text-[14px]">Max</p>
+          <p className="font-[600] mr-[5px] text-[14px]">Մաքս</p>
           <h2 className="border py-[5px] md:px-[10px] lg:px-[20px]">{pricesRange[1].currentPrice}</h2>
         </div>
       </div>

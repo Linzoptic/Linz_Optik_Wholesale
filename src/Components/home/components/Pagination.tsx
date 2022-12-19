@@ -1,24 +1,25 @@
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
+import { COUNTS } from "../../../Product/constants";
 
 const Pagination = ({
-  totolCount,
+  totolCountRef,
   currentPage,
   productPerPage,
   setCurrentPage,
 }: {
-  totolCount: number;
+  totolCountRef: React.MutableRefObject<number>;
   currentPage: number;
   productPerPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }) => {
 
-  const paginationCount:number[] = Array.from({length: Math.ceil(totolCount/productPerPage)}, (_, i) => i + 1);
+  const paginationCount:number[] = Array.from({length: Math.ceil(totolCountRef.current/productPerPage)}, (_, i) => i + 1);
 
   const incrementPaginationCount = () => {
     if (currentPage === 1) {
       return false;
     } else {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(currentPage - COUNTS.ONE);
     }
   };
 
@@ -26,7 +27,7 @@ const Pagination = ({
     if (currentPage === paginationCount.length) {
       return false;
     } else {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage(currentPage + COUNTS.ONE);
     }
   };
 
@@ -34,7 +35,7 @@ const Pagination = ({
     <div className="flex items-center justify-between mt-[10px] sm:mb-[15px]">
       <div className="flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          {paginationCount.length > 1 && (
+          {!!paginationCount.length && (
             <nav className="flex items-center justify-center text-[#091852]">
               <AiOutlineArrowLeft
                 size={13}

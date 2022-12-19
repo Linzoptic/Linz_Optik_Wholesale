@@ -2,39 +2,34 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { LOCAL_STORAGE_KEYS, PAGES } from "../../Product/constants";
 import SearchProduct from "./components/SearchProduct";
-import { SingleProducts } from "../../utils/interface";
 
 const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string>("");
-  const [searchProduct, setSearchProduct] = useState<SingleProducts[]>();
-
-  const searchHandleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  
 
   const onLogOutHandler = () => {
-    localStorage.removeItem("jwt_token");
-    navigate("/login");
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.JWT_TOKEN);
+    navigate(PAGES.LOGIN);
   };
 
   useEffect(() => {
-    const user = localStorage.getItem("username");
+    const user = localStorage.getItem(LOCAL_STORAGE_KEYS.USERNAME);
     if (typeof user === "string") {
       const userName = JSON.parse(user);
       setUserInfo(userName);
     }
   }, []);
-
  
   return (
     <div className="py-[20px]  px-2 bg-gray-300 mb-[30px]">
       <div className="block md:flex justify-between items-center relative">
         <div className="flex items-center">
-          <div className="">
-            <img src={logo} alt="" />
+          <div>
+            <img src={logo} alt="Logo" />
           </div>
           <div className="flex items-center mb-2 md:mb-0">
             <button
@@ -52,7 +47,6 @@ const Header = () => {
         </div>
         <div className="block md:flex items-center">
           <form
-            onSubmit={searchHandleSubmit}
             autoComplete="off"
             className="flex items-center relative"
           >
@@ -71,7 +65,7 @@ const Header = () => {
           </form>
           <div
             className={
-              search.length !== 0
+              !!search.length
                 ? "max-h-[700px] overflow-y-auto overflow-x-hidden border border-cyan-400 rounded-lg  scrollbar-thin  scrollbar-thumb-cyan-800 absolute top-[40px]  right-[50%] translate-x-[50%] bg-white z-40 p-2"
                 : "hidden"
             }
@@ -79,8 +73,6 @@ const Header = () => {
             <SearchProduct
               search={search}
               setSearch={setSearch}
-              searchProduct={searchProduct}
-              setSearchProduct={setSearchProduct}
             />
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { PAGES } from '../../Product/constants';
 
 const LoginEmailPass = () => {
 
@@ -22,7 +23,7 @@ const LoginEmailPass = () => {
             RESET PASSWORD
           </h1>
           <p className="underline text-[12px] xs:text-[14px] md:text-[16px] text-sky-800 font-bold hover:text-sky-400 duration-150">
-            <Link to="/login">Back to Login</Link>
+            <Link to={PAGES.LOGIN}>Back to Login</Link>
           </p>
         </div>
         <div className="w-full border p-2 xs:p-6 md:p-12 mt-7">

@@ -1,4 +1,4 @@
-function SameProductSkeleton({ count }: { count: number }) {
+function SimilarProductSkeleton({ count }: { count: number }) {
    return (
      <>
        {Array(count)
@@ -21,4 +21,4 @@ function SameProductSkeleton({ count }: { count: number }) {
    );
  }
  
- export default SameProductSkeleton;
+ export default SimilarProductSkeleton;

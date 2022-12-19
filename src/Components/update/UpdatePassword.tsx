@@ -4,6 +4,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { BsCheck2All, BsEmojiSmile } from "react-icons/bs";
 import { isMatchPassword } from "./utils";
 import logo from "../../images/logo.svg";
+import { PAGES } from "../../Product/constants";
 
 const UpdatePassword: React.FC = () => {
   const [typechange1, setTypechange1] = useState<boolean>(true);
@@ -129,7 +130,7 @@ const UpdatePassword: React.FC = () => {
           </div>
         </form>
         <h1 className="px-[16px] py-[4px] my-12 text-cyan-800 border border-cyan-800 text-[14px] font-[600]  rounded-lg  shadow-xl shadow-neutral-900 hover:scale-110 duration-300">
-          <Link to="/login">Go Back</Link>
+          <Link to={PAGES.LOGIN}>Go Back</Link>
         </h1>
       </div>
     </div>

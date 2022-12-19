@@ -2,26 +2,15 @@ import React from "react";
 import ChooseComponent from "../../header/components/ChooseComponent";
 
 const InformationBlock = ({
-  totolCount,
-  productPerPage,
+  totolCountRef,
 }: {
-  totolCount: number;
-  productPerPage:number,
+  totolCountRef: React.MutableRefObject<number>;
 }) => {
-
-  const sortBy: string[] = [
-    "ADVERTISING",
-    "BESTSELLERS",
-    "ALPHABETICAL",
-    "NEW RELEASES",
-  ];
+  const sortBy: string[] = ["ADVERTISING", "BESTSELLERS", "ALPHABETICAL"];
 
   return (
     <div className="block w-full md:grid gap-4 grid-cols-4 justify-between items-center">
       <div className="col-span-1">
-        <div className="text-center text-white bg-cyan-900 mb-2">
-          <h1>SHOP BEST SELLER</h1>
-        </div>
         <div className="text-center text-white bg-cyan-900">
           <h1>WISHLIST</h1>
         </div>
@@ -31,16 +20,12 @@ const InformationBlock = ({
           <ChooseComponent props={sortBy} title="sort by" />
         </div>
         <div className=" ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
-          <p className="text-[10px] text-[#094579] font-[700] underline xs:text-[13px]">
-            {totolCount}
-            <span className="font-[600]"> :ITEMS</span>
-          </p>
-        </div>
-        <div className=" hidden xs:block ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
-          <p className="text-[13px] text-[#094579] font-[700] underline">
-            {productPerPage}
-            <span className="text-[13px] font-[600]"> :ITEMS PER PAGE</span>
-          </p>
+          {!!totolCountRef.current ? (
+            <p className="text-[10px] text-[#094579] font-[700] underline xs:text-[13px]">
+              {totolCountRef.current}
+              <span className="font-[600]"> :ITEMS</span>
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

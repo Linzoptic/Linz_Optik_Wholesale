@@ -1,11 +1,11 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import axios from "axios";
-import { AttributeCategory, Attributes } from "../../utils/interface";
+import React, { useState, Dispatch, SetStateAction } from "react";
+import { AttributeCategory } from "../../utils/interface";
 import FillterTitle from "./components/FillterTitle";
 import LeftBarInfo from "./components/LeftBarInfo";
 import LeftBarItem from "./components/LeftBarItem";
 import ReactRangeSlider from "./components/ReactRangeSlider";
 import { useSearchParams } from "react-router-dom";
+import useAttributesCall from "../../Product/Hooks/useAttributesCall";
 
 const LeftBarMenu = ({
   pricesRange,
@@ -14,32 +14,11 @@ const LeftBarMenu = ({
   pricesRange: { [key: string]: number | null }[];
   setPricesRange: Dispatch<SetStateAction<{ [key: string]: number | null }[]>>;
 }) => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL as string;
 
-  const [attributes, setAttributes] = useState<Attributes[]>([]);
   const [FilterItemList, setFilterItemList] = useState<AttributeCategory[]>();
   const [searchparams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    (async () => {
-      const correctData = await axios.get(`${BASE_URL}/wholesale/attributes`);
-      const attributesArray: Attributes[] = [];
-      for (const [key, value] of Object.entries(correctData.data)) {
-        attributesArray.push({
-          name: key,
-          name_category: (value as AttributeCategory[]).map((elem) => {
-            return {
-              term_id: elem.term_id,
-              name: elem.name,
-              taxonomy: elem.taxonomy,
-              description: elem.description,
-            } as AttributeCategory;
-          }),
-        });
-      }
-      setAttributes(attributesArray);
-    })();
-  }, [BASE_URL]);
+  const { attributes } = useAttributesCall()
 
   const onChangeHandler = (term_id: number, taxonomy: string) => {
     // @ts-ignore:next-line

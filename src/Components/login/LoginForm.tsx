@@ -3,12 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
+import { LOCAL_STORAGE_KEYS, LOGIN_URL, PAGES } from "../../Product/constants";
 
 const LoginForm: React.FC = () => {
-  const LOGIN_URL = process.env.REACT_APP_LOGIN_URL as string;
-
-  const Home: string = "home";
-
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [userpassword, setUserpassword] = useState<string>("");
@@ -27,9 +24,9 @@ const LoginForm: React.FC = () => {
       })
     );
     if (resoult) {
-      localStorage.setItem("jwt_token", JSON.stringify(resoult.data.jwt_token));
-      localStorage.setItem("username", JSON.stringify(username));
-      navigate(`/${Home}`);
+      localStorage.setItem(LOCAL_STORAGE_KEYS.JWT_TOKEN, JSON.stringify(resoult.data.jwt_token));
+      localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, JSON.stringify(username));
+      navigate(`/${PAGES.HOME}`);
     }
   };
 
@@ -56,7 +53,9 @@ const LoginForm: React.FC = () => {
               USERNAME
             </span>
             <input
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setUsername(e.target.value)
+              }
               value={username}
               type="text"
               name="text"
@@ -68,7 +67,9 @@ const LoginForm: React.FC = () => {
               PASSWORD
             </span>
             <input
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserpassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setUserpassword(e.target.value)
+              }
               value={userpassword}
               type={!showpassword ? "password" : "text"}
               name="password"

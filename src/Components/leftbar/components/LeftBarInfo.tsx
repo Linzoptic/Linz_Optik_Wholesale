@@ -3,47 +3,48 @@ import { IoIosClose } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import { AttributeCategory, Attributes } from "../../../utils/interface";
 
-const LeftBarInfo = (
-  {attributes,
+const LeftBarInfo = ({
+  attributes,
   FilterItemList,
   setFilterItemList,
-  }:{
-    FilterItemList:AttributeCategory[] | undefined,
-  setFilterItemList:React.Dispatch<React.SetStateAction<AttributeCategory[] | undefined>>
-  attributes: Attributes[],
+}: {
+  FilterItemList: AttributeCategory[] | undefined;
+  setFilterItemList: React.Dispatch<
+    React.SetStateAction<AttributeCategory[] | undefined>
+  >;
+  attributes: Attributes[];
 }) => {
-
+  
   const [searchParams, setSearchParams] = useSearchParams();
   const [newCurrectValues, setNewCurrectValues] = useState<number[]>([]);
   // @ts-ignore:next-line
   const currentQueries = Object.fromEntries([...searchParams]);
-  
-  useEffect(() => {
-    const values:string[] = Object.values(currentQueries)
-    const currectValues:number[] = [];
-    values.forEach(el => {
-      el.split(",").forEach(el => {
-        currectValues.push(Number(el))
-      })
-    });
-    setNewCurrectValues(currectValues)
-  },[searchParams])
 
   useEffect(() => {
-    const selectedIds:AttributeCategory[] = [];
-    attributes.forEach( atribute => {
-      atribute.name_category.forEach(category => {
-        if(newCurrectValues.includes(category.term_id)){
+    const values: [string,string][] = Array.from(searchParams);
+    const currectValues: number[] = [];
+    values.forEach((el) => {
+     el[1].split(',').map(el => (
+      currectValues.push(Number(el))
+     ))
+    });
+    setNewCurrectValues(currectValues);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const selectedIds: AttributeCategory[] = [];
+    attributes.forEach((atribute) => {
+      atribute.name_category.forEach((category) => {
+        if (newCurrectValues.includes(category.term_id)) {
           selectedIds.push(category);
         }
-      })
-    })
-    setFilterItemList(selectedIds)
-    },[newCurrectValues,attributes,setFilterItemList])
+      });
+    });
+    setFilterItemList(selectedIds);
+  }, [newCurrectValues, attributes, setFilterItemList]);
 
   const ClearHandler = (term_id: number, taxonomy: string) => {
-
-    const newCurrenctQueries = {...currentQueries}
+    const newCurrenctQueries = { ...currentQueries };
 
     if (newCurrenctQueries[taxonomy]) {
       const newQurrentQueries = currentQueries[taxonomy]
@@ -62,8 +63,8 @@ const LeftBarInfo = (
           currentQueries[taxonomy] = newValues;
         }
         setSearchParams({ ...currentQueries });
-      };
-    };
+      }
+    }
   };
 
   return (
@@ -81,8 +82,8 @@ const LeftBarInfo = (
               {elem.description.includes("https://") && (
                 <div>
                   <img
-                    src={elem.description}
-                    alt=""
+                    src={elem?.description}
+                    alt="product"
                     className="w-[20px]"
                   />
                 </div>

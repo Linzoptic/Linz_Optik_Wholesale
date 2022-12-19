@@ -2,41 +2,46 @@ import { SingleProducts } from "../../../utils/interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { Link } from "react-router-dom";
-import SameProductSkeleton from "../../../skeleton/SameProductSkeleton";
+import SimilarProductSkeleton from "../../../skeleton/SimilarProductSkeleton";
+import { COUNTS, PAGES, SCREENS, SWIPER_SIMILAR_CONFIG } from "../../../Product/constants";
 
-
-const SameProducts = ({
-  sameProducts,
-  Loading,
+const SimilarProducts = ({
+  similarProducts,
+  SimilarLoading,
 }: {
-  Loading: boolean;
-  sameProducts: SingleProducts[] | undefined;
+  SimilarLoading: boolean;
+  similarProducts: SingleProducts[] | undefined;
 }) => {
-
   const SkeletonCount = () => {
-    let count:number = 0;
+    let count: number = 0;
     window.addEventListener("resize", (event) => {
-      if (+window.innerWidth > 1024) {
-        count = 5;
+      if (+window.innerWidth > SCREENS.LOPTOP) {
+        count = COUNTS.FIVE;
       }
-      if (+window.innerWidth  < 1024 && +window.innerWidth  > 768){
-        count = 4;
+      if (
+        +window.innerWidth < SCREENS.LOPTOP &&
+        +window.innerWidth > SCREENS.TABLET
+      ) {
+        count = COUNTS.FOUR;
       }
-      if (+window.innerWidth  < 768 && +window.innerWidth  > 640){
-        count = 2;
+      if (
+        +window.innerWidth < SCREENS.TABLET &&
+        +window.innerWidth > SCREENS.SMALL_TABLET
+      ) {
+        count = COUNTS.TWO;
       }
-      if (+window.innerWidth  < 480){
-        count = 1;
+      if (+window.innerWidth < SCREENS.MOBAIL) {
+        count = COUNTS.ONE;
       }
-    })
-    return count; 
-  }
+    });
+    return count;
+  };
 
   return (
     <div>
-      {Loading ? (
+      {SimilarLoading ? (
         <div className="flex justify-between">
-          <SameProductSkeleton count={SkeletonCount()} />
+          <SimilarProductSkeleton count={SkeletonCount()} />
         </div>
       ) : (
         <div>
@@ -44,32 +49,14 @@ const SameProducts = ({
             <h1>Նմանատիպ Ապրանքներ</h1>
           </div>
           <div>
-            <Swiper
-              breakpoints={{
-                500: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 4,
-                },
-                1024: {
-                  slidesPerView: 5,
-                },
-              }}
-              spaceBetween={20}
-              pagination={{
-                clickable: true,
-                bulletClass: `swiper-pagination-bullet`,
-              }}
-              modules={[Pagination]}
-            >
-              {sameProducts?.map((product, i) => (
+            <Swiper {...SWIPER_SIMILAR_CONFIG} modules={[Pagination]}>
+              {similarProducts?.map((product, i) => (
                 <SwiperSlide key={i}>
-                  <Link to={`/product/${product.id}`}>
-                    <div className="flex items-center justify-center border rounded-xl bg-[#b3b3b366]">
+                  <Link to={`${PAGES.PRODUCT}/${product.id}`}>
+                    <div className="flex items-center justify-center border rounded-xl bg-[#b3b3b366] hover:scale-105 duration-150 hover:shadow-[0_5px_30px]">
                       <img
-                        src={product.images[0].src}
-                        alt=""
+                        src={product?.images[0]?.src}
+                        alt="glasses"
                         className="w-40  h-40 object-contain"
                       />
                     </div>
@@ -79,9 +66,9 @@ const SameProducts = ({
                       <div>
                         {product?.sale_price ? (
                           <p className="text-[14px] md:text-[16px] font-[600]">
-                            {product.sale_price} AMD
+                            {product?.sale_price} AMD
                             <span className="line-through ml-3">
-                              {product.regular_price} AMD
+                              {product?.regular_price} AMD
                             </span>
                           </p>
                         ) : (
@@ -102,4 +89,4 @@ const SameProducts = ({
   );
 };
 
-export default SameProducts;
+export default SimilarProducts;
