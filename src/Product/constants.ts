@@ -4,6 +4,7 @@ export const LOGIN_URL = process.env.REACT_APP_LOGIN_URL as string;
 export const CONSUMER_KEY = process.env.REACT_APP_CONSUMER_KEY as string;
 export const WC_V3 = process.env.REACT_APP_WC_V3 as string;
 export const PRODUCTS = process.env.REACT_APP_PRODUCTS as string;
+export const FOOTER_CALL = process.env.REACT_APP_FOOTER_CALL as string;
 
 export const PAGES = {
   HOME: "/home",
@@ -47,6 +48,7 @@ export const SWIPER_SIMILAR_CONFIG = {
     bulletClass: `swiper-pagination-bullet`,
   },
 };
+
 export const SWIPER_SINGLE_CONFIG = {
   spaceBetween: 10,
   centeredSlides: true,
@@ -66,3 +68,8 @@ export const LOCAL_STORAGE_KEYS = {
 export const UNMOUNT_TIMEOUT_VALUE = 700;
 
 export const ERROR_MASSEGE = "Տվըալ Ֆիլտրով ապրանք չի գտնվել";
+
+export const QUERY_PARAMS = { 
+  MIN_PRICE: "min_price",
+  MAX_PRICE: "max_price",
+}

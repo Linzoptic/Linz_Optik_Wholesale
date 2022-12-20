@@ -19,3 +19,4 @@ const SingleProductSkeleton = () => {
  };
  
  export default SingleProductSkeleton;
+ 

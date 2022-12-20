@@ -7,9 +7,9 @@ import { COUNTS, PAGES, SCREENS, SWIPER_SIMILAR_CONFIG } from "../../../Product/
 
 const SimilarProducts = ({
   similarProducts,
-  SimilarLoading,
+  similarLoading,
 }: {
-  SimilarLoading: boolean;
+  similarLoading: boolean;
   similarProducts: SingleProducts[] | undefined;
 }) => {
   const SkeletonCount = () => {
@@ -39,7 +39,7 @@ const SimilarProducts = ({
 
   return (
     <div>
-      {SimilarLoading ? (
+      {similarLoading ? (
         <div className="flex justify-between">
           <SimilarProductSkeleton count={SkeletonCount()} />
         </div>

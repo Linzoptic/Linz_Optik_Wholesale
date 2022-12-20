@@ -66,3 +66,24 @@ export interface CatchError {
 
 
 ////////////////////////////////
+
+export interface FooterItemType {
+  id: number;
+  description: string;
+  name: string;
+};
+
+export interface FooterType {
+  address: FooterItemType,
+  contact: FooterItemType,
+  locationIcon: FooterItemType,
+  phoneIcon: FooterItemType,
+  phone: FooterItemType,
+  phone1: FooterItemType,
+  timeIcon: FooterItemType,
+  time1: FooterItemType,
+  time2: FooterItemType,
+}
+
+////////////////////////////////
+

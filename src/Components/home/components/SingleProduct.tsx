@@ -26,7 +26,7 @@ const SingleProduct = () => {
   const [similarProducts, setSimilarProducts] = useState<SingleProducts[] | undefined>();
   
   const {isError,isLoading} = useSingleProductCall(setSingleProduct);
-  const {SimilarLoading} = useSimiliarProductsCall(setSimilarProducts,singleProduct);
+  const {similarLoading} = useSimiliarProductsCall(setSimilarProducts,singleProduct);
 
   return (
     <div className="mx-auto">
@@ -119,7 +119,7 @@ const SingleProduct = () => {
         </div>
       )}
       <div>
-        <SimilarProducts similarProducts={similarProducts} SimilarLoading={SimilarLoading} />
+        <SimilarProducts similarProducts={similarProducts} similarLoading={similarLoading} />
       </div>
     </div>
   );

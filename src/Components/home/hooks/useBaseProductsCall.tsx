@@ -1,19 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BASE_PRODUCT, BASE_URL } from "../../../Product/constants";
+import { BASE_PRODUCT, BASE_URL, QUERY_PARAMS } from "../../../Product/constants";
 import { CatchError, Products } from "../../../utils/interface";
 
 function useBaseProductsCall(
   URL_PARAMS: string,
   currentPage: number,
   setPricesRange: React.Dispatch<
-    React.SetStateAction<
-      {
-        [key: string]: number | null;
-      }[]
-    >
-  >
+    React.SetStateAction<{[key: string]: number | null}[]>>
 ) {
   const [productsData, setProductsData] = useState<Products[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -21,8 +16,8 @@ function useBaseProductsCall(
   const [isError, setIsError] = useState<CatchError>();
   const productPerPage: number = 9;
   const totolCountRef = useRef(0);
-  const MinPriceQuery = searchParams.get("min_price") || "5000";
-  const MaxPriceQuery = searchParams.get("max_price") || "1000000";
+  const MinPriceQuery = searchParams.get(QUERY_PARAMS.MIN_PRICE) || "5000";
+  const MaxPriceQuery = searchParams.get(QUERY_PARAMS.MAX_PRICE) || "1000000";
 
   useEffect(() => {
     (async () => {

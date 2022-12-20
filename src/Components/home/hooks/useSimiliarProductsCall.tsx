@@ -9,8 +9,8 @@ const useSimiliarProductsCall = (
   >,
   singleProduct: SingleProducts | undefined
 ) => {
-  const [SimilarLoading, setSimilarloading] = useState<boolean>(false);
-  const [SimilarCatch, setSimilarCatch] = useState<CatchError>();
+  const [similarLoading, setSimilarloading] = useState<boolean>(false);
+  const [similarCatch, setSimilarCatch] = useState<CatchError>();
 
   useEffect(() => {
     setSimilarloading(true);
@@ -32,8 +32,8 @@ const useSimiliarProductsCall = (
   }, [setSimilarProducts, singleProduct?.related_ids]);
 
   return {
-    SimilarLoading,
-    SimilarCatch,
+    similarLoading,
+    similarCatch,
   };
 };
 

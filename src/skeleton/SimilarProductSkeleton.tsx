@@ -1,4 +1,6 @@
 function SimilarProductSkeleton({ count }: { count: number }) {
+  console.log(count);
+  
    return (
      <>
        {Array(count)
@@ -22,3 +24,4 @@ function SimilarProductSkeleton({ count }: { count: number }) {
  }
  
  export default SimilarProductSkeleton;
+ 
