@@ -1,52 +1,114 @@
+import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { BsSearch } from "react-icons/bs";
+import { useSearchParams } from "react-router-dom";
+import { AttributeCategory, Attributes } from "../../../utils/interface";
 
-const LeftBarInfo = ({filterItemList , setFilterItemList}:{filterItemList:string[], setFilterItemList:React.Dispatch<React.SetStateAction<string[]>>}) => {
+const LeftBarInfo = ({
+  attributes,
+  FilterItemList,
+  setFilterItemList,
+}: {
+  FilterItemList: AttributeCategory[] | undefined;
+  setFilterItemList: React.Dispatch<
+    React.SetStateAction<AttributeCategory[] | undefined>
+  >;
+  attributes: Attributes[];
+}) => {
   
-  const ClearHandler = (elem: string) => {
-     const newDataList = filterItemList.filter(item => item !== elem)
-     setFilterItemList(newDataList);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [newCurrectValues, setNewCurrectValues] = useState<number[]>([]);
+  // @ts-ignore:next-line
+  const currentQueries = Object.fromEntries([...searchParams]);
+
+  useEffect(() => {
+    const values: [string,string][] = Array.from(searchParams);
+    const currectValues: number[] = [];
+    values.forEach((el) => {
+     el[1].split(',').map(el => (
+      currectValues.push(Number(el))
+     ))
+    });
+    setNewCurrectValues(currectValues);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const selectedIds: AttributeCategory[] = [];
+    attributes.forEach((atribute) => {
+      atribute.name_category.forEach((category) => {
+        if (newCurrectValues.includes(category.term_id)) {
+          selectedIds.push(category);
+        }
+      });
+    });
+    setFilterItemList(selectedIds);
+  }, [newCurrectValues, attributes, setFilterItemList]);
+
+  const ClearHandler = (term_id: number, taxonomy: string) => {
+    const newCurrenctQueries = { ...currentQueries };
+
+    if (newCurrenctQueries[taxonomy]) {
+      const newQurrentQueries = currentQueries[taxonomy]
+        .split(",")
+        .includes(term_id.toString());
+      if (newQurrentQueries) {
+        let newValues = currentQueries[taxonomy]
+          .replace(`${term_id},`, "")
+          .replace(`${term_id}`, "");
+        if (newValues.slice(-1) === ",") {
+          newValues = newValues.slice(0, -1);
+        }
+        if (newValues === "") {
+          delete currentQueries[taxonomy];
+        } else {
+          currentQueries[taxonomy] = newValues;
+        }
+        setSearchParams({ ...currentQueries });
+      }
+    }
   };
 
   return (
-    <div className="bg-[#c2c8ce] text-center md:text-left">
+    <div className="text-center md:text-left border border-cyan-200">
       <div className="py-3 px-4">
-        <p className="text-2xl font-[600] md:text-[14px] text-[#022e5a] mb-4">YOUR SELECTION</p>
-        {filterItemList?.map((elem, index) => (
+        <p className="text-xl font-[600] md:text-[14px] text-cyan-900 mb-4">
+          Ըտրված
+        </p>
+        {FilterItemList?.map((elem, index) => (
           <div
             key={index}
-            className="flex items-center justify-between px-3 py-[4px] mb-2 text-gray-200 font-bold bg-[#022e5a] rounded-2xl"
+            className="flex items-center justify-between px-3 py-[2px] mb-2 text-gray-900 font-bold bg-[#d1d1d2] rounded-2xl"
           >
-            <p className="text-[12px]">{elem}</p>
-            <IoIosClose 
-              size={18}
-              className="cursor-pointer" 
-              onClick={() => ClearHandler(elem)}
-            />
+            <div className="flex items-center">
+              {elem.description.includes("https://") && (
+                <div>
+                  <img
+                    src={elem?.description}
+                    alt="product"
+                    className="w-[20px]"
+                  />
+                </div>
+              )}
+              <div
+                className="w-[10px] h-[10px] rounded-full mr-[3px]"
+                style={{ backgroundColor: elem.name.toLowerCase() }}
+              ></div>
+              <p className="text-[12px]">{elem.name}</p>
+            </div>
+            <div>
+              <IoIosClose
+                size={30}
+                className="cursor-pointer flex justify-end"
+                onClick={() => ClearHandler(elem.term_id, elem.taxonomy)}
+              />
+            </div>
           </div>
         ))}
-        <p className="underline text-[16px] md:text-xs pt-4 cursor-pointer hover:text-[#022e5a] duration-150"
-        onClick={() => setFilterItemList([])}
+        <p
+          className="underline text-[14px] md:text-base font-bold pt-4 cursor-pointer text-[#022e5a] hover:text-[#67839f] duration-100"
+          onClick={() => setSearchParams()}
         >
-          clear selection
+          Մաքրել Ամբողջը
         </p>
-      </div>
-      <div className="border-t-[1px] border-[#ffffff48] py-4 px-4">
-        <div>
-          <p className="text-[12px] md:text-[14px] font-[600] text-[#022e5a] pb-4">REFINE YOUR SEARCH</p>
-        </div>
-        <div className="flex">
-          <div className="w-full">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full outline-none rounded-none rounded-tl-xl rounded-bl-xl py-[3px] border-none"
-            />
-          </div>
-          <div className="flex items-center justify-center cursor-pointer bg-[#abaeb0] text-white py-[3px] px-4 rounded-tr-xl rounded-br-xl">
-            <BsSearch size={20} />
-          </div>
-        </div>
       </div>
     </div>
   );

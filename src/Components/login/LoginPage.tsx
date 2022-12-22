@@ -14,8 +14,8 @@ const LoginPageLgo: React.FC = () => {
             className='w-40'
           />
         </div>
-        <div className='border-b-2 border-blue-800'>
-          <h1 className='text-center text-[30px]  font-bold text-blue-800 md:text-[2rem] md:text-left '>LOGIN</h1>
+        <div className='border-b-2 border-sky-800'>
+          <h1 className='text-center text-[24px]  font-bold text-sky-800 md:text-[2rem] md:text-left '>LOGIN</h1>
         </div>
      </div>
       <LoginForm/>

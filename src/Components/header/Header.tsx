@@ -1,37 +1,81 @@
-import React, { useState } from "react";
-import { BsSearch } from "react-icons/bs";
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import React, { useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo.svg";
+import { LOCAL_STORAGE_KEYS, PAGES } from "../../Product/constants";
+import SearchProduct from "./components/SearchProduct";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState<string>("");
+  const [userInfo, setUserInfo] = useState<string>("");
   
-  const [ search, setSearch ] = useState<string>('')
-  
+
+  const onLogOutHandler = () => {
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.JWT_TOKEN);
+    navigate(PAGES.LOGIN);
+  };
+
+  useEffect(() => {
+    const user = localStorage.getItem(LOCAL_STORAGE_KEYS.USERNAME);
+    if (typeof user === "string") {
+      const userName = JSON.parse(user);
+      setUserInfo(userName);
+    }
+  }, []);
+ 
   return (
-    <div className="py-9 px-4 bg-[#004f87]">
-      <div className="block md:flex  items-center justify-between">
-        <div>
-          <h1 className="text-2xl md:text-4xl tracking-[.2rem] md:tracking-[-.2rem] mb-1 text-white/40">
-           here will be user info
-          </h1>
-        </div>
-        <div className="max-w-[500px] flex items-center relative">
+    <div className="py-[20px]  px-2 bg-gray-300 mb-[30px]">
+      <div className="block md:flex justify-between items-center relative">
+        <div className="flex items-center">
           <div>
+            <img src={logo} alt="Logo" />
+          </div>
+          <div className="flex items-center mb-2 md:mb-0">
+            <button
+              className="text-[13px] mr-2 px-[10px] py-[2px] bg-transparent border border-cyan-700 text-cyan-700 rounded-xl"
+              onClick={onLogOutHandler}
+            >
+              Log Out
+            </button>
+            <div className="hidden md:flex">
+              <h1 className="text-[15px] text-cyan-800 underline">
+                {userInfo}
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div className="block md:flex items-center">
+          <form
+            autoComplete="off"
+            className="flex items-center relative"
+          >
             <input
               type="text"
               name="search"
-              placeholder="Search"
-              className="w-full outline-none rounded-none rounded-tl-xl rounded-bl-xl py-[6px]"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-              />
-          </div>
-          <div className="cursor-pointer bg-[#abaeb0] text-white py-[8px] px-4 rounded-tr-xl rounded-br-xl">
-            <BsSearch size={20} />
+              placeholder="Search Product"
+              value={search}
+              className="w-full md:w-[300px] outline-none  rounded-xl py-[2px] px-[30px] border placeholder:text-[13px] border-white relative"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <AiOutlineSearch
+              size={20}
+              className="absolute right-2 text-gray-500"
+            />
+          </form>
+          <div
+            className={
+              !!search.length
+                ? "max-h-[700px] overflow-y-auto overflow-x-hidden border border-cyan-400 rounded-lg  scrollbar-thin  scrollbar-thumb-cyan-800 absolute top-[40px]  right-[50%] translate-x-[50%] bg-white z-40 p-2"
+                : "hidden"
+            }
+          >
+            <SearchProduct
+              search={search}
+              setSearch={setSearch}
+            />
           </div>
         </div>
-         <div className="flex items-center text-gray-200 text-xl">
-            <AiOutlineShoppingCart/>
-            <h1>Cart-(0)</h1>
-         </div>
       </div>
     </div>
   );

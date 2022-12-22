@@ -1,31 +1,64 @@
 import React, { useState } from "react";
 import { MdArrowRight, MdOutlineArrowDropDown } from "react-icons/md";
-import { Fillter } from "../../home/base";
+import { AttributeCategory } from "../../../utils/interface";
 
-const LeftBarItem = ({item, filterItemList, onChangeHandler}:{item: Fillter, filterItemList:string[], onChangeHandler: (filtersItem: string) => void}) => {
-  const [icon, setIcon] = useState(false);
+const LeftBarItem = ({
+  categories,
+  filterItems_name,
+  FilterItemList,
+  onChangeHandler,
+}: {
+  categories: AttributeCategory[];
+  filterItems_name: string;
+  FilterItemList: AttributeCategory[] | undefined,
+  onChangeHandler: (term_id: number,taxonomy:string) => void;
+}) => {
+
+  const [Toggleicon, setToggleIcon] = useState(false);
 
   return (
     <div className=" text-[#295189] cursor-pointer mb-4 border-b-2 pb-1 last:border-b-0 last:mb-0">
-      <div className="flex items-center" onClick={() => setIcon(!icon)}>
-        {!icon ? <MdArrowRight size={24} /> : <MdOutlineArrowDropDown size={24} />}
+      <div className="flex items-center" onClick={() => setToggleIcon(!Toggleicon)}>
+        {!Toggleicon ? (
+          <MdArrowRight size={24} />
+        ) : (
+          <MdOutlineArrowDropDown size={24} />
+        )}
         <h1 className="text-[14px] md:text-[15px] uppercase font-[600] hover:underline  hover:text-[#2286c5] duration-150">
-          {item.name}
+          {filterItems_name}
         </h1>
       </div>
-      <div className={icon ? "block ml-2 duration-150" : "hidden"}>
+      <div className={Toggleicon ? "block ml-2 duration-150" : "hidden"}>
         <div>
           <ul>
-            {item.name_category?.map((el, index) => (
+            {categories?.map((el, index) => (
               <label key={index}>
-                <li className="text-[13px] text-gray-600 flex items-center cursor-pointer hover:text-[#2286c5]">
-                  <input
-                    type="checkbox"
-                    className="mr-[5px] accent-black0"
-                    onChange={() => onChangeHandler(el.filter_name)}
-                    checked={filterItemList.includes(el.filter_name)}
-                  />
-                  {el.filter_name}
+                <li className="text-[13px] flex text-gray-900 items-center cursor-pointer hover:text-[#2286c5]">
+                  <div>
+                    <input
+                      type="checkbox"
+                      className="mr-[8px] accent-black0"
+                      onChange={() => onChangeHandler(el.term_id, el.taxonomy)}
+                      checked={FilterItemList?.some((item) => item.term_id === el.term_id)}
+                    />
+                  </div>
+                  <div>
+                    {el.description.includes("https://") && (
+                      <img
+                        src={el?.description}
+                        alt="glasses"
+                        className="h-[12px] w-[40px] px-2"
+                      />
+                    )}
+                  </div>
+                  {filterItems_name.toLowerCase() === "գույն" && (
+                    <div
+                      style={{ backgroundColor: el?.name }}
+                      className="w-[15px] h-[15px] mr-1 rounded-full"
+                    >
+                    </div>
+                  )}
+                  <div>{el.name}</div>
                 </li>
               </label>
             ))}
