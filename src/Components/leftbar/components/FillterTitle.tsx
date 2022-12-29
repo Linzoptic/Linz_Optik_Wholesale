@@ -1,10 +1,18 @@
 import React from 'react';
+import { HomePageTextsType } from '../../../utils/interface';
 
-const FillterTitle = ({title}:{title:string}) => {
+const FillterTitle = ({
+  filterIcon, 
+  filter 
+} : {
+  filterIcon: HomePageTextsType['filterIcon'] | undefined,
+  filter: HomePageTextsType['filter'] | undefined,
+}) => {
   return (
-    <div>
-      <div className="bg-cyan-900 px-3 py-2">
-          <h1 className="text-white uppercase text-[16px]">{title}</h1>
+    <div className='border'>
+      <div className="px-3 py-2 flex items-center">
+          <img src={filterIcon?.description} alt="icon" className='w-5 h-4'/>
+          <h1 className="uppercase text-[20px] font-[600] ml-3">{filter?.description}</h1>
         </div>
     </div>
   )

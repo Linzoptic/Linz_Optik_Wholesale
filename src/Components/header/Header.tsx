@@ -33,13 +33,13 @@ const Header = () => {
           </div>
           <div className="flex items-center mb-2 md:mb-0">
             <button
-              className="text-[13px] mr-2 px-[10px] py-[2px] bg-transparent border border-cyan-700 text-cyan-700 rounded-xl"
+              className="text-[13px] mr-2 px-[10px] py-[2px] bg-transparent border border-[#384275] text-[#384275] rounded-xl"
               onClick={onLogOutHandler}
             >
               Log Out
             </button>
             <div className="hidden md:flex">
-              <h1 className="text-[15px] text-cyan-800 underline">
+              <h1 className="text-[15px] text-[#384275] underline">
                 {userInfo}
               </h1>
             </div>
@@ -53,7 +53,7 @@ const Header = () => {
             <input
               type="text"
               name="search"
-              placeholder="Search Product"
+              placeholder="Փնտրել ապրանքը"
               value={search}
               className="w-full md:w-[300px] outline-none  rounded-xl py-[2px] px-[30px] border placeholder:text-[13px] border-white relative"
               onChange={(e) => setSearch(e.target.value)}

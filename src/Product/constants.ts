@@ -5,6 +5,8 @@ export const CONSUMER_KEY = process.env.REACT_APP_CONSUMER_KEY as string;
 export const WC_V3 = process.env.REACT_APP_WC_V3 as string;
 export const PRODUCTS = process.env.REACT_APP_PRODUCTS as string;
 export const FOOTER_CALL = process.env.REACT_APP_FOOTER_CALL as string;
+export const HOME_PAGE_TEXTS = process.env.REACT_APP_HOME_PAGE_TEXTS as string;
+export const SINGLE_PRODUCT_TEXTS = process.env.REACT_APP_SINGLE_PRODUCT_TEXTS as string;
 
 export const PAGES = {
   HOME: "/home",
@@ -37,10 +39,7 @@ export const SWIPER_SIMILAR_CONFIG = {
     },
     768: {
       slidesPerView: 4,
-    },
-    1024: {
-      slidesPerView: 5,
-    },
+    }
   },
   spaceBetween: 20,
   pagination: {
@@ -72,4 +71,8 @@ export const ERROR_MASSEGE = "Տվըալ Ֆիլտրով ապրանք չի գտն
 export const QUERY_PARAMS = { 
   MIN_PRICE: "min_price",
   MAX_PRICE: "max_price",
+  ORDER_BY: "orderby",
+  DEFUALUT_MIN_PRICE: "5000",
+  DEFUALUT_MAX_PRICE: "500000000",
+  DEFUALUT_ORDER_BY: "by-a-z",
 }

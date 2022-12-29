@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CatchError, SingleProducts } from "../../../utils/interface";
-import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../../../Product/constants";
+import { CatchError, SingleProducts } from "../../../../utils/interface";
+import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../../../../Product/constants";
 
 const useSimiliarProductsCall = (
   setSimilarProducts: React.Dispatch<

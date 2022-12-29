@@ -3,7 +3,7 @@ const SingleProductSkeleton = () => {
      <div className="mx-auto grid grid-cols-1 gap-5 md:grid-cols-2 my-5">
        <div
          role="status"
-         className="rounded bg-gray-300 shadow animate-pulse h-[220px] md:h-[410px] sm:h-[200px] "
+         className="rounded bg-gray-300 shadow animate-pulse w-full h-[330px] md:h-[400px] lg:h-[500px] "
        ></div>
        <div className="p-2 border">
          <div className="h-4 bg-gray-200 rounded-full w-24 mb-2.5"></div>

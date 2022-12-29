@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import NotFoundPage from "./Components/home/components/NotFoundPage";
-import Product from "./Components/home/components/SingleProduct";
+import Product from "./Components/home/SingleProduct/SingleProduct";
 import HomePage from "./Components/home/HomePage";
 import LoginPage from "./Components/login/LoginPage";
 import LoginEmailPass from "./Components/update/LoginEmailPass";

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../constants";
-import { CatchError, SingleProducts } from "../../utils/interface";
+import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../../../../Product/constants";
+import { CatchError, SingleProducts } from "../../../../utils/interface";
 
 function useSingleProductCall(
   setSingleProduct: React.Dispatch<

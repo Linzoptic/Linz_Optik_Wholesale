@@ -38,9 +38,9 @@ const Footer = () => {
       {footerIsLoading ? (
         <FooterSkekelton/>
       ) : (
-        <div className="bottom-0 mt-10 p-4 border-t-4">
-          <div className="flex justify-around flex-wrap">
-            <div className="flex items-center ">
+        <div className="mt-10 p-4 border-t-4">
+          <div className="md:flex justify-around flex-wrap ">
+            <div className="flex items-center text-center mt-2 p-2">
               <img
                 src={footerInfo?.locationIcon.description}
                 alt="#location"
@@ -48,7 +48,7 @@ const Footer = () => {
               />
               <h1>{footerInfo?.address.description}</h1>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
               <img
                 src={footerInfo?.phoneIcon.description}
                 alt="#phone"
@@ -59,7 +59,7 @@ const Footer = () => {
                 <p>{footerInfo?.phone1.description}</p>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
               <img
                 src={footerInfo?.phoneIcon.description}
                 alt="#time"

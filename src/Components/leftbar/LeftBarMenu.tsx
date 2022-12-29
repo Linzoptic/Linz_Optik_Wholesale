@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
-import { AttributeCategory } from "../../utils/interface";
+import { AttributeCategory, HomePageTextsType } from "../../utils/interface";
 import FillterTitle from "./components/FillterTitle";
 import LeftBarInfo from "./components/LeftBarInfo";
 import LeftBarItem from "./components/LeftBarItem";
@@ -10,15 +10,16 @@ import useAttributesCall from "../../Product/Hooks/useAttributesCall";
 const LeftBarMenu = ({
   pricesRange,
   setPricesRange,
+  homePageTexts,
 }: {
   pricesRange: { [key: string]: number | null }[];
   setPricesRange: Dispatch<SetStateAction<{ [key: string]: number | null }[]>>;
+  homePageTexts: HomePageTextsType | undefined;
 }) => {
-
-  const [FilterItemList, setFilterItemList] = useState<AttributeCategory[]>();
+  const [filterItemList, setFilterItemList] = useState<AttributeCategory[]>();
   const [searchparams, setSearchParams] = useSearchParams();
 
-  const { attributes } = useAttributesCall()
+  const { attributes } = useAttributesCall();
 
   const onChangeHandler = (term_id: number, taxonomy: string) => {
     // @ts-ignore:next-line
@@ -57,26 +58,28 @@ const LeftBarMenu = ({
       <div>
         <LeftBarInfo
           attributes={attributes}
-          FilterItemList={FilterItemList}
+          homePageTexts={homePageTexts}
+          filterItemList={filterItemList}
           setFilterItemList={setFilterItemList}
         />
-        <div className="py-5 px-4 border">
-          <h1 className="uppercase text-[#1366a1] text-[14px]">narrow by</h1>
-        </div>
-        <FillterTitle title="product attributes" />
+        <FillterTitle
+          filterIcon={homePageTexts?.filterIcon}
+          filter={homePageTexts?.filter}
+        />
         <div className="border p-2">
           {attributes?.map((item, index) => (
             <LeftBarItem
               key={index}
               filterItems_name={item.name}
               categories={item.name_category}
-              FilterItemList={FilterItemList}
+              filterItemList={filterItemList}
               onChangeHandler={onChangeHandler}
             />
           ))}
         </div>
         <div className="my-2 w-full">
           <ReactRangeSlider
+            homePageTexts={homePageTexts}
             pricesRange={pricesRange}
             setPricesRange={setPricesRange}
           />
