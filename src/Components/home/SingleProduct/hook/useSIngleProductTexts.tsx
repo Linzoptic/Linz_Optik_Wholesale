@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { SINGLE_PRODUCT_TEXTS } from "../../../../Product/constants";
-import { SinglePageTextsType } from "../../../../utils/interface";
+import { SINGLE_PRODUCT_TEXTS } from "../../../../utils/constants/constants";
+import { ISinglePageTexts } from "../../../../utils/interface";
 
-const useSIngleProductTextsCall = () => {
+const useSIngleProductTexts = () => {
   const [singleProductTexts, setsingleProductTexts] = useState<
-    SinglePageTextsType | undefined
+  ISinglePageTexts | undefined
   >();
 
   useEffect(() => {
@@ -33,6 +33,7 @@ const useSIngleProductTextsCall = () => {
           linkdin_icon: correctTexts.data[11],
           single_product_currency: correctTexts.data[20],
           go_products: correctTexts.data[21],
+          notAvailable: correctTexts.data[22],
           choose: correctTexts.data[23],
         });
       }
@@ -44,4 +45,4 @@ const useSIngleProductTextsCall = () => {
   };
 };
 
-export default useSIngleProductTextsCall;
+export default useSIngleProductTexts;

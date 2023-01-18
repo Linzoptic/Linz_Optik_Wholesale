@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BASE_PRODUCT, BASE_URL, QUERY_PARAMS } from "../../../Product/constants";
+import { BASE_PRODUCT, BASE_URL, QUERY_PARAMS } from "../../../utils/constants/constants";
 import { CatchError, Products } from "../../../utils/interface";
 
-const  useBaseProductsCall = (
+const  useBaseProducts = (
   URL_PARAMS: string,
   currentPage: number,
   setPricesRange: React.Dispatch<
@@ -18,9 +18,9 @@ const  useBaseProductsCall = (
   const [isError, setIsError] = useState<CatchError>();
   const productPerPage: number = 9;
   const totolCountRef = useRef(0);
-  const MinPriceQuery = searchParams.get(QUERY_PARAMS.MIN_PRICE) || QUERY_PARAMS.DEFUALUT_MIN_PRICE;
-  const MaxPriceQuery = searchParams.get(QUERY_PARAMS.MAX_PRICE) || QUERY_PARAMS.DEFUALUT_MAX_PRICE;
-  const OrderBy = searchParams.get(QUERY_PARAMS.ORDER_BY) || QUERY_PARAMS.DEFUALUT_ORDER_BY;
+  const MinPriceQuery = searchParams.get(QUERY_PARAMS.MIN_PRICE) || QUERY_PARAMS.DEFAULT_MIN_PRICE;
+  const MaxPriceQuery = searchParams.get(QUERY_PARAMS.MAX_PRICE) || QUERY_PARAMS.DEFAULT_MAX_PRICE;
+  const OrderBy = searchParams.get(QUERY_PARAMS.ORDER_BY) || QUERY_PARAMS.DEFAULT_ORDER_BY;
 
   useEffect(() => {
     if(OrderBy){
@@ -68,4 +68,4 @@ const  useBaseProductsCall = (
   };
 }
 
-export default useBaseProductsCall;
+export default useBaseProducts;

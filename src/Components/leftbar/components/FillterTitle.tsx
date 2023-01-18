@@ -1,12 +1,12 @@
 import React from 'react';
-import { HomePageTextsType } from '../../../utils/interface';
+import { IHomePageTexts } from '../../../utils/interface';
 
 const FillterTitle = ({
   filterIcon, 
   filter 
 } : {
-  filterIcon: HomePageTextsType['filterIcon'] | undefined,
-  filter: HomePageTextsType['filter'] | undefined,
+  filterIcon: IHomePageTexts['filterIcon'] | undefined,
+  filter: IHomePageTexts['filter'] | undefined,
 }) => {
   return (
     <div className='border'>

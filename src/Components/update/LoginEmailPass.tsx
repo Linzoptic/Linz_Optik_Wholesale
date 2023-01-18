@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-import { PAGES } from '../../Product/constants';
+import { PAGES } from '../../utils/constants/constants';
 
 const LoginEmailPass = () => {
 

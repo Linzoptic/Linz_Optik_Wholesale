@@ -5,10 +5,10 @@ import ProductItem from "./ProductItem";
 import InformationBlock from "./components/InformationBlock";
 import Pagination from "./components/Pagination";
 import CartSkeleton from "../../skeleton/CartSkeleton";
-import { ERROR_MASSEGE } from "../../Product/constants";
+import { ERROR_MASSEGE } from "../../utils/constants/constants";
 import { TfiFaceSad } from "react-icons/tfi";
-import useBaseProductsCall from "./hooks/useBaseProductsCall";
-import useHomePageTextsCall from "./hooks/useHomePageTextsCall";
+import useBaseProducts from "./hooks/useBaseProducts";
+import useHomePageTexts from "./hooks/useHomePageTexts";
 
 const HomePage: React.FC = () => {
   
@@ -34,9 +34,9 @@ const HomePage: React.FC = () => {
   }, [URL_PARAMS, searchParams]); 
 
   const { isError, isLoading, productsData, totolCountRef, productPerPage,currencyName } =
-    useBaseProductsCall(URL_PARAMS, currentPage, setPricesRange);
+  useBaseProducts(URL_PARAMS, currentPage, setPricesRange);
 
-  const { homePageTexts } = useHomePageTextsCall();
+  const { homePageTexts } = useHomePageTexts();
 
   return (
     <div>

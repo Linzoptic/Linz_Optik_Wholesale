@@ -12,10 +12,10 @@ function CartSkeleton({ count }: { count: number }) {
               <div className="flex justify-center items-center mb-4 bg-gray-300 rounded object-cover ">
               </div>
             </div>
-            <div className="p-2 text-center border">
-              <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-4 mx-auto"></div>
-              <div className="h-3.5 bg-gray-200 rounded-full w-48 mb-2.5 mx-auto"></div>
-              <div className="h-2.5 bg-gray-200 rounded-full w-48 mb-2.5 mx-auto"></div>
+            <div className="p-2 text-center">
+              <div className="h-[17px] bg-gray-200 rounded-full w-48 mb-2 mx-auto"></div>
+              <div className="h-[23px] bg-gray-200 rounded-full w-48 mb-2 mx-auto"></div>
+              <div className="h-[18px] bg-gray-200 rounded-full w-48 mx-auto"></div>
             </div>
           </div>
         ))}

@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { SingleProductAttributes } from "../../../../../utils/interface";
+import React, { useState } from "react";
+import { IOptionsAttributes } from "../../../../../utils/interface";
 
 const SelectComponent = ({
   name,
-  option,
   choose,
+  options,
 }: {
   name: string | undefined;
   choose: string | undefined;
-  option: SingleProductAttributes[] | undefined;
+  options: IOptionsAttributes[] | undefined;
 }) => {
   const [correctOption, setCorrectOption] = useState<string[] | undefined>();
 
-  useEffect(() => {
-    const values: string[] | undefined = [];
-    option?.forEach((item) => {
-      item.options.map((el) => values?.push(el));
-    });
-    setCorrectOption(values);
-  }, [option]);
 
   return (
     <div>
       <h1>{name}</h1>
       <div className="p-2 border rounded-xl">
-        <select className="w-full justify-between outline-none">
+        <select  className="w-full justify-between outline-none cursor-pointer">
           <option hidden>{choose}</option>
-          {correctOption?.map((el, i) => (
-            <option key={i} value={el} >
-              {el}
+          {options?.map((el, i) => (
+            <option key={i}>
+              {el.name}
             </option>
           ))}
         </select>

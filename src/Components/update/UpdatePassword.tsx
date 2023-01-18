@@ -4,7 +4,7 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { BsCheck2All, BsEmojiSmile } from "react-icons/bs";
 import { isMatchPassword } from "./utils";
 import logo from "../../images/logo.svg";
-import { PAGES } from "../../Product/constants";
+import { PAGES } from "../../utils/constants/constants";
 
 const UpdatePassword: React.FC = () => {
   const [typechange1, setTypechange1] = useState<boolean>(true);

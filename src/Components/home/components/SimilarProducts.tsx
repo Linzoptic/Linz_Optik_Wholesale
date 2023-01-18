@@ -1,9 +1,9 @@
-import { SingleProducts } from "../../../utils/interface";
+import { ISingleProducts } from "../../../utils/interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { Link } from "react-router-dom";
 import SimilarProductSkeleton from "../../../skeleton/SimilarProductSkeleton";
-import { COUNTS, PAGES, SCREENS, SWIPER_SIMILAR_CONFIG } from "../../../Product/constants";
+import { COUNTS, PAGES, SCREENS, SWIPER_SIMILAR_CONFIG } from "../../../utils/constants/constants";
 
 const SimilarProducts = ({
   similarProducts,
@@ -12,10 +12,11 @@ const SimilarProducts = ({
   currency,
 }: {
   similarLoading: boolean;
-  similarProducts: SingleProducts[] | undefined;
+  similarProducts: ISingleProducts[] | undefined;
   similar_product_title: string | undefined;
   currency: string | undefined;
 }) => {
+  
 
   const SkeletonCount  = (): number => {
     let count: number = 0;
@@ -42,7 +43,7 @@ const SimilarProducts = ({
         </div>
       ) : (
         <div>
-          <div className="text-center font-bold text-cyan-800 text-[16px] md:text-[25px] lg:text-[30px] my-5">
+          <div className="text-center font-bold text-[#384275] text-[16px] md:text-[25px] lg:text-[30px] my-5">
             <h1>{similar_product_title}</h1>
           </div>
           <div className="pt-3">

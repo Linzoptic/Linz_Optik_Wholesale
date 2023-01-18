@@ -3,8 +3,8 @@ import { IoIosClose } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import {
   AttributeCategory,
-  Attributes,
-  HomePageTextsType,
+  IAttributes,
+  IHomePageTexts,
 } from "../../../utils/interface";
 
 const LeftBarInfo = ({
@@ -17,12 +17,11 @@ const LeftBarInfo = ({
   setFilterItemList: React.Dispatch<
     React.SetStateAction<AttributeCategory[] | undefined>
   >;
-  attributes: Attributes[];
-  homePageTexts: HomePageTextsType | undefined;
+  attributes: IAttributes[];
+  homePageTexts: IHomePageTexts | undefined;
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [newCurrectValues, setNewCurrectValues] = useState<number[]>([]);
-  // @ts-ignore:next-line
   const currentQueries = Object.fromEntries([...searchParams]);
 
   useEffect(() => {

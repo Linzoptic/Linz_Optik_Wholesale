@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { HOME_PAGE_TEXTS } from "../../../Product/constants";
-import { HomePageTextsType } from "../../../utils/interface";
+import { HOME_PAGE_TEXTS } from "../../../utils/constants/constants";
+import { IHomePageTexts } from "../../../utils/interface";
 
-const useHomePageTextsCall = () => {
+const useHomePageTexts = () => {
   
-  const [homePageTexts, setHomePageTexts] = useState<HomePageTextsType | undefined>();
+  const [homePageTexts, setHomePageTexts] = useState<IHomePageTexts | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -29,10 +29,10 @@ const useHomePageTextsCall = () => {
       }
     })();
   }, []);
-
+  
   return {
     homePageTexts,
   };
 };
 
-export default useHomePageTextsCall;
+export default useHomePageTexts;

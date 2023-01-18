@@ -1,5 +1,5 @@
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
-import { COUNTS } from "../../../Product/constants";
+import { COUNTS } from "../../../utils/constants/constants";
 
 const Pagination = ({
   totolCountRef,

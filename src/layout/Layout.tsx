@@ -4,15 +4,15 @@ import Header from "../Components/header/Header";
 
 const Layout = () => {
   return (
-    <div className="mx-auto">
+    <div className="flex flex-col min-h-screen">
       <header>
         <Header />
       </header>
       <main>
         <Outlet />
       </main>
-      <footer>
-        <Footer/>
+      <footer className="mt-auto">
+        <Footer />
       </footer>
     </div>
   );
