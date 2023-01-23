@@ -1,16 +1,16 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react'
-import { AttributeCategory, Attributes } from '../../utils/interface';
-import { BASE_URL } from '../constants';
+import { AttributeCategory, IAttributes } from '../../../../utils/interface';
+import { BASE_URL } from '../../../../utils/constants/constants';
 
-const useAttributesCall = () => {
+const useAttributes = () => {
 
-  const [attributes, setAttributes] = useState<Attributes[]>([]);
+  const [attributes, setAttributes] = useState<IAttributes[]>([]);
 
    useEffect(() => {
       (async () => {
         const correctData = await axios.get(`${BASE_URL}/wholesale/attributes`);
-        const attributesArray: Attributes[] = [];
+        const attributesArray: IAttributes[] = [];
         if(correctData){
           for (const [key, value] of Object.entries(correctData?.data)) {
             attributesArray.push({
@@ -35,4 +35,4 @@ const useAttributesCall = () => {
    };
 };
 
-export default useAttributesCall;
+export default useAttributes;

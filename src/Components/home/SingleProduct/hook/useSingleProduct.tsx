@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../constants";
-import { CatchError, SingleProducts } from "../../utils/interface";
+import { BASE_URL } from "../../../../utils/constants/constants";
+import { CatchError, ISingleProducts } from "../../../../utils/interface";
 
-function useSingleProductCall(
+function useSingleProduct(
   setSingleProduct: React.Dispatch<
-    React.SetStateAction<SingleProducts | undefined>
+    React.SetStateAction<ISingleProducts | undefined>
   >
 ) {
   
@@ -19,7 +19,7 @@ function useSingleProductCall(
       setIsloading(true);
       try {
         const correctData = await axios.get(
-          `${BASE_URL}/${WC_V3}/${PRODUCTS}/${id}?${CONSUMER_KEY}`
+          `${BASE_URL}/single/product?id=${id}` 
         );
         if (correctData) {
           setSingleProduct(correctData.data);
@@ -37,4 +37,4 @@ function useSingleProductCall(
   };
 }
 
-export default useSingleProductCall;
+export default useSingleProduct;

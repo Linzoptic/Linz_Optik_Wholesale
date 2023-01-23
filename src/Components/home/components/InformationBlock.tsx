@@ -1,23 +1,28 @@
 import React from "react";
-import ChooseComponent from "../../header/components/ChooseComponent";
+import { IHomePageTexts } from "../../../utils/interface";
+import ChooseComponent from "../../header/components/SortHeader";
 
 const InformationBlock = ({
   totolCountRef,
+  homePageTexts,
 }: {
   totolCountRef: React.MutableRefObject<number>;
+  homePageTexts: IHomePageTexts | undefined;
 }) => {
-  const sortBy: string[] = ["ADVERTISING", "BESTSELLERS", "ALPHABETICAL"];
-
   return (
     <div className="block w-full md:grid gap-4 grid-cols-4 justify-between items-center">
       <div className="col-span-1">
-        <div className="text-center text-white bg-cyan-900">
-          <h1>WISHLIST</h1>
-        </div>
+        {homePageTexts ? (
+          <div className="text-center text-white bg-[#384275]">
+            <h1 className="tracking-[10px]">LINZ OPTIK</h1>
+          </div>
+        ) : (
+          <div className="w-[230px] h-[30px]  bg-gray-300 animate-pulse"></div>
+        )}
       </div>
       <div className="flex items-center justify-between py-2 border-b-[2px] col-span-3 flex-wrap">
         <div className="border-r-0 px-[5px] sm:border-r-2 z-10">
-          <ChooseComponent props={sortBy} title="sort by" />
+          <ChooseComponent homePageTexts={homePageTexts} />
         </div>
         <div className=" ml-0 border-r-0 px-[5px] sm:border-r-2 md:ml-2">
           {!!totolCountRef.current ? (
@@ -25,7 +30,9 @@ const InformationBlock = ({
               {totolCountRef.current}
               <span className="font-[600]"> :ITEMS</span>
             </p>
-          ) : null}
+          ) : (
+            <div className="w-[80px] h-[20px] bg-gray-300 animate-pulse rounded-xl"></div>
+          )}
         </div>
       </div>
     </div>

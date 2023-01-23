@@ -5,12 +5,12 @@ import { AttributeCategory } from "../../../utils/interface";
 const LeftBarItem = ({
   categories,
   filterItems_name,
-  FilterItemList,
+  filterItemList,
   onChangeHandler,
 }: {
   categories: AttributeCategory[];
   filterItems_name: string;
-  FilterItemList: AttributeCategory[] | undefined,
+  filterItemList: AttributeCategory[] | undefined,
   onChangeHandler: (term_id: number,taxonomy:string) => void;
 }) => {
 
@@ -39,7 +39,7 @@ const LeftBarItem = ({
                       type="checkbox"
                       className="mr-[8px] accent-black0"
                       onChange={() => onChangeHandler(el.term_id, el.taxonomy)}
-                      checked={FilterItemList?.some((item) => item.term_id === el.term_id)}
+                      checked={filterItemList?.some((item) => item.term_id === el.term_id)}
                     />
                   </div>
                   <div>

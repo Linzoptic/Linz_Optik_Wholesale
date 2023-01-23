@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CatchError, SingleProducts } from "../../../../utils/interface";
-import { BASE_URL, WC_V3, CONSUMER_KEY, PRODUCTS, UNMOUNT_TIMEOUT_VALUE } from "../../../../Product/constants";
+import { CatchError, ISingleProducts } from "../../../../utils/interface";
+import { BASE_URL, WC_V3, CONSUMER_KEY, PRODUCTS, UNMOUNT_TIMEOUT_VALUE } from "../../../../utils/constants/constants";
 
-const useSearchProductsCall = (
+const useSearchProducts = (
   setSearchProduct: React.Dispatch<
-    React.SetStateAction<SingleProducts[] | undefined>
+    React.SetStateAction<ISingleProducts[] | undefined>
   >,
   search: string
 ) => {
@@ -18,7 +18,7 @@ const useSearchProductsCall = (
     const searchTime = setTimeout(async () => {
       try {
         const correncSearch = await axios.get(
-          `${BASE_URL}/${WC_V3}/${PRODUCTS}?search=${search}&${CONSUMER_KEY}`
+          `${BASE_URL}/${WC_V3}/${PRODUCTS}&search=${search}&${CONSUMER_KEY}`
         );
         if (correncSearch.data) {
           setSearchProduct(correncSearch.data);
@@ -38,4 +38,4 @@ const useSearchProductsCall = (
   };
 };
 
-export default useSearchProductsCall;
+export default useSearchProducts;

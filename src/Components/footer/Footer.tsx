@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FOOTER_CALL } from "../../Product/constants";
+import { FOOTER_CALL } from "../../utils/constants/constants";
 import FooterSkekelton from "../../skeleton/FooterSkekelton";
-import { CatchError, FooterType } from "../../utils/interface";
+import { CatchError, IFooterTexts } from "../../utils/interface";
 
 const Footer = () => {
-  const [footerInfo, setFooterInfo] = useState<FooterType>();
+  const [footerInfo, setFooterInfo] = useState<IFooterTexts>();
   const [footerIsLoading, setFooterIsLoading] = useState<boolean>(false);
   const [footerCatchError, setFooterCatchError] = useState<CatchError>();
 
@@ -36,11 +36,11 @@ const Footer = () => {
   return (
     <>
       {footerIsLoading ? (
-        <FooterSkekelton/>
+        <FooterSkekelton />
       ) : (
-        <div className="bottom-0 mt-10 p-4 border-t-4">
-          <div className="flex justify-around flex-wrap">
-            <div className="flex items-center ">
+        <div className="mt-10 p-4 border-t-4 border-[#F1EFE8]">
+          <div className="md:flex justify-around flex-wrap ">
+            <div className="flex items-center text-center mt-2 p-2">
               <img
                 src={footerInfo?.locationIcon.description}
                 alt="#location"
@@ -48,20 +48,28 @@ const Footer = () => {
               />
               <h1>{footerInfo?.address.description}</h1>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
               <img
                 src={footerInfo?.phoneIcon.description}
                 alt="#phone"
                 className="w-6 h-6 mx-2"
               />
               <div>
-                <p>{footerInfo?.phone.description}</p>
-                <p>{footerInfo?.phone1.description}</p>
+                <p className="hover:underline duration-150">
+                  <a href={`tel:${footerInfo?.phone.description}`}>
+                    {footerInfo?.phone.description}
+                  </a>
+                </p>
+                <p className="hover:underline duration-150">
+                  <a href={`tel:${footerInfo?.phone1.description}`}>
+                    {footerInfo?.phone1.description}
+                  </a>
+                </p>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
               <img
-                src={footerInfo?.phoneIcon.description}
+                src={footerInfo?.timeIcon.description}
                 alt="#time"
                 className="w-6 h-6 mx-2"
               />

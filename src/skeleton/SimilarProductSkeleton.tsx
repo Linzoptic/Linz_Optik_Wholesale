@@ -1,6 +1,5 @@
 function SimilarProductSkeleton({ count }: { count: number }) {
-  console.log(count);
-  
+
    return (
      <>
        {Array(count)
@@ -9,7 +8,7 @@ function SimilarProductSkeleton({ count }: { count: number }) {
            <div key={i}>
              <div
                role="status"
-               className="rounded bg-gray-300 shadow animate-pulse w-[100%] h-[150px] "
+               className="rounded bg-gray-200 shadow animate-pulse w-[250px] h-[150px] "
              >
              </div>
              <div className="p-2 text-center">

@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 @layer base {
-    ::-webkit-scrollbar {
-        width: 5px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgb(20, 98, 115); 
-      }
-    input{
-        padding: 5px 15px;
-        border-radius: 10px;
-    }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(20, 98, 115);
+  }
+  input {
+    padding: 5px 15px;
+    border-radius: 10px;
+  }
 }

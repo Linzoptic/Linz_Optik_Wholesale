@@ -1,36 +1,50 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
-import { LOCAL_STORAGE_KEYS, LOGIN_URL, PAGES } from "../../Product/constants";
+import { LOCAL_STORAGE_KEYS, LOGIN_URL, PAGES } from "../../utils/constants/constants";
+import { CatchError } from "../../utils/interface";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [userpassword, setUserpassword] = useState<string>("");
   const [showpassword, setShowpassword] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<CatchError>();
 
   const formHendler = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(username);
+    console.log(userpassword);
+    
+    try {
+      const resoult = await axios.post(
+        `${LOGIN_URL}`,
+        JSON.stringify({
+          username: username,
+          password: userpassword,
+        })
+      );
+      if (resoult) {
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.JWT_TOKEN,
+          JSON.stringify(resoult.data.jwt_token)
+        );
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.USERNAME,
+          JSON.stringify(username)
+        );
+        navigate(`/${PAGES.HOME}`);
+      }
+    } catch (error: any) {
+      setLoginError(error);
+    }
     setUsername("");
     setUserpassword("");
-
-    const resoult = await axios.post(
-      `${LOGIN_URL}/api/v1/token`,
-      JSON.stringify({
-        username: username,
-        password: userpassword,
-      })
-    );
-    if (resoult) {
-      localStorage.setItem(LOCAL_STORAGE_KEYS.JWT_TOKEN, JSON.stringify(resoult.data.jwt_token));
-      localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, JSON.stringify(username));
-      navigate(`/${PAGES.HOME}`);
-    }
   };
 
-  const changeIcon = (): void => {
+  const changeIcon = () => {
     setShowpassword(!showpassword);
   };
 
@@ -90,12 +104,14 @@ const LoginForm: React.FC = () => {
           <p className="text-[15px] font-[600] text-sky-900 mt-1 underline hover:no-underline">
             <Link to="/emailPass">Forgot your Password?</Link>
           </p>
-          <button
+          <input
             type="submit"
             className="uppercase bg-sky-900 text-sky-100 font-bold text-[18px] px-4 py-[8px] mt-3 rounded-md hover:bg-sky-300 hover:text-sky-900 duration-300 cursor-pointer"
-          >
-            login
-          </button>
+            value={"login"}
+          />
+        {typeof loginError?.response.data.message === "string" && loginError?.response.data.message && (
+          <div className="text-red-700 font-[600]" dangerouslySetInnerHTML={{__html:loginError?.response.data.message}}/>
+        )}
         </form>
       </div>
     </div>

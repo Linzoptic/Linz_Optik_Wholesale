@@ -1,40 +1,36 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { SingleProducts } from "../../../utils/interface";
-import ClipLoader from "react-spinners/ClipLoader";
-import useSearchProductsCall from "./hooks/useSearchProductsCall";
-import { PAGES } from "../../../Product/constants";
+import { ISingleProducts } from "../../../utils/interface";
+import useSearchProducts from "./hooks/useSearchProducts";
+import { PAGES } from "../../../utils/constants/constants";
+import Loader from "../../../utils/loader/Loader";
 
 const SearchProduct = ({
   search,
+  notFoundProduct,
   setSearch,
 }: {
   search: string;
+  notFoundProduct: string | undefined;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }) => {
 
-  const [ searchProduct, setSearchProduct ] = useState<SingleProducts[]>();
+  const [ searchProduct, setSearchProduct ] = useState<ISingleProducts[]>();
 
-  const {searchCatch, isSrearchLoading} = useSearchProductsCall(setSearchProduct,search)
+  const {searchCatch, isSrearchLoading} = useSearchProducts(setSearchProduct,search)
 
   return (
     <div>
       {searchCatch && <h1>{searchCatch.response.data.message}</h1>}
       {isSrearchLoading ? (
         <div className="w-[300px] md:w-[450px] flex items-center justify-center">
-          <ClipLoader
-            color={"cyan"}
-            loading={isSrearchLoading}
-            size={40}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
+         <Loader loading={isSrearchLoading} size={30}/>
         </div>
       ) : (
         <div>
           {!searchProduct?.length && (
             <div className="w-[300px] md:w-[450px] flex items-center justify-center">
-              <h1 className="">Ոչինչ չի գտնվել</h1>
+              <h1 className="">{notFoundProduct}</h1>
             </div>
           )}
           {searchProduct?.map((product, index) => (
@@ -57,7 +53,7 @@ const SearchProduct = ({
                   </div>
                   <div>
                     {product?.sale_price ? (
-                      <div className="flex justify-between">
+                      <div className="flex items-center justify-between">
                         <p className="text-[12px] lg:text-[14px] font-[600]">
                           {product?.sale_price}
                           <span className="text-[12px] lg:text-[14px]">

@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CatchError, SingleProducts } from "../../../utils/interface";
-import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../../../Product/constants";
+import { CatchError, ISingleProducts } from "../../../../utils/interface";
+import { BASE_URL, CONSUMER_KEY, PRODUCTS, WC_V3 } from "../../../../utils/constants/constants";
 
-const useSimiliarProductsCall = (
+const useSimiliarProducts = (
   setSimilarProducts: React.Dispatch<
-    React.SetStateAction<SingleProducts[] | undefined>
+    React.SetStateAction<ISingleProducts[] | undefined>
   >,
-  singleProduct: SingleProducts | undefined
+  singleProduct: ISingleProducts | undefined
 ) => {
   const [similarLoading, setSimilarloading] = useState<boolean>(false);
   const [similarCatch, setSimilarCatch] = useState<CatchError>();
@@ -37,4 +37,4 @@ const useSimiliarProductsCall = (
   };
 };
 
-export default useSimiliarProductsCall;
+export default useSimiliarProducts;
