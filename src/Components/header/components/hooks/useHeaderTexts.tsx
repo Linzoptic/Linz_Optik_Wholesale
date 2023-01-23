@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { httpClient } from "../../../../http-client/HttpClient";
 import { HEADER_TEXTS } from "../../../../utils/constants/constants";
 import { IHeaderTxts } from "../../../../utils/interface";
 
@@ -7,7 +7,7 @@ const useHeaderTexts = () => {
   const [headerTexts, setHeaderTexts] = useState<IHeaderTxts | undefined>();
   useEffect(() => {
     (async () => {
-      const correctData = await axios.get(HEADER_TEXTS);
+      const correctData = await httpClient.get(HEADER_TEXTS);
       setHeaderTexts({
         logOut: correctData.data[10],
         logoIcon: correctData.data[2],

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PAGES, SINGLE_PRODUCT_TYPES } from "../../utils/constants/constants";
-import { Products } from "../../utils/interface";
+import { IProducts } from "../../utils/interface";
 
-const ProductItem = (props: Products) => {
+const ProductItem = (props: IProducts) => {
   return (
     <Link to={`${PAGES.PRODUCT}/${props.id}`}>
       <div

@@ -30,6 +30,7 @@ export const SCREENS = {
 export const SINGLE_PRODUCT_TYPES = {
   VARIABLE: "variable",
   OUT_OFF_STOCK: "outofstock",
+  IN_STOCK: "instock",
 };
 
 export const SOCIAL_MEDIA = {
@@ -74,6 +75,7 @@ export const SWIPER_SINGLE_CONFIG = {
 export const LOCAL_STORAGE_KEYS = {
   JWT_TOKEN: "jwt_token",
   USERNAME: "username",
+  NONCE: "Nonce"
 };
 
 export const UNMOUNT_TIMEOUT_VALUE = 700;

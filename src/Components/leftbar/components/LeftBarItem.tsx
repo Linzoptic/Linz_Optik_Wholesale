@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdArrowRight, MdOutlineArrowDropDown } from "react-icons/md";
-import { AttributeCategory } from "../../../utils/interface";
+import { IAttributeCategory } from "../../../utils/interface";
 
 const LeftBarItem = ({
   categories,
@@ -8,9 +8,9 @@ const LeftBarItem = ({
   filterItemList,
   onChangeHandler,
 }: {
-  categories: AttributeCategory[];
+  categories: IAttributeCategory[];
   filterItems_name: string;
-  filterItemList: AttributeCategory[] | undefined,
+  filterItemList: IAttributeCategory[] | undefined,
   onChangeHandler: (term_id: number,taxonomy:string) => void;
 }) => {
 

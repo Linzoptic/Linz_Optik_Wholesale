@@ -1,6 +1,5 @@
-import axios from "axios";
+import { httpClient } from "../../../http-client/HttpClient";
 import {
-  BASE_URL,
   CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
 } from "../../../utils/constants/constants";
@@ -10,13 +9,13 @@ export const onRemoveAllBasket = (
   setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>
 ) => {
   (async () => {
-      const { data } = await axios.delete(
-        `${BASE_URL}/wc/store/cart/items?${CONSUMER_KEY}`,
+      const { data } = await httpClient.delete(
+        `/wc/store/cart/items?${CONSUMER_KEY}`,
         {
           headers: {
-            Nonce: "b96be96539",
-            "Content-Type": "application/json; charset=UTF-8",
-            Authorization: `Bearer  ${localStorage.getItem(
+            Nonce: `${localStorage.getItem(LOCAL_STORAGE_KEYS.NONCE)}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem(
               LOCAL_STORAGE_KEYS.JWT_TOKEN
             )}`,
           },

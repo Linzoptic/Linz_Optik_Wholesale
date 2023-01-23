@@ -26,8 +26,6 @@ const Basket = () => {
     navigate(PAGES.HOME);
   };
 
-  console.log(basket)
-
   return (
     <>
       {basketLoading ? (
@@ -64,7 +62,7 @@ const Basket = () => {
             </div>
           </div>
           <div>
-            {basket?.length ? (
+            {!!basket  ? (
               basket?.map((elem, index) => (
                 <BasketProductItem
                   key={elem.key}
@@ -75,6 +73,7 @@ const Basket = () => {
                   prices={elem.prices}
                   id={elem.id}
                   quantity={elem.quantity}
+                  variation={elem.variation}
                   count={basketText && basketText[2]?.description}
                   setBasket={setBasket}
                 />
@@ -89,7 +88,7 @@ const Basket = () => {
       )}
       {basketError && (
         <div>
-          <h1>{basketError?.response?.data.message}</h1>
+          <h1>{basketError?.data.message}</h1>
         </div>
       )}
     </>

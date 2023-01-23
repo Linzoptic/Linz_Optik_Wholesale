@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
               </h1>
             </div>
           )}
-          {isError ? <h1>{isError?.response.data?.message}</h1> : null}
+          {isError ? <h1>{isError?.data?.message}</h1> : null}
         </div>
       </div>
     </div>

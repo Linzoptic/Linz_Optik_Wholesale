@@ -1,6 +1,7 @@
 import {
   ISinglePageTexts,
   ISingleProductAttributes,
+  IVariationAttributes,
 } from "../../../../utils/interface";
 import SelectComponent from "./utils/SelectComponent";
 import IncrementDecrement from "./utils/IncrementDecrement";
@@ -9,11 +10,16 @@ const LinsInfo = ({
   singleProductTexts,
   variation_attributes,
   choose,
+  setVariationAttributes,
+  variationAttributes,
 }: {
   singleProductTexts: ISinglePageTexts | undefined;
-  variation_attributes: ISingleProductAttributes[] | undefined;
+  variation_attributes: ISingleProductAttributes[] ;
   choose: string | undefined;
+  setVariationAttributes: React.Dispatch<React.SetStateAction<IVariationAttributes[]>>,
+  variationAttributes: IVariationAttributes[] ,
 }) => {
+  
   return (
     <div>
       <div className="flex items-center mb-3">
@@ -40,6 +46,8 @@ const LinsInfo = ({
                       name={type.name}
                       choose={choose}
                       options={type.options}
+                      setVariationAttributes={setVariationAttributes}
+                      variationAttributes={variationAttributes}
                     />
                   );
                 })}

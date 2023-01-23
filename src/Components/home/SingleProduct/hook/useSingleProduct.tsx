@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../../../utils/constants/constants";
-import { CatchError, ISingleProducts } from "../../../../utils/interface";
+import { ICatchError, ISingleProducts } from "../../../../utils/interface";
+import { httpClient } from "../../../../http-client/HttpClient";
 
 function useSingleProduct(
   setSingleProduct: React.Dispatch<
@@ -11,15 +10,15 @@ function useSingleProduct(
 ) {
   
   const [isLoading, setIsloading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<CatchError>();
+  const [isError, setIsError] = useState<ICatchError>();
   const { id } = useParams();
 
   useEffect(() => {
     (async () => {
       setIsloading(true);
       try {
-        const correctData = await axios.get(
-          `${BASE_URL}/single/product?id=${id}` 
+        const correctData = await httpClient.get(
+          `/single/product?id=${id}` 
         );
         if (correctData) {
           setSingleProduct(correctData.data);

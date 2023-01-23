@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BASE_PRODUCT, BASE_URL, QUERY_PARAMS } from "../../../utils/constants/constants";
-import { CatchError, Products } from "../../../utils/interface";
+import { httpClient } from "../../../http-client/HttpClient";
+import { BASE_PRODUCT, QUERY_PARAMS } from "../../../utils/constants/constants";
+import { ICatchError, IProducts } from "../../../utils/interface";
 
 const  useBaseProducts = (
   URL_PARAMS: string,
@@ -10,12 +10,12 @@ const  useBaseProducts = (
   setPricesRange: React.Dispatch<
     React.SetStateAction<{[key: string]: number | null}[]>>
 ) =>  {
-  const [productsData, setProductsData] = useState<Products[]>([]);
+  const [productsData, setProductsData] = useState<IProducts[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [oerderBySort, setOrderBySort] = useState<string>()
   const [currencyName, setCurrencyName] = useState<string>()
   const [searchParams] = useSearchParams();
-  const [isError, setIsError] = useState<CatchError>();
+  const [isError, setIsError] = useState<ICatchError>();
   const productPerPage: number = 9;
   const totolCountRef = useRef(0);
   const MinPriceQuery = searchParams.get(QUERY_PARAMS.MIN_PRICE) || QUERY_PARAMS.DEFAULT_MIN_PRICE;
@@ -32,8 +32,8 @@ const  useBaseProducts = (
     (async () => {
       setIsloading(true);
       try {
-        const correctData = await axios.get(
-          `${BASE_URL}/${BASE_PRODUCT}&per_page=${productPerPage}&page=${currentPage}&filter[min_price]=${MinPriceQuery}&filter[max_price]=${MaxPriceQuery}${URL_PARAMS}${oerderBySort}`
+        const correctData = await httpClient.get(
+          `/${BASE_PRODUCT}&per_page=${productPerPage}&page=${currentPage}&filter[min_price]=${MinPriceQuery}&filter[max_price]=${MaxPriceQuery}${URL_PARAMS}${oerderBySort}`
         )
         if (correctData) {
           setProductsData(correctData.data.products);

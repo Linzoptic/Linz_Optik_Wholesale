@@ -21,7 +21,7 @@ const SearchProduct = ({
 
   return (
     <div>
-      {searchCatch && <h1>{searchCatch.response.data.message}</h1>}
+      {searchCatch && <h1>{searchCatch.data.message}</h1>}
       {isSrearchLoading ? (
         <div className="w-[300px] md:w-[450px] flex items-center justify-center">
          <Loader loading={isSrearchLoading} size={30}/>

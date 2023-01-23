@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import {
-  AttributeCategory,
+  IAttributeCategory,
   IAttributes,
   IHomePageTexts,
 } from "../../../utils/interface";
@@ -13,9 +13,9 @@ const LeftBarInfo = ({
   homePageTexts,
   setFilterItemList,
 }: {
-  filterItemList: AttributeCategory[] | undefined;
+  filterItemList: IAttributeCategory[] | undefined;
   setFilterItemList: React.Dispatch<
-    React.SetStateAction<AttributeCategory[] | undefined>
+    React.SetStateAction<IAttributeCategory[] | undefined>
   >;
   attributes: IAttributes[];
   homePageTexts: IHomePageTexts | undefined;
@@ -34,7 +34,7 @@ const LeftBarInfo = ({
   }, [searchParams]);
 
   useEffect(() => {
-    const selectedIds: AttributeCategory[] = [];
+    const selectedIds: IAttributeCategory[] = [];
     attributes.forEach((atribute) => {
       atribute.name_category.forEach((category) => {
         if (newCurrectValues.includes(category.term_id)) {

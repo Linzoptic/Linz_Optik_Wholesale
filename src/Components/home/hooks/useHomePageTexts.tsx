@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { httpClient } from "../../../http-client/HttpClient";
 import { HOME_PAGE_TEXTS } from "../../../utils/constants/constants";
 import { IHomePageTexts } from "../../../utils/interface";
 
@@ -9,7 +9,7 @@ const useHomePageTexts = () => {
 
   useEffect(() => {
     (async () => {
-      const correctData = await axios.get(HOME_PAGE_TEXTS);
+      const correctData = await httpClient.get(HOME_PAGE_TEXTS);
       if (correctData) {
         setHomePageTexts({
           filter: correctData.data[10],

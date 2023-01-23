@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { httpClient } from "../../../../http-client/HttpClient";
 import { SINGLE_PRODUCT_TEXTS } from "../../../../utils/constants/constants";
 import { ISinglePageTexts } from "../../../../utils/interface";
 
@@ -10,7 +10,7 @@ const useSIngleProductTexts = () => {
 
   useEffect(() => {
     (async () => {
-      const correctTexts = await axios.get(SINGLE_PRODUCT_TEXTS);
+      const correctTexts = await httpClient.get(SINGLE_PRODUCT_TEXTS);
       if (correctTexts) {
         setsingleProductTexts({
           ADD: correctTexts.data[0],

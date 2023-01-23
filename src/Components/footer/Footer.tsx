@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FOOTER_CALL } from "../../utils/constants/constants";
 import FooterSkekelton from "../../skeleton/FooterSkekelton";
-import { CatchError, IFooterTexts } from "../../utils/interface";
+import { ICatchError, IFooterTexts } from "../../utils/interface";
 
 const Footer = () => {
   const [footerInfo, setFooterInfo] = useState<IFooterTexts>();
   const [footerIsLoading, setFooterIsLoading] = useState<boolean>(false);
-  const [footerCatchError, setFooterCatchError] = useState<CatchError>();
+  const [footerCatchError, setFooterCatchError] = useState<ICatchError>();
 
   useEffect(() => {
     (async () => {
@@ -86,7 +86,7 @@ const Footer = () => {
           </div>
         </div>
       )}
-      {footerCatchError && <p>{footerCatchError?.response.data?.message}</p>}
+      {footerCatchError && <p>{footerCatchError?.data?.message}</p>}
     </>
   );
 };

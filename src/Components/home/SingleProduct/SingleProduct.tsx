@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import {
   ISingleProducts,
   IGetTexts,
-  CatchError,
+  ICatchError,
+  IVariationAttributes,
 } from "../../../utils/interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
@@ -23,21 +24,20 @@ import SingleProductSkeleton from "../../../skeleton/SingleProductSkeleton";
 import useSIngleProductTexts from "./hook/useSIngleProductTexts";
 import GlassesInfo from "./components/GlassesInfo";
 import LinsInfo from "./components/LinsInfo";
-import ClipLoader from "react-spinners/ClipLoader";
 import { TfiBackLeft } from "react-icons/tfi";
-import { AddToCartFunctionCom } from "./components/utils/AddToCartFunctionCom";
+import { AddToCartFunction } from "./components/utils/AddToCartFunction";
 import Loader from "../../../utils/loader/Loader";
 
 const SingleProduct = () => {
-  const [productCount, setProductCount] = useState<number>(8);
-  const [addToCartCatchError, setAddToCartCatchError] = useState<CatchError>();
+  const [productCount, setProductCount] = useState<number>(1);
+  const [variationAttributes, setVariationAttributes] = useState<IVariationAttributes[]>([]);
+  const [addToCartCatchError, setAddToCartCatchError] = useState<ICatchError>();
   const [addToCartLoading, setAddToCartLoading] = useState<boolean>();
   const [singleProduct, setSingleProduct] = useState<ISingleProducts>();
   const [socialIcons, setSocialIcons] = useState<IGetTexts[] | undefined>();
   const [similarProducts, setSimilarProducts] = useState<
     ISingleProducts[] | undefined
   >();
-
   const { isError, isLoading } = useSingleProduct(setSingleProduct);
   const { similarLoading } = useSimiliarProducts(
     setSimilarProducts,
@@ -72,7 +72,7 @@ const SingleProduct = () => {
       )}
       {isError && (
         <div className="text-center">
-          <h1>{isError.response.data.message}</h1>
+          <h1>{isError.data.message}</h1>
         </div>
       )}
       {isLoading ? (
@@ -138,27 +138,42 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="mt-2">
-              {singleProduct?.type === SINGLE_PRODUCT_TYPES.VARIABLE ? (
+              {!!singleProduct?.variation_attributes ? (
                 <LinsInfo
                   singleProductTexts={singleProductTexts}
                   variation_attributes={singleProduct?.variation_attributes}
                   choose={choose}
+                  setVariationAttributes={setVariationAttributes}
+                  variationAttributes={variationAttributes}
                 />
               ) : (
                 <GlassesInfo singleProductTexts={singleProductTexts} />
               )}
-              <div className="mt-2 lg:mt-4 lg:flex justify-between  items-center">
+              <div className="mt-2 lg:mt-4 lg:flex justify-between items-center">
                 <div>
-                  <div
+                  <button
+                    disabled={
+                      singleProduct?.stock_status ===
+                      SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK
+                        ? true
+                        : false
+                    }
                     onClick={() =>
-                      AddToCartFunctionCom(
+                      AddToCartFunction(
                         singleProduct?.id,
                         productCount,
                         setAddToCartCatchError,
-                        setAddToCartLoading
+                        setAddToCartLoading,
+                        singleProduct?.stock_status,
+                        variationAttributes
                       )
                     }
-                    className="border-2 text-[#384275] border-[#384275] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px] flex items-center justify-center hover:border-cyan-700 cursor-pointer duration-150"
+                    className={
+                      singleProduct?.stock_status ===
+                      SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK
+                        ? "flex border-2 font-[600] text-[#a4a8a9] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px]  items-center justify-center"
+                        : "border-2 text-[#384275] font-[600] border-[#384275] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px] flex items-center justify-center hover:border-cyan-700 cursor-pointer duration-150"
+                    }
                   >
                     <p>{singleProductTexts?.addToCart.description}</p>
                     <img
@@ -166,12 +181,12 @@ const SingleProduct = () => {
                       alt="basketIcon"
                       className="mx-2"
                     />
-                  </div>
-                  {addToCartCatchError?.response.data.message && (
+                  </button>
+                  {addToCartCatchError?.data.message && (
                     <div
                       className="text-red-500"
                       dangerouslySetInnerHTML={{
-                        __html: addToCartCatchError?.response.data.message,
+                        __html: addToCartCatchError.data.message
                       }}
                     />
                   )}

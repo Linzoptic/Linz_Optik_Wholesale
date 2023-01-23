@@ -1,14 +1,14 @@
-
 export interface IOptionsAttributes {
-    name: string;
-    stock_quantity: number;
-    variation_id: number;
-};
-
+  name: string;
+  stock_quantity: number;
+  variation_id: number;
+  taxonomy: string;
+}
 
 ///////////////////////////////////
 export interface ISingleProductAttributes {
   name: string;
+  taxonomy: string;
   types: {
     name: string;
     options: IOptionsAttributes[];
@@ -41,7 +41,7 @@ export interface ISingleProducts {
 
 //////////////////////////////
 
-export interface Products {
+export interface IProducts {
   id: number;
   name: string;
   sku: string;
@@ -54,7 +54,7 @@ export interface Products {
 }
 
 //////////////////////////////
-export interface AttributeCategory {
+export interface IAttributeCategory {
   term_id: number;
   name: string;
   taxonomy: string;
@@ -63,16 +63,14 @@ export interface AttributeCategory {
 
 export interface IAttributes {
   name: string;
-  name_category: AttributeCategory[];
+  name_category: IAttributeCategory[];
 }
 
 //////////////////////////////
 
-export interface CatchError {
-  response: {
-    data: {
-      message: string;
-    };
+export interface ICatchError {
+  data: {
+    message: string;
   };
 }
 
@@ -181,6 +179,10 @@ export interface IBasketProduct {
     regular_price: string;
     sale_price: string;
   };
+  variation?: {
+    attribute: string;
+    value: string;
+  }[];
   setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>;
 }
 
@@ -188,4 +190,11 @@ export interface IBasketProduct {
 
 export interface IBasketText {
   description: string;
+}
+
+/////////////////////////
+
+export interface IVariationAttributes {
+  attribute: string;
+  value: string;
 }

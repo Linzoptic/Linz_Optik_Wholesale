@@ -4,14 +4,14 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
 import { LOCAL_STORAGE_KEYS, LOGIN_URL, PAGES } from "../../utils/constants/constants";
-import { CatchError } from "../../utils/interface";
+import { ICatchError } from "../../utils/interface";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [userpassword, setUserpassword] = useState<string>("");
   const [showpassword, setShowpassword] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState<CatchError>();
+  const [loginError, setLoginError] = useState<ICatchError>();
 
   const formHendler = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -109,8 +109,8 @@ const LoginForm: React.FC = () => {
             className="uppercase bg-sky-900 text-sky-100 font-bold text-[18px] px-4 py-[8px] mt-3 rounded-md hover:bg-sky-300 hover:text-sky-900 duration-300 cursor-pointer"
             value={"login"}
           />
-        {typeof loginError?.response.data.message === "string" && loginError?.response.data.message && (
-          <div className="text-red-700 font-[600]" dangerouslySetInnerHTML={{__html:loginError?.response.data.message}}/>
+        {typeof loginError?.data.message === "string" && loginError?.data.message && (
+          <div className="text-red-700 font-[600]" dangerouslySetInnerHTML={{__html:loginError?.data.message}}/>
         )}
         </form>
       </div>
