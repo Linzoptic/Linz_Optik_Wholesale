@@ -32,6 +32,7 @@ export interface ISingleProducts {
   price_string: string;
   stock_status: string;
   quantity: number;
+  stock_quantity: number;
   description?: string | undefined;
   short_description?: string | undefined;
   related_ids: number[];
@@ -115,6 +116,7 @@ export interface IGetTexts {
   description: string;
   slug: string;
   name: string;
+  link: string
 }
 
 export interface IHomePageTexts {
@@ -183,7 +185,9 @@ export interface IBasketProduct {
     attribute: string;
     value: string;
   }[];
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>;
+  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
+  onCheckBasketItem: (id: number) => void;
+  checkoutBasket: IBasketProduct[];
 }
 
 //////////////////////
@@ -198,3 +202,5 @@ export interface IVariationAttributes {
   attribute: string;
   value: string;
 }
+
+//////////////////////////

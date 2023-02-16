@@ -5,7 +5,7 @@ import HeaderSkeleton from "../../skeleton/HeaderSkeleton";
 import useHeaderTeaxts from "./components/hooks/useHeaderTexts";
 import SearchProduct from "./components/SearchProduct";
 
-const Header = () => {
+const Header = ({basketLength}:{basketLength: number | undefined}) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string>("");
@@ -79,12 +79,13 @@ const Header = () => {
                     to={PAGES.BASKET}
                     className="bg-[#F1EFE8] flex items-center justify-center p-2 rounded-xl ml-2 cursor-pointer"
                   >
-                    <div>
+                    <div className="relative">
                       <img
                         src={headerTexts?.basketIcon.description}
                         alt="basket"
                         className="w-[26px]"
                       />
+                      <p className="absolute top-[-15px] right-[-20px] font-[700] text-[13px]">({basketLength})</p>
                     </div>
                   </Link>
                 </div>

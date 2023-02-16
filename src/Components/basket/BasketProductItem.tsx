@@ -3,18 +3,24 @@ import { IBasketProduct } from "../../utils/interface";
 import { onRemoveBasketItem } from "./utils/onRemoveBasketItem";
 import { MdDeleteOutline } from "react-icons/md";
 import Loader from "../../utils/loader/Loader";
+import Utils from "./utils/Utils";
 
 const BasketProductItem = (props: IBasketProduct) => {
   
-  const [removeItemLoading, setRemoveItemLoading] = useState<boolean>();
+  const [removeItemLoading, setRemoveItemLoading] = useState<boolean>(false);
 
   return (
     <div className="border my-3 p-6 rounded-2xl shadow-[0_4px_32px_rgba(141,141,141,.12)]">
       <div className="flex items-center justify-between flex-wrap">
-        <div className="flex items-center justify-between w-full md:w-[80%]">
+        <div className={!!props.variation?.length ? "flex items-center justify-between w-full md:w-[85%]" : "flex items-center justify-between w-full md:w-[55%]"}>
           <div className="flex items-center justify-between">
             <div>
-              <input type="checkbox" />
+              <input 
+                type="checkbox" 
+                className="cursor-pointer"
+                checked={props.checkoutBasket.some(element => element.id === props.id)}
+                onChange={() => props.onCheckBasketItem(props.id)}
+              />
             </div>
             <div className="w-[80px] md:w-[120px] h-[80px] md:h-[120px] flex items-center justify-center">
               <img
@@ -32,13 +38,13 @@ const BasketProductItem = (props: IBasketProduct) => {
               </p>
             </div>
           </div>
-          {!!props.variation?.length  ? (
+          {!!props.variation?.length ? (
             <div className="flex flex-wrap justify-between">
               <div className="grid grid-cols-2 md:grid-cols-4 mx-3">
                 {props.variation.map((elem, index) => (
-                  <div key={index} className="border p-2 rounded-xl mx-[4px]">
-                    <p>{elem.attribute}</p>
-                    <span className="border p-[2px] inline">{elem.value}</span>
+                  <div key={index} className="border p-[5px] rounded-xl mx-[4px] flex items-center">
+                    <p className="mx-2">{elem.attribute}</p>
+                    <span className="border p-[2px] rounded-xl inline">{elem.value}</span>
                   </div>
                 ))}
               </div>
@@ -48,7 +54,7 @@ const BasketProductItem = (props: IBasketProduct) => {
               </div>
             </div>
           ) : (
-            <div className="px-[15px] py-[5px] border rounded-xl flex items-center">
+            <div className="px-[15px] py-[5px] border rounded-xl flex items-center text-center">
               <h1 className="text-gray-500">{props?.count}</h1>
               <span className="ml-3 font-[00]">{props?.quantity}</span>
             </div>
@@ -60,16 +66,16 @@ const BasketProductItem = (props: IBasketProduct) => {
               <Loader loading={removeItemLoading} size={20} />
             </div>
           )}
-          {props?.prices.sale_price !== "0" ? (
+          {props?.prices?.sale_price !== "0" ? (
             <div>
               <p className="text-[14px] md:text-[14px] lg:text-[16px] font-[600]">
-                {props?.prices.sale_price}
+                {Utils(props.prices?.sale_price, props.quantity)}
                 <span className="text-[14px] md:text-[14px] lg:text-[16px]">
                   {props?.prices.currency_code}
                 </span>
               </p>
               <p className="text-[14px] md:text-[14px] lg:text-[16px] line-through">
-                {props?.prices.regular_price}
+                {Utils(props.prices?.regular_price, props.quantity)}
                 <span className="text-[14px] md:text-[14px] lg:text-[16px]">
                   {props?.prices.currency_code}
                 </span>
@@ -78,14 +84,13 @@ const BasketProductItem = (props: IBasketProduct) => {
           ) : (
             <div>
               <p className="text-[14px] md:text-[14px] lg:text-[16px] font-[600]">
-                {props?.prices.regular_price}
+                {Utils(props.prices?.regular_price, props.quantity)}
                 <span className="text-[14px] md:text-[14px] lg:text-[16px] ml-1">
                   {props?.prices.currency_code}
                 </span>
               </p>
             </div>
           )}
-
           <div className="ml-4 cursor-pointer">
             <MdDeleteOutline
               onClick={() =>

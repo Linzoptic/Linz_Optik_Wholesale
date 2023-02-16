@@ -40,7 +40,7 @@ const UpdatePassword: React.FC = () => {
         <form
           className={
             openErrorDiv
-              ? "w-full p-5 border border-cyan-700 rounded-2xl shadow-[0_10px_15px_0]"
+              ? "w-full p-5 border rounded-2xl shadow-[0_2px_20px]"
               : "w-full p-5 border rounded-2xl shadow-2xl border-red-500"
           }
           onSubmit={clickHandler}
@@ -105,7 +105,7 @@ const UpdatePassword: React.FC = () => {
           <div className="block  md:flex justify-between">
             <button
               type="submit"
-              className="border px-[20px] py-[5px] rounded-lg border-cyan-800 text-cyan-800 font-[700] mt-3 duration-150 text-[14px] md:text-[16px] w-full md:w-[250px] hover:scale-105 hover:text-cyan-700"
+              className="border px-[20px] py-[5px] rounded-xl bg-[#F1EFE8] text-[#384275] font-[700] mt-3 duration-150 text-[14px] md:text-[16px] w-full md:w-[250px] hover:scale-105 hover:text-cyan-700"
             >
               Update Password
             </button>
@@ -129,7 +129,7 @@ const UpdatePassword: React.FC = () => {
             <h1 className="text-xl">*Please enter the correct password*</h1>
           </div>
         </form>
-        <h1 className="px-[16px] py-[4px] my-12 text-cyan-800 border border-cyan-800 text-[14px] font-[600]  rounded-lg  shadow-xl shadow-neutral-900 hover:scale-110 duration-300">
+        <h1 className="px-[20px] py-[5px] my-12 text-[#384275] bg-[#F1EFE8] border text-[14px] font-[600]  rounded-xl  shadow-xl shadow-neutral-900 hover:scale-110 duration-300">
           <Link to={PAGES.LOGIN}>Go Back</Link>
         </h1>
       </div>

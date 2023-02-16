@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import axios from "axios";
 import Photo from "../../images/Rectangle.svg";
-import { LOCAL_STORAGE_KEYS, LOGIN_URL, PAGES } from "../../utils/constants/constants";
+import {
+  LOCAL_STORAGE_KEYS,
+  LOGIN_URL,
+  PAGES,
+} from "../../utils/constants/constants";
 import { ICatchError } from "../../utils/interface";
+import { httpClient } from "../../http-client/HttpClient";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
@@ -15,11 +19,8 @@ const LoginForm: React.FC = () => {
 
   const formHendler = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(username);
-    console.log(userpassword);
-    
     try {
-      const resoult = await axios.post(
+      const resoult = await httpClient.post(
         `${LOGIN_URL}`,
         JSON.stringify({
           username: username,
@@ -35,7 +36,7 @@ const LoginForm: React.FC = () => {
           LOCAL_STORAGE_KEYS.USERNAME,
           JSON.stringify(username)
         );
-        navigate(`/${PAGES.HOME}`);
+        navigate(PAGES.HOME);
       }
     } catch (error: any) {
       setLoginError(error);
@@ -101,17 +102,24 @@ const LoginForm: React.FC = () => {
               />
             )}
           </label>
-          <p className="text-[15px] font-[600] text-sky-900 mt-1 underline hover:no-underline">
-            <Link to="/emailPass">Forgot your Password?</Link>
+          <p
+            onClick={() => navigate(PAGES.UPDATE_PASS)}
+            className="text-[15px] font-[600] text-sky-900 mt-1 underline hover:no-underline cursor-pointer"
+          >
+            Forgot your Password?
           </p>
           <input
             type="submit"
             className="uppercase bg-sky-900 text-sky-100 font-bold text-[18px] px-4 py-[8px] mt-3 rounded-md hover:bg-sky-300 hover:text-sky-900 duration-300 cursor-pointer"
             value={"login"}
           />
-        {typeof loginError?.data.message === "string" && loginError?.data.message && (
-          <div className="text-red-700 font-[600]" dangerouslySetInnerHTML={{__html:loginError?.data.message}}/>
-        )}
+          {typeof loginError?.data.message === "string" &&
+            loginError?.data.message && (
+              <div
+                className="text-red-700 font-[600]"
+                dangerouslySetInnerHTML={{ __html: loginError?.data.message }}
+              />
+            )}
         </form>
       </div>
     </div>

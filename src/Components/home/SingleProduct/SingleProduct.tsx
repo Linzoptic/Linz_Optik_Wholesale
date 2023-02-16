@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ISingleProducts,
-  IGetTexts,
   ICatchError,
   IVariationAttributes,
 } from "../../../utils/interface";
@@ -17,7 +16,6 @@ import useSimiliarProducts from "./hook/useSimiliarProducts";
 import {
   PAGES,
   SINGLE_PRODUCT_TYPES,
-  SOCIAL_MEDIA,
   SWIPER_SINGLE_CONFIG,
 } from "../../../utils/constants/constants";
 import SingleProductSkeleton from "../../../skeleton/SingleProductSkeleton";
@@ -27,14 +25,15 @@ import LinsInfo from "./components/LinsInfo";
 import { TfiBackLeft } from "react-icons/tfi";
 import { AddToCartFunction } from "./components/utils/AddToCartFunction";
 import Loader from "../../../utils/loader/Loader";
+import { useGlobalContext } from "./components/context/useClobalContext";
+import SocialMediaIcons from "../../social/SocialMediaIcons";
 
 const SingleProduct = () => {
-  const [productCount, setProductCount] = useState<number>(1);
   const [variationAttributes, setVariationAttributes] = useState<IVariationAttributes[]>([]);
   const [addToCartCatchError, setAddToCartCatchError] = useState<ICatchError>();
   const [addToCartLoading, setAddToCartLoading] = useState<boolean>();
+  const [animationCart, setAnimationCart] = useState<boolean>();
   const [singleProduct, setSingleProduct] = useState<ISingleProducts>();
-  const [socialIcons, setSocialIcons] = useState<IGetTexts[] | undefined>();
   const [similarProducts, setSimilarProducts] = useState<
     ISingleProducts[] | undefined
   >();
@@ -46,16 +45,10 @@ const SingleProduct = () => {
   const { singleProductTexts } = useSIngleProductTexts();
   const currency = singleProductTexts?.single_product_currency?.description;
   const choose = singleProductTexts?.choose?.description;
+  const postUrl = encodeURI(document.location.href);
+  const { productCount } = useGlobalContext()
 
-  useEffect(() => {
-    const socialMediaTexts: IGetTexts[] | undefined = Object.values({
-      ...singleProductTexts,
-    });
-    const nextSocialMediaTexts = socialMediaTexts.filter((el) =>
-      el.name.includes(SOCIAL_MEDIA.SOCIAL)
-    );
-    setSocialIcons(nextSocialMediaTexts);
-  }, [singleProductTexts, setSocialIcons]);
+  console.log(singleProduct)
 
   return (
     <div className="mx-auto">
@@ -68,7 +61,7 @@ const SingleProduct = () => {
         >
           {singleProductTexts?.go_products.description}
           <TfiBackLeft />
-        </Link>
+        </Link>  
       )}
       {isError && (
         <div className="text-center">
@@ -78,7 +71,7 @@ const SingleProduct = () => {
       {isLoading ? (
         <SingleProductSkeleton />
       ) : (
-        <div className="mx-auto grid  grid-cols-1 gap-5 md:grid-cols-2 my-5 border rounded-xl p-2">
+        <div className="relative mx-auto grid  grid-cols-1 gap-5 md:grid-cols-2 my-5 border rounded-xl p-2">
           <div className="relative flex items-center justify-center overflow-hidden">
             <Swiper
               {...SWIPER_SINGLE_CONFIG}
@@ -102,6 +95,9 @@ const SingleProduct = () => {
               </div>
             )}
           </div>
+            <div className={animationCart ? "w-full h-full z-20 absolute top-[20%] left-[-100px] opacity-0" : "w-[0px] z-20 absolute top-[-130px] right-[20px] opacity-1 duration-[1.2s] animate-pulse"}>
+              <img src={singleProduct?.images[0].src} alt="images" className="w-[200px] md:w-[400px] object-contain"/>
+            </div>
           <div>
             <div>
               <div className="flex justify-between">
@@ -110,13 +106,6 @@ const SingleProduct = () => {
                   <h1 className="text-[18px] xs:text-[25px] md:text[20px] lg:text-[2rem] font-[700]">
                     {singleProduct?.name}
                   </h1>
-                </div>
-                <div className="w-8 h-8 flex justify-center items-center border border-sky-900 text-sky-900 rounded-lg cursor-pointer">
-                  <img
-                    src={singleProductTexts?.wishList_icon.description}
-                    alt="wishlistIcon"
-                    className="w-4"
-                  />
                 </div>
               </div>
               <div>
@@ -147,7 +136,7 @@ const SingleProduct = () => {
                   variationAttributes={variationAttributes}
                 />
               ) : (
-                <GlassesInfo singleProductTexts={singleProductTexts} />
+                <GlassesInfo singleProductTexts={singleProductTexts} stockQuantity={singleProduct?.stock_quantity}/>
               )}
               <div className="mt-2 lg:mt-4 lg:flex justify-between items-center">
                 <div>
@@ -164,6 +153,7 @@ const SingleProduct = () => {
                         productCount,
                         setAddToCartCatchError,
                         setAddToCartLoading,
+                        setAnimationCart,
                         singleProduct?.stock_status,
                         variationAttributes
                       )
@@ -203,14 +193,7 @@ const SingleProduct = () => {
                     </p>
                   </div>
                   <div className="flex justify-between">
-                    {socialIcons?.map((el, i) => (
-                      <img
-                        key={i}
-                        src={el.description}
-                        alt="icon"
-                        className="ml-10 cursor-pointer"
-                      />
-                    ))}
+                    <SocialMediaIcons postUrl={postUrl}/>
                   </div>
                 </div>
               </div>
@@ -248,9 +231,7 @@ const SingleProduct = () => {
       )}
       <div>
         <SimilarProducts
-          similar_product_title={
-            singleProductTexts?.similar_product_title.description
-          }
+          similar_product_title={singleProductTexts?.similar_product_title.description}
           similarProducts={similarProducts}
           similarLoading={similarLoading}
           currency={currency}

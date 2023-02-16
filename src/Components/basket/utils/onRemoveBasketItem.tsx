@@ -4,8 +4,8 @@ import { IBasketProduct } from "../../../utils/interface";
 
 export const onRemoveBasketItem = async (
   key: string | number,
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>,
-  setRemoveItemLoading: React.Dispatch<React.SetStateAction<boolean | undefined>>
+  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>,
+  setRemoveItemLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setRemoveItemLoading(true);
   const { data } = await httpClient.post(
@@ -25,6 +25,7 @@ export const onRemoveBasketItem = async (
   );
   if (data) {
     setBasket(data.items);
+    console.log(data)
     setRemoveItemLoading(false);
   }
 };

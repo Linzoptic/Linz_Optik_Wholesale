@@ -6,9 +6,11 @@ import {
 import { IBasketProduct } from "../../../utils/interface";
 
 export const onRemoveAllBasket = (
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>
+  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] >>,
+  setBasketRemoveLoading: React.Dispatch<React.SetStateAction<boolean >>
 ) => {
   (async () => {
+    setBasketRemoveLoading(true)
       const { data } = await httpClient.delete(
         `/wc/store/cart/items?${CONSUMER_KEY}`,
         {
@@ -23,6 +25,7 @@ export const onRemoveAllBasket = (
       );
       if (data) {
         setBasket(data);
+        setBasketRemoveLoading(false)
       }
   })();
 };

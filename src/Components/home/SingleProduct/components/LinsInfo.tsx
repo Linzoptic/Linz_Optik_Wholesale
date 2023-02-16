@@ -53,9 +53,9 @@ const LinsInfo = ({
                 })}
               </div>
               <div className="w-full mt-3 md:mt-0 md:max-w-[150px]">
-                <IncrementDecrement
+                {/* <IncrementDecrement
                   name={singleProductTexts?.count.description}
-                />
+                /> */}
               </div>
             </div>
           </div>

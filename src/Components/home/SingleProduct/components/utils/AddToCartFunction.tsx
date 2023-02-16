@@ -19,6 +19,9 @@ export const AddToCartFunction = async (
   setAddToCartLoading: React.Dispatch<
     React.SetStateAction<boolean | undefined>
   >,
+  setAnimationCart:  React.Dispatch<
+  React.SetStateAction<boolean | undefined>
+>,
   variationAdd: string | undefined,
   variationAttributes: IVariationAttributes[] | undefined
 ) => {
@@ -31,6 +34,7 @@ export const AddToCartFunction = async (
   };
   try {
     setAddToCartLoading(true);
+    setAnimationCart(true)
     if (!id) {
       return false;
     } else {
@@ -49,6 +53,7 @@ export const AddToCartFunction = async (
       );
       if (response){
         setAddToCartLoading(false);
+        setAnimationCart(false)
       }
     }
   } catch (error: any | undefined) {

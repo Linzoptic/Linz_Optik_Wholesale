@@ -7,17 +7,20 @@ export const PRODUCTS = process.env.REACT_APP_PRODUCTS as string;
 export const FOOTER_CALL = process.env.REACT_APP_FOOTER_CALL as string;
 export const HEADER_TEXTS = process.env.REACT_APP_HEADER_TEXTS as string;
 export const HOME_PAGE_TEXTS = process.env.REACT_APP_HOME_PAGE_TEXTS as string;
-export const SINGLE_PRODUCT_TEXTS = process.env
-  .REACT_APP_SINGLE_PRODUCT_TEXTS as string;
+export const SINGLE_PRODUCT_TEXTS = process.env.REACT_APP_SINGLE_PRODUCT_TEXTS as string;
+export const CHECKOUT_TEXTS = process.env.REACT_APP_CHECKOUT_TEXTS as string;
+export const BASKET_TEXTS = process.env.REACT_APP_BASKET_TEXTS as string;
+export const SEND_CHEKOUT = process.env.REACT_APP_SEND_CHECKOUT as string;
 
 export const PAGES = {
   HOME: "/home",
   LOGIN: "/login",
   EMAIL_PASS: "/emailPass",
-  UPDATE_PASS: "/updatePass",
+  UPDATE_PASS: "/updatePassword",
   PRODUCT: "/product",
   PRODUCT_ID: "/product/:id",
   BASKET: "/basket",
+  CHECKOUT: "/checkout",
 };
 
 export const SCREENS = {
@@ -35,6 +38,10 @@ export const SINGLE_PRODUCT_TYPES = {
 
 export const SOCIAL_MEDIA = {
   SOCIAL: "social",
+  FACEBOOK: "facebook",
+  TWITTER: "twitter",
+  INSTAGRAM: "instagram",
+  LINKEDIN: "linkedin",
 };
 
 export const COUNTS = {

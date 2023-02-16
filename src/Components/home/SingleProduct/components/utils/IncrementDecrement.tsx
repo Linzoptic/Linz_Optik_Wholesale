@@ -1,23 +1,32 @@
-import { useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { FaMinus } from "react-icons/fa";
+import { useGlobalContext } from "../context/useClobalContext";
 
-const IncrementDecrement = ({ name }: { name: string | undefined }) => {
-  const [count, setcount] = useState<number>(1);
+const IncrementDecrement = ({
+  name,
+  stockQuantity,
+}: {
+  name: string | undefined;
+  stockQuantity: number | undefined;
+}) => {
+
+  const { productCount, setProductCount } = useGlobalContext()
   const Counter = (option: string) => {
     switch (option) {
       case "increment":
-        setcount(count + 1);
+        if(stockQuantity && productCount < stockQuantity) {
+          setProductCount(productCount + 1);
+        }
         break;
       case "dincrement":
-        if (count === 1) {
+        if (productCount === 1) {
           return false;
         } else {
-          setcount(count - 1);
+          setProductCount(productCount - 1);
         }
         break;
     }
-    return count;
+    return productCount;
   };
 
   return (
@@ -30,7 +39,7 @@ const IncrementDecrement = ({ name }: { name: string | undefined }) => {
           className="cursor-pointer"
         />
         <p className="border-2 p-[2px] rounded-xl shadow-[0_2px_5px_0_#384275] font-[700]">
-          {count}
+          {productCount}
         </p>
         <BsPlusLg
           size={14}

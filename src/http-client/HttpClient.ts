@@ -30,7 +30,7 @@ class HttpClient {
 
     http.interceptors.response.use(
       (response) => {
-        return response
+        return response;
       },
       (error) => {
         const { response } = error;
@@ -80,8 +80,10 @@ class HttpClient {
 
   private async handleError(error: any) {
     if (!error) return;
-    const { status, data: { code = '' } } = error;
-    // console.log(error, code)
+    const {
+      status,
+      data: { code = "" },
+    } = error;
 
     switch (status) {
       case StatusCode.InternalServerError: {
@@ -89,28 +91,24 @@ class HttpClient {
       }
       case StatusCode.Forbidden: {
         const originalRequest = error.config;
-        if(!originalRequest._retry) {
+        if (!originalRequest._retry) {
           originalRequest._retry = true;
-          if(code === "woocommerce_rest_invalid_nonce") {
-            const { data } = await this.get(
-              `${BASE_URL}/nonce/header`,
-            );
-            if(this.instance) {
-              originalRequest.headers['nonce'] = data[0];
-              localStorage.setItem(LOCAL_STORAGE_KEYS.NONCE,data[0])
+          if (code === "woocommerce_rest_invalid_nonce") {
+            const { data } = await this.get(`${BASE_URL}/nonce/header`);
+            if (this.instance) {
+              originalRequest.headers["nonce"] = data[0];
+              localStorage.setItem(LOCAL_STORAGE_KEYS.NONCE, data[0]);
               return this.instance?.request(originalRequest);
             }
           }
-
         }
-      
+
         break;
       }
       case StatusCode.Unauthorized: {
         break;
       }
       case StatusCode.TooManyRequests: {
-        // Handle TooManyRequests
         break;
       }
       default:

@@ -7,7 +7,7 @@ import {
 import { ICatchError, IBasketProduct } from "../../../utils/interface";
 
 const useGetBasket = (
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>
+  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>
 ) => {
   const [basketLoading, setBasketLoading] = useState<boolean>(false);
   const [basketError, setBasketError] = useState<ICatchError>();
