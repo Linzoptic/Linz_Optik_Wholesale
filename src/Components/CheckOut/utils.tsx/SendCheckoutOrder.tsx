@@ -1,6 +1,9 @@
 import { httpClient } from "../../../http-client/HttpClient";
-import { LOCAL_STORAGE_KEYS, PAGES, SEND_CHEKOUT } from "../../../utils/constants/constants";
-import { ICatchError } from "../../../utils/interface";
+import {
+  LOCAL_STORAGE_KEYS,
+  SEND_CHEKOUT,
+} from "../../../utils/constants/constants";
+import { ICatchError, IProductIds } from "../../../utils/interface";
 
 export const SendCheckoutOrder = async (
   firstName: string,
@@ -9,38 +12,43 @@ export const SendCheckoutOrder = async (
   userEmail: string,
   company: string,
   phoneNumber: string,
-  checkoutBasketItemsKeys: (string | number)[],
+  productIds: IProductIds[],
   city: string,
   postAddress: string,
   setSendLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setCheckOutSendError: React.Dispatch<React.SetStateAction<ICatchError | undefined>>
+  setCheckOutSendError: React.Dispatch<
+    React.SetStateAction<ICatchError | undefined>
+  >,
+  deleveriPrice: string | undefined
 ) => {
   try {
-    setSendLoading(true)
-    const data = await httpClient.post(
+    setSendLoading(true);
+    await httpClient.post(
       SEND_CHEKOUT,
       JSON.stringify({
-         payment_data:[
-          checkoutBasketItemsKeys,
-         ],
-         billing_address: {
-            first_name: firstName,
-            last_name: lastName,
-            company,
-            address_1: userAddress,
-            phone: phoneNumber,
-            email: userEmail,
-            country: "AM",
-            city,
-            postcode: postAddress,
-            state: "Erevan"
-         },
-         payment_method: "cheque",
-         create_account: false
+        line_items: productIds,
+        billing: {
+          first_name: firstName,
+          last_name: lastName,
+          company,
+          address_1: userAddress,
+          phone: phoneNumber,
+          email: userEmail,
+          country: "AM",
+          city,
+          postcode: postAddress,
+          state: "Erevan",
+        },
+        status: "completed",
+        shipping_lines: [
+          {
+            method_id: "flat_rate",
+            total: "1000",
+          },
+        ],
       }),
       {
         headers: {
-          Nonce: `${localStorage.getItem(LOCAL_STORAGE_KEYS.NONCE)}`,
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem(
             LOCAL_STORAGE_KEYS.JWT_TOKEN
@@ -48,11 +56,9 @@ export const SendCheckoutOrder = async (
         },
       }
     );
-    setSendLoading(false)
+    setSendLoading(false);
   } catch (error: any | undefined) {
-    setCheckOutSendError(error)
-    setSendLoading(true)
+    setCheckOutSendError(error);
+    setSendLoading(true);
   }
 };
-
-

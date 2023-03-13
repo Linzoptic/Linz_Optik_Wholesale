@@ -14,10 +14,10 @@ import useGetText from "./utils/useGetText";
 import BorderComponent from "../CheckOut/components/BorderComponent";
 
 const Basket = ({
-  basket,
-  setBasket,
   setCheckoutBasket,
   checkoutBasket,
+  basket,
+  setBasket,
 }: {
   basket: IBasketProduct[];
   setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
@@ -29,12 +29,12 @@ const Basket = ({
     useState<boolean>(false);
   const [allBasketItemPrice, setAllBasketItemPrice] = useState<number>(0);
   const [basketText, setBasketText] = useState<IBasketText[] | undefined>();
-
   const { basketError, basketLoading } = useGetBasket(setBasket);
 
   useGetText(setBasketText, BASKET_TEXTS);
 
-  const currency = basket.map((el) => el.prices.currency_code);
+  const currency = basket?.map((el) => el.prices.currency_code);
+  const producIds = basket?.map((el) => el.id);
 
   useEffect(() => {
     let prices = basket.reduce((acc, elem) => {
@@ -47,7 +47,7 @@ const Basket = ({
     setAllBasketItemPrice(prices);
   }, [basket]);
 
-  const onCheckBasketItem = (id:number) => {
+  const onCheckBasketItem = (id: number) => {
     const findInsideBasket = basket.find((el) => el.id === id);
     const findInsideCheckoutBasket = checkoutBasket.find((el) => el.id === id);
     if (findInsideBasket && !findInsideCheckoutBasket) {
@@ -59,13 +59,19 @@ const Basket = ({
   };
 
   const onCheckCkeckOutBasket = () => {
-    if(checkoutBasket.length === basket.length){
+    if (checkoutBasket.length === basket.length) {
       setCheckoutBasket([]);
-    }else{
-      setCheckoutBasket([...basket])
+    } else {
+      setCheckoutBasket([...basket]);
     }
   };
-  
+
+  const backTo = () => {
+    producIds[0] === undefined
+      ? navigate(PAGES.HOME)
+      : navigate(`${PAGES.PRODUCT}/${producIds[0]}`);
+  };
+
   return (
     <>
       {basketLoading ? (
@@ -74,11 +80,11 @@ const Basket = ({
             <div className="w-32 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
             <div className="w-44 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
           </div>
-          <BasketSkeleton count={basket.length} />
+          <BasketSkeleton count={basket.length}/>
         </>
       ) : (
         <div>
-          <div className="rounded-2xl  px-3 py-1 mt-2 border-2 border-[#F1EFE8]  text-[#384275] font-[600] flex items-center flex-col xs:flex-row justify-center  xs:justify-between">
+          <div className="rounded-2xl  px-3 py-1 mt-2 border-2 border-[#F1EFE8] text-[#384275] font-[600] flex items-center flex-col xs:flex-row justify-center  xs:justify-between">
             <div className="flex items-center">
               <div
                 onClick={() => navigate(PAGES.HOME)}
@@ -87,7 +93,7 @@ const Basket = ({
                 <AiOutlineHome />
               </div>
               <div
-                onClick={() => navigate(-1)}
+                onClick={backTo}
                 className="px-4 bg-[#F1EFE8] rounded-2xl py-2 ml-2 cursor-pointer"
               >
                 <IoMdArrowBack />
@@ -125,7 +131,9 @@ const Basket = ({
                 <input
                   type="checkbox"
                   className="mx-2"
-                  checked={checkoutBasket.length === basket.length ? true : false}
+                  checked={
+                    checkoutBasket.length === basket.length ? true : false
+                  }
                   onChange={onCheckCkeckOutBasket}
                 />
                 {basketText[1].description}

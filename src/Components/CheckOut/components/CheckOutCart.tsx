@@ -15,6 +15,7 @@ const CheckOutCart = ({
   onSubmitForm,
   sendError,
   sendLoading,
+  deleveriPrice,
 }: {
   checkoutBasket: IBasketProduct[];
   setCheckoutBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
@@ -22,10 +23,10 @@ const CheckOutCart = ({
   onSubmitForm: () => void;
   sendError: boolean;
   sendLoading: boolean;
+  deleveriPrice: string | undefined;
 }) => {
   const navigate = useNavigate();
   const currency = checkoutBasket?.map((el) => el.prices.currency_code);
-  const deleveriPrice = checkoutText && checkoutText[29].description;
 
   const { allPrices, sale, totalPrice } = getTotalSaleAllPrices(
     checkoutBasket,
@@ -42,8 +43,6 @@ const CheckOutCart = ({
       navigate(PAGES.BASKET);
     }
   }, [checkoutBasket.length, navigate]);
-
-  console.log(checkoutBasket)
 
   return (
     <>
@@ -77,33 +76,43 @@ const CheckOutCart = ({
                         <p className="text-[#2D2A2E] ">{el.sku}</p>
                         <p className="text-[#2D2A2E] font-[700]">{el.name}</p>
                       </div>
+                      {checkoutBasket.find((el) => el.variation) && (
+                        <div className="flex flex-wrap">
+                          {el.variation?.map((el, i) => (
+                            <p key={i} className="text-[12px] [&:not(:first-child)]:ml-[5px] font-[600]">
+                              {el.attribute.split(" ")[1]}:
+                              <span className="mx-1 font-[500]">{el.value}</span>
+                            </p>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center md:justify-between md:items-end">
+                  <div className="flex items-center mt-3 md:mt-0 justify-between md:flex-col md:items-end">
                     <div className="flex items-center bg-white px-[10px] py-[5px] rounded-xl">
                       <p>{checkoutText[30].description}</p>
                       <p className="font-[700] ml-2">{el.quantity}</p>
                     </div>
                     {el?.prices?.sale_price !== "0" ? (
-                      <div className="flex items-end md:block lg:flex">
-                        <p className="text-[16px] md:text-[16px] lg:text-[20px] font-[600]">
+                      <div className="flex items-end md:block  lg:flex">
+                        <p className="text-[16px] lg:text-[20px] font-[600]">
                           {Utils(el.prices?.sale_price, el.quantity)}
-                          <span className="text-[14px] md:text-[16px] lg:text-[20px]">
+                          <span className=" text-[16px] lg:text-[20px]">
                             {el?.prices.currency_code}
                           </span>
                         </p>
-                        <p className="text-[16px] md:text-[16px] lg:text-[20px] line-through ml-2">
+                        <p className="text-[16px] lg:text-[20px] line-through ml-2">
                           {Utils(el.prices?.regular_price, el.quantity)}
-                          <span className="text-[14px] md:text-[16px] lg:text-[20px]">
+                          <span className=" text-[16px] lg:text-[20px]">
                             {el?.prices.currency_code}
                           </span>
                         </p>
                       </div>
                     ) : (
                       <div>
-                        <p className="text-[16px] md:text-[16px] lg:text-[20px] font-[600]">
+                        <p className="text-[16px] lg:text-[20px] font-[600]">
                           {Utils(el.prices?.regular_price, el.quantity)}
-                          <span className="text-[14px] md:text-[16px] lg:text-[20px] ml-1">
+                          <span className=" text-[16px] lg:text-[20px] ml-1">
                             {el?.prices.currency_code}
                           </span>
                         </p>
@@ -150,9 +159,7 @@ const CheckOutCart = ({
                     {checkoutText[35].description}
                   </p>
                 )}
-                {sendLoading && (
-                  <Loader loading={sendLoading} size={30}/>
-                )}
+                {sendLoading && <Loader loading={sendLoading} size={30} />}
                 <div
                   className="mt-3 bg-[#384275] px-7 py-2 rounded-xl text-white cursor-pointer text-center"
                   onClick={onSubmitForm}

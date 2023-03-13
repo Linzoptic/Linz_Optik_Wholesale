@@ -18,25 +18,31 @@ const SelectComponent = ({
   >;
   variationAttributes: IVariationAttributes[];
 }) => {
-
   const onchange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    if (variationAttributes) {
+    const taxonomy = options?.find((elem) => elem.name === event.target.value)?.taxonomy;
+    const name = options?.find((elem) => elem.name === event.target.value)?.name;
+    if (taxonomy && name) {
       const newVariationAttr = [...variationAttributes];
-      newVariationAttr.push({
-        attribute: options?.find((elem) => elem.name === event.target.value)?.taxonomy || "",
-        value: options?.find((elem) => elem.name === event.target.value)?.name || "",
-      });
+      const findAttribute = newVariationAttr.find((elem) => elem.attribute === taxonomy);
+      if (findAttribute) {
+        findAttribute.value = name;
+      } else {
+        newVariationAttr.push({
+          attribute: taxonomy,
+          value: name,
+        });
+      }
       setVariationAttributes(newVariationAttr);
     }
   };
 
   return (
-    <div>
-      <h1>{name}</h1>
+    <div className="mr-3">
+      <h1 className="font-[500]">{name}</h1>
       <div className="p-2 border rounded-xl">
         <select
           onChange={onchange}
-          className="w-full justify-between outline-none cursor-pointer"
+          className="w-full outline-none cursor-pointer pb-1"
         >
           <option hidden>{choose}</option>
           {options?.map((el, i) => (

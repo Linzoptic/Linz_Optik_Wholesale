@@ -3,8 +3,8 @@ import {
   ISingleProductAttributes,
   IVariationAttributes,
 } from "../../../../utils/interface";
-import SelectComponent from "./utils/SelectComponent";
 import IncrementDecrement from "./utils/IncrementDecrement";
+import SelectComponent from "./utils/SelectComponent";
 
 const LinsInfo = ({
   singleProductTexts,
@@ -12,14 +12,19 @@ const LinsInfo = ({
   choose,
   setVariationAttributes,
   variationAttributes,
+  stockQuantity,
+  onChangeCount,
 }: {
   singleProductTexts: ISinglePageTexts | undefined;
-  variation_attributes: ISingleProductAttributes[] ;
+  variation_attributes: ISingleProductAttributes[];
   choose: string | undefined;
-  setVariationAttributes: React.Dispatch<React.SetStateAction<IVariationAttributes[]>>,
-  variationAttributes: IVariationAttributes[] ,
+  setVariationAttributes: React.Dispatch<
+    React.SetStateAction<IVariationAttributes[]>
+  >;
+  variationAttributes: IVariationAttributes[];
+  stockQuantity: number | undefined;
+  onChangeCount: (count: number) => void;
 }) => {
-  
   return (
     <div>
       <div className="flex items-center mb-3">
@@ -37,8 +42,8 @@ const LinsInfo = ({
             }`}
           >
             <h1 className="text-[20px] font-[600]">{elem?.name}</h1>
-            <div className="block xs:flex items-center justify-between mt-2">
-              <div className="w-full mt-3 md:mt-0 md:max-w-[230px] flex justify-between">
+            <div className="">
+              <div className="mt-3 md:mt-0  xs:flex justify-between items-center">
                 {elem?.types.map((type, index) => {
                   return (
                     <SelectComponent
@@ -51,11 +56,13 @@ const LinsInfo = ({
                     />
                   );
                 })}
-              </div>
-              <div className="w-full mt-3 md:mt-0 md:max-w-[150px]">
-                {/* <IncrementDecrement
-                  name={singleProductTexts?.count.description}
-                /> */}
+                <div className="mt-3 md:mt-0 xs:w-[120px]">
+                  <IncrementDecrement
+                    name={singleProductTexts?.count.description}
+                    stockQuantity={stockQuantity}
+                    onChangeCount={onChangeCount}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -1,45 +1,53 @@
+import {useState} from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { FaMinus } from "react-icons/fa";
-import { useGlobalContext } from "../context/useClobalContext";
 
 const IncrementDecrement = ({
   name,
   stockQuantity,
+  onChangeCount,
 }: {
   name: string | undefined;
   stockQuantity: number | undefined;
+  onChangeCount: (count: number) => void,
+
 }) => {
 
-  const { productCount, setProductCount } = useGlobalContext()
+  const [count, setCount] = useState<number>(1);
+
+
   const Counter = (option: string) => {
     switch (option) {
       case "increment":
-        if(stockQuantity && productCount < stockQuantity) {
-          setProductCount(productCount + 1);
+        if(stockQuantity === null) {
+          setCount(count + 1);
+        }else if(stockQuantity && stockQuantity < count){
+          return false;
         }
         break;
       case "dincrement":
-        if (productCount === 1) {
+        if (count === 1) {
           return false;
         } else {
-          setProductCount(productCount - 1);
+          setCount(count - 1);
         }
         break;
     }
-    return productCount;
+    onChangeCount(count)
+    return count;
   };
 
   return (
     <>
       <p>{name}</p>
-      <div className="flex items-center justify-between border rounded-xl px-4 py-2">
+      <div className="flex items-center justify-between mt-1 border rounded-xl px-4 py-2 xs:w-[130px]">
         <FaMinus
           size={14}
           onClick={() => Counter("dincrement")}
           className="cursor-pointer"
         />
-        <p className="border-2 p-[2px] rounded-xl shadow-[0_2px_5px_0_#384275] font-[700]">
-          {productCount}
+        <p className="border px-[3px] text-[14px] rounded-xl shadow-[0_2px_5px_0_#384275] font-[600]">
+          {count}
         </p>
         <BsPlusLg
           size={14}

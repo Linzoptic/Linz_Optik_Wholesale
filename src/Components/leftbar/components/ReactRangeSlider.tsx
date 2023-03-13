@@ -18,7 +18,7 @@ const ReactRangeSlider = ({
     pricesRange[0]?.currentPrice || 0,
     pricesRange[1]?.currentPrice || 1,
   ];
-
+  
   const onFinalChange = () => {
     setSearchParams({
       ...currentQueries,
@@ -29,10 +29,10 @@ const ReactRangeSlider = ({
 
   return (
     <>
-      {homePageTexts?.value.description ? (
+      {homePageTexts?.value.description && pricesRange[1].currentPrice !== pricesRange[0].currentPrice ? (
         <div className="mt-10 px-2 w-full">
           <div>
-            <h1>{homePageTexts?.value.description}</h1>
+            <h1>{homePageTexts?.value.description} </h1>
           </div>
           <div className="flex justify-between items-center my-4 flex-wrap">
             <div className="flex items-center my-2">

@@ -14,6 +14,7 @@ import SimilarProducts from "../components/SimilarProducts";
 import useSingleProduct from "./hook/useSingleProduct";
 import useSimiliarProducts from "./hook/useSimiliarProducts";
 import {
+  ERROR_MASSEGE,
   PAGES,
   SINGLE_PRODUCT_TYPES,
   SWIPER_SINGLE_CONFIG,
@@ -25,15 +26,17 @@ import LinsInfo from "./components/LinsInfo";
 import { TfiBackLeft } from "react-icons/tfi";
 import { AddToCartFunction } from "./components/utils/AddToCartFunction";
 import Loader from "../../../utils/loader/Loader";
-import { useGlobalContext } from "./components/context/useClobalContext";
 import SocialMediaIcons from "../../social/SocialMediaIcons";
 
 const SingleProduct = () => {
-  const [variationAttributes, setVariationAttributes] = useState<IVariationAttributes[]>([]);
+  const [variationAttributes, setVariationAttributes] = useState<
+    IVariationAttributes[]
+  >([]);
   const [addToCartCatchError, setAddToCartCatchError] = useState<ICatchError>();
-  const [addToCartLoading, setAddToCartLoading] = useState<boolean>();
-  const [animationCart, setAnimationCart] = useState<boolean>();
+  const [addToCartLoading, setAddToCartLoading] = useState<boolean>(false);
+  const [animationCart, setAnimationCart] = useState<boolean>(false);
   const [singleProduct, setSingleProduct] = useState<ISingleProducts>();
+  const [productCount, setProductCount] = useState<number>(1);
   const [similarProducts, setSimilarProducts] = useState<
     ISingleProducts[] | undefined
   >();
@@ -46,12 +49,13 @@ const SingleProduct = () => {
   const currency = singleProductTexts?.single_product_currency?.description;
   const choose = singleProductTexts?.choose?.description;
   const postUrl = encodeURI(document.location.href);
-  const { productCount } = useGlobalContext()
 
-  console.log(singleProduct)
+  const onChangeCount = (count: number) => {
+    setProductCount(count + 1);
+  };
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto border-2 p-2 rounded-xl">
       {!singleProductTexts?.go_products.description ? (
         <div className="h-[30px] w-[150px] rounded-xl bg-gray-300 animate-pulse"></div>
       ) : (
@@ -61,7 +65,7 @@ const SingleProduct = () => {
         >
           {singleProductTexts?.go_products.description}
           <TfiBackLeft />
-        </Link>  
+        </Link>
       )}
       {isError && (
         <div className="text-center">
@@ -95,9 +99,19 @@ const SingleProduct = () => {
               </div>
             )}
           </div>
-            <div className={animationCart ? "w-full h-full z-20 absolute top-[20%] left-[-100px] opacity-0" : "w-[0px] z-20 absolute top-[-130px] right-[20px] opacity-1 duration-[1.2s] animate-pulse"}>
-              <img src={singleProduct?.images[0].src} alt="images" className="w-[200px] md:w-[400px] object-contain"/>
-            </div>
+          <div
+            className={
+              animationCart
+                ? "w-full h-full z-[-1] absolute top-[20%] left-[-100px] opacity-0"
+                : "w-[0px] z-20 absolute top-[-130px] right-[20px] opacity-1 duration-[1.2s] animate-pulse"
+            }
+          >
+            <img
+              src={singleProduct?.images[0].src}
+              alt="images"
+              className="w-[200px] md:w-[400px] object-contain"
+            />
+          </div>
           <div>
             <div>
               <div className="flex justify-between">
@@ -108,21 +122,32 @@ const SingleProduct = () => {
                   </h1>
                 </div>
               </div>
-              <div>
+              <div className="flex justify-between items-center">
                 {singleProduct?.sale_price_string ? (
                   <div className="flex items-center justify-between">
-                    <p className="text-[20px] md:text-[25px] font-[600]">
-                      {singleProduct?.sale_price_string} <span>{currency}</span>
+                    <p className="text-[18px] md:text-[24px] lg:text-[32px] font-[600]">
+                      {singleProduct?.sale_price_string}
+                      <span>{currency}</span>
                     </p>
-                    <p className="line-through  text-[16px] md:text-[20px] font-[600]">
+                    <p className="line-through ml-2 text-[18px] md:text-[24px] lg:text-[32px] font-[600]">
                       {singleProduct?.regular_price_string}
                       <span>{currency}</span>
                     </p>
                   </div>
                 ) : (
-                  <p className="text-[20px] md:text-[25px] font-[600]">
-                    {singleProduct?.price_string} <span>{currency}</span>
-                  </p>
+                  <div>
+                    <p className="text-[20px] md:text-[25px] font-[600]">
+                      {singleProduct?.price_string} <span>{currency}</span>
+                    </p>
+                  </div>
+                )}
+                {singleProduct?.stock_quantity && (
+                  <div className="flex font-[400]">
+                    <p>{singleProductTexts?.stockQuantity.description}</p>
+                    <span className="ml-2 font-[500]">
+                      {singleProduct?.stock_quantity}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
@@ -134,9 +159,15 @@ const SingleProduct = () => {
                   choose={choose}
                   setVariationAttributes={setVariationAttributes}
                   variationAttributes={variationAttributes}
+                  stockQuantity={singleProduct?.stock_quantity}
+                  onChangeCount={onChangeCount}
                 />
               ) : (
-                <GlassesInfo singleProductTexts={singleProductTexts} stockQuantity={singleProduct?.stock_quantity}/>
+                <GlassesInfo
+                  singleProductTexts={singleProductTexts}
+                  stockQuantity={singleProduct?.stock_quantity}
+                  onChangeCount={onChangeCount}
+                />
               )}
               <div className="mt-2 lg:mt-4 lg:flex justify-between items-center">
                 <div>
@@ -172,13 +203,17 @@ const SingleProduct = () => {
                       className="mx-2"
                     />
                   </button>
-                  {addToCartCatchError?.data.message && (
-                    <div
-                      className="text-red-500"
-                      dangerouslySetInnerHTML={{
-                        __html: addToCartCatchError.data.message
-                      }}
-                    />
+                  {addToCartCatchError?.data.message ===
+                    ERROR_MASSEGE.NoMatchingVariation && (
+                    <p className="text-red-500 font-[600]">
+                      {singleProductTexts?.fillAllFildes.description}
+                    </p>
+                  )}
+                  {addToCartCatchError?.data.message ===
+                    ERROR_MASSEGE.ThisItemIsAreadyInCart && (
+                    <p className="text-red-500 font-[600]">
+                      {singleProductTexts?.isAlradyInCart.description}
+                    </p>
                   )}
                   {addToCartLoading && (
                     <div className="flex items-center justify-center">
@@ -193,7 +228,7 @@ const SingleProduct = () => {
                     </p>
                   </div>
                   <div className="flex justify-between">
-                    <SocialMediaIcons postUrl={postUrl}/>
+                    <SocialMediaIcons postUrl={postUrl} />
                   </div>
                 </div>
               </div>
@@ -231,7 +266,9 @@ const SingleProduct = () => {
       )}
       <div>
         <SimilarProducts
-          similar_product_title={singleProductTexts?.similar_product_title.description}
+          similar_product_title={
+            singleProductTexts?.similar_product_title.description
+          }
           similarProducts={similarProducts}
           similarLoading={similarLoading}
           currency={currency}

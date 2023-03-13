@@ -116,8 +116,10 @@ export interface IGetTexts {
   description: string;
   slug: string;
   name: string;
-  link: string
+  link: string;
 }
+
+////////////////////////////////
 
 export interface IHomePageTexts {
   filter: IGetTexts;
@@ -160,6 +162,9 @@ export interface ISinglePageTexts {
   go_products: IGetTexts;
   choose: IGetTexts;
   notAvailable: IGetTexts;
+  isAlradyInCart: IGetTexts;
+  fillAllFildes: IGetTexts;
+  stockQuantity: IGetTexts;
 }
 
 ///////////////////////
@@ -204,3 +209,16 @@ export interface IVariationAttributes {
 }
 
 //////////////////////////
+
+export interface IProductIds {
+  product_id: number;
+  quantity: number;
+  total: string;
+}
+
+//////////////////////////
+
+export interface ICategories {
+  name: string; 
+  slug: string;
+}

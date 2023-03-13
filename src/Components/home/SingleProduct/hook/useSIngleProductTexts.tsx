@@ -35,6 +35,9 @@ const useSIngleProductTexts = () => {
           go_products: correctTexts.data[21],
           notAvailable: correctTexts.data[22],
           choose: correctTexts.data[23],
+          fillAllFildes : correctTexts.data[27],
+          isAlradyInCart: correctTexts.data[28],
+          stockQuantity: correctTexts.data[25],
         });
       }
     })();

@@ -12,7 +12,7 @@ export const getTotalSaleAllPrices = (
     if (elem.prices.sale_price === "0") {
       return acc;
     }
-    return acc + (+elem.prices.regular_price - +elem.prices.sale_price) / 100;
+    return acc + (+elem.prices.regular_price - +elem.prices.sale_price) / 100 * elem.quantity;
   }, 0);
   if (allPrices && deleveriPrice && sale) {
     totalPrice = +allPrices - +sale + +deleveriPrice;

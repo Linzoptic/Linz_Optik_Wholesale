@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { CHECKOUT_TEXTS } from "../../utils/constants/constants";
-import { IBasketProduct, IBasketText, ICatchError } from "../../utils/interface";
+import {
+  IBasketProduct,
+  IBasketText,
+  ICatchError,
+} from "../../utils/interface";
 import useGetText from "../basket/utils/useGetText";
 import CheckOutCart from "./components/CheckOutCart";
 import { SendCheckoutOrder } from "./utils.tsx/SendCheckoutOrder";
@@ -27,9 +31,20 @@ const CheckOut = ({
 
   const [checkoutText, setCheckoutText] = useState<IBasketText[] | undefined>();
   useGetText(setCheckoutText, CHECKOUT_TEXTS);
+  const deleveriPrice = checkoutText && checkoutText[29].description;
   const navigate = useNavigate();
 
-  const checkoutBasketItemsKeys = checkoutBasket.map((el) => el.key);
+  const productIds = checkoutBasket.map((el) => {
+    return {
+      product_id: el.id,
+      quantity: el.quantity,
+      total:
+        el.prices.sale_price !== "0"
+          ? ((+el.prices.sale_price * el.quantity) / 100).toString()
+          : ((+el.prices.regular_price * el.quantity) / 100).toString(),
+    };
+  });
+  console.log("productIds>>>", productIds)
 
   const onSubmitForm = () => {
     if (
@@ -47,11 +62,12 @@ const CheckOut = ({
         userEmail,
         company,
         phoneNumber,
-        checkoutBasketItemsKeys,
+        productIds,
         checkoutText[2].description,
         postAddress,
         setSendLoading,
         setCheckOutSendError,
+        deleveriPrice
       );
       setSendError(false);
     } else {
@@ -70,13 +86,13 @@ const CheckOut = ({
             <div className="flex">
               <div
                 onClick={() => navigate(-1)}
-                className="flex items-center mt-2 cursor-pointer"
+                className="flex items-center cursor-pointer"
               >
                 <IoIosArrowBack />
                 <p className="ml-2">{checkoutText[3].description}</p>
               </div>
             </div>
-            <div className="absolute top-[28px] right-[20px] lg:right-[50%] lg:translate-x-[50%]">
+            <div className="absolute top-[20px] right-[20px] lg:right-[50%] lg:translate-x-[50%]">
               <img src={checkoutText[15].description} alt="" />
             </div>
             <div className="mt-[50px]">
@@ -242,6 +258,7 @@ const CheckOut = ({
               onSubmitForm={onSubmitForm}
               sendError={sendError}
               sendLoading={sendLoading}
+              deleveriPrice={deleveriPrice}
             />
           </div>
         </div>

@@ -11,6 +11,7 @@ export const SINGLE_PRODUCT_TEXTS = process.env.REACT_APP_SINGLE_PRODUCT_TEXTS a
 export const CHECKOUT_TEXTS = process.env.REACT_APP_CHECKOUT_TEXTS as string;
 export const BASKET_TEXTS = process.env.REACT_APP_BASKET_TEXTS as string;
 export const SEND_CHEKOUT = process.env.REACT_APP_SEND_CHECKOUT as string;
+export const GET_CATEGORIES = process.env.REACT_APP_CATEGORIES_CALL as string;
 
 export const PAGES = {
   HOME: "/home",
@@ -87,7 +88,10 @@ export const LOCAL_STORAGE_KEYS = {
 
 export const UNMOUNT_TIMEOUT_VALUE = 700;
 
-export const ERROR_MASSEGE = "Տվըալ Ֆիլտրով ապրանք չի գտնվել";
+export const ERROR_MASSEGE = {
+  ThisItemIsAreadyInCart: "This item is already in the cart and its quantity cannot be edited",
+  NoMatchingVariation: "No matching variation found.",
+}
 
 export const QUERY_PARAMS = {
   MIN_PRICE: "min_price",
@@ -96,4 +100,6 @@ export const QUERY_PARAMS = {
   DEFAULT_MIN_PRICE: "5000",
   DEFAULT_MAX_PRICE: "500000000",
   DEFAULT_ORDER_BY: "by-a-z",
+  CATEGORY: "category",
+  FRAMES: "frames",
 };

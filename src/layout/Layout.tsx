@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Components/footer/Footer";
 import Header from "../Components/header/Header";
 
-const Layout = ({basketLength}: {basketLength:number | undefined}) => {
+const Layout = ({basketLength}: {basketLength:number}) => {
   return (
     <div className="flex flex-col min-h-screen">
       <header>

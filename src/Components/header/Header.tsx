@@ -5,7 +5,7 @@ import HeaderSkeleton from "../../skeleton/HeaderSkeleton";
 import useHeaderTeaxts from "./components/hooks/useHeaderTexts";
 import SearchProduct from "./components/SearchProduct";
 
-const Header = ({basketLength}:{basketLength: number | undefined}) => {
+const Header = ({basketLength}:{basketLength: number}) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string>("");
@@ -24,7 +24,7 @@ const Header = ({basketLength}:{basketLength: number | undefined}) => {
   }, []);
 
   const { headerTexts } = useHeaderTeaxts();
-
+  
   return (
     <>
       {!headerTexts ? (

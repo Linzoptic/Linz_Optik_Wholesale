@@ -5,16 +5,18 @@ import ProductItem from "./ProductItem";
 import InformationBlock from "./components/InformationBlock";
 import Pagination from "./components/Pagination";
 import CartSkeleton from "../../skeleton/CartSkeleton";
-import { ERROR_MASSEGE } from "../../utils/constants/constants";
 import { TfiFaceSad } from "react-icons/tfi";
 import useBaseProducts from "./hooks/useBaseProducts";
 import useHomePageTexts from "./hooks/useHomePageTexts";
+import useGetCategories from "./SingleProduct/hook/useGetCategories";
+import CategoriesHeader from "./components/CategoriesHeader";
 
 const HomePage: React.FC = () => {
-  
   const [URL_PARAMS, setURL_PARAMS] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pricesRange, setPricesRange] = useState<{ [key: string]: number | null }[]>([
+  const [pricesRange, setPricesRange] = useState<
+    { [key: string]: number | null }[]
+  >([
     { borderPrice: null, currentPrice: null },
     { borderPrice: null, currenPrice: null },
   ]);
@@ -24,24 +26,36 @@ const HomePage: React.FC = () => {
     let currentQueries = "";
     const newCurrentQueries = Array.from(searchParams);
     for (const [key, value] of newCurrentQueries) {
-      if(key.includes("pa")){
+      if (key.includes("pa")) {
         currentQueries += `&filter[${key}]=${value}`;
-      }else{
-        currentQueries += ""
+      } else {
+        currentQueries += "";
       }
     }
     setURL_PARAMS(currentQueries);
-  }, [URL_PARAMS, searchParams]); 
+  }, [URL_PARAMS, searchParams]);
 
-  const { isError, isLoading, productsData, totolCountRef, productPerPage,currencyName } =
-  useBaseProducts(URL_PARAMS, currentPage, setPricesRange);
+  const {
+    isError,
+    isLoading,
+    productsData,
+    totolCountRef,
+    productPerPage,
+    currencyName,
+  } = useBaseProducts(URL_PARAMS, currentPage, setPricesRange);
 
   const { homePageTexts } = useHomePageTexts();
 
   return (
     <div>
+      <div className="border">
+        <CategoriesHeader />
+      </div>
       <div className="flex flex-col items-center justify-center">
-        <InformationBlock totolCountRef={totolCountRef} homePageTexts={homePageTexts}/>
+        <InformationBlock
+          totolCountRef={totolCountRef}
+          homePageTexts={homePageTexts}
+        />
         <div className="hidden sm:block">
           <Pagination
             totolCountRef={totolCountRef}
@@ -90,7 +104,6 @@ const HomePage: React.FC = () => {
           ) : (
             <div className="flex">
               <h1 className="w-full">
-                {ERROR_MASSEGE}
                 <TfiFaceSad size={24} />
               </h1>
             </div>

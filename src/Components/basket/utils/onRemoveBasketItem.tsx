@@ -25,7 +25,6 @@ export const onRemoveBasketItem = async (
   );
   if (data) {
     setBasket(data.items);
-    console.log(data)
     setRemoveItemLoading(false);
   }
 };

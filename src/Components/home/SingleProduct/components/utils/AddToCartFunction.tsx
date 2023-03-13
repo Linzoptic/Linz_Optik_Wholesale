@@ -17,10 +17,10 @@ export const AddToCartFunction = async (
     React.SetStateAction<ICatchError | undefined>
   >,
   setAddToCartLoading: React.Dispatch<
-    React.SetStateAction<boolean | undefined>
+    React.SetStateAction<boolean>
   >,
   setAnimationCart:  React.Dispatch<
-  React.SetStateAction<boolean | undefined>
+  React.SetStateAction<boolean>
 >,
   variationAdd: string | undefined,
   variationAttributes: IVariationAttributes[] | undefined
@@ -51,13 +51,17 @@ export const AddToCartFunction = async (
           },
         }
       );
-      if (response){
+      if (response.status){
         setAddToCartLoading(false);
         setAnimationCart(false)
+        setAddToCartCatchError(undefined)
       }
     }
   } catch (error: any | undefined) {
     setAddToCartCatchError(error);
     setAddToCartLoading(false);
+    setTimeout(() => {
+      setAddToCartCatchError(undefined)
+    },4000)
   }
 };
