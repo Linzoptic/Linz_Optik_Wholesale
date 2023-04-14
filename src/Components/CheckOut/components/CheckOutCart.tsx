@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IBasketProduct, IBasketText } from "../../../utils/interface";
+import { ICheckOutText } from "../../../utils/interface";
 import { GrClose } from "react-icons/gr";
 import BorderComponent from "./BorderComponent";
 import Utils from "../../basket/utils/Utils";
@@ -7,26 +7,27 @@ import { getTotalSaleAllPrices } from "../utils.tsx/getTotalSaleAllPrices";
 import { useNavigate } from "react-router-dom";
 import { PAGES } from "../../../utils/constants/constants";
 import Loader from "../../../utils/loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { setCheckoutBasket } from "../../../store/createSlice";
 
 const CheckOutCart = ({
-  checkoutBasket,
-  setCheckoutBasket,
   checkoutText,
   onSubmitForm,
-  sendError,
-  sendLoading,
+  hasError,
+  sendIsLoading,
   deleveriPrice,
 }: {
-  checkoutBasket: IBasketProduct[];
-  setCheckoutBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
-  checkoutText: IBasketText[] | undefined;
+  checkoutText: ICheckOutText | undefined;
   onSubmitForm: () => void;
-  sendError: boolean;
-  sendLoading: boolean;
+  hasError: boolean;
+  sendIsLoading: boolean;
   deleveriPrice: string | undefined;
 }) => {
   const navigate = useNavigate();
+  const checkoutBasket = useSelector((state: RootState) => state.checkoutBasket);
   const currency = checkoutBasket?.map((el) => el.prices.currency_code);
+  const dispatch = useDispatch();
 
   const { allPrices, sale, totalPrice } = getTotalSaleAllPrices(
     checkoutBasket,
@@ -35,7 +36,7 @@ const CheckOutCart = ({
 
   const onDelelteItem = (id: number) => {
     const newCheckOutBasket = checkoutBasket.filter((el) => el.id !== id);
-    setCheckoutBasket(newCheckOutBasket);
+    dispatch(setCheckoutBasket(newCheckOutBasket));
   };
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const CheckOutCart = ({
         <div className="h-auto">
           <div className="mb-[50px] mt-[20px]">
             <h1 className="text-[#2D2A2E] text-[18px] xs:text-[20px] md:text-[24px] font-[700]">
-              {checkoutText[27].description}
+              {checkoutText?.["your-order"].description}
             </h1>
           </div>
           <div>
@@ -79,9 +80,14 @@ const CheckOutCart = ({
                       {checkoutBasket.find((el) => el.variation) && (
                         <div className="flex flex-wrap">
                           {el.variation?.map((el, i) => (
-                            <p key={i} className="text-[12px] [&:not(:first-child)]:ml-[5px] font-[600]">
+                            <p
+                              key={i}
+                              className="text-[12px] [&:not(:first-child)]:ml-[5px] font-[600]"
+                            >
                               {el.attribute.split(" ")[1]}:
-                              <span className="mx-1 font-[500]">{el.value}</span>
+                              <span className="mx-1 font-[500]">
+                                {el.value}
+                              </span>
                             </p>
                           ))}
                         </div>
@@ -90,7 +96,7 @@ const CheckOutCart = ({
                   </div>
                   <div className="flex items-center mt-3 md:mt-0 justify-between md:flex-col md:items-end">
                     <div className="flex items-center bg-white px-[10px] py-[5px] rounded-xl">
-                      <p>{checkoutText[30].description}</p>
+                      <p>{checkoutText?.["quantity"].description}</p>
                       <p className="font-[700] ml-2">{el.quantity}</p>
                     </div>
                     {el?.prices?.sale_price !== "0" ? (
@@ -128,19 +134,19 @@ const CheckOutCart = ({
             {checkoutText && currency && (
               <div className="flex flex-col items-end">
                 <div className="flex">
-                  <p>{checkoutText[18].description}</p>
+                  <p>{checkoutText?.["order-price"].description}</p>
                   <p className="ml-5 font-semibold">
                     {allPrices.toLocaleString()}
                   </p>
                   <p className="ml-1">{currency[0]}</p>
                 </div>
                 <div className="flex">
-                  <p>{checkoutText[10].description}</p>
+                  <p>{checkoutText?.["delivery-price"].description}</p>
                   <p className="ml-5 font-semibold">{deleveriPrice}</p>
                   <p className="ml-1">{currency[0]}</p>
                 </div>
                 <div className="flex">
-                  <p>{checkoutText[25].description}</p>
+                  <p>{checkoutText?.sale.description}</p>
                   <p className="ml-5 font-semibold">{sale.toLocaleString()}</p>
                   <p className="ml-1">{currency[0]}</p>
                 </div>
@@ -148,23 +154,23 @@ const CheckOutCart = ({
                   <BorderComponent bg="bg-white" />
                 </div>
                 <div className="flex">
-                  <p className="font-[700]">{checkoutText[26].description}</p>
+                  <p className="font-[700]">{checkoutText?.total.description}</p>
                   <p className="ml-5 font-[600]">
                     {totalPrice?.toLocaleString()}
                   </p>
                   <p className="ml-1">{currency[0]}</p>
                 </div>
-                {sendError && (
+                {hasError && (
                   <p className="text-red-900 font-bold mt-3">
-                    {checkoutText[35].description}
+                    {checkoutText?.["fill-all-fields"].description}
                   </p>
                 )}
-                {sendLoading && <Loader loading={sendLoading} size={30} />}
+                {sendIsLoading && <Loader loading={sendIsLoading} size={30} />}
                 <div
                   className="mt-3 bg-[#384275] px-7 py-2 rounded-xl text-white cursor-pointer text-center"
                   onClick={onSubmitForm}
                 >
-                  <p>{checkoutText[7].description}</p>
+                  <p>{checkoutText?.["confirm-order"].description}</p>
                 </div>
               </div>
             )}

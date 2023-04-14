@@ -1,4 +1,6 @@
 import { httpClient } from "../../../http-client/HttpClient";
+import { setBasket } from "../../../store/createSlice";
+import Store from "../../../store/store";
 import {
   CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
@@ -6,7 +8,6 @@ import {
 import { IBasketProduct } from "../../../utils/interface";
 
 export const onRemoveAllBasket = (
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] >>,
   setBasketRemoveLoading: React.Dispatch<React.SetStateAction<boolean >>
 ) => {
   (async () => {
@@ -24,7 +25,7 @@ export const onRemoveAllBasket = (
         }
       );
       if (data) {
-        setBasket(data);
+        Store.dispatch(setBasket(data));
         setBasketRemoveLoading(false)
       }
   })();

@@ -14,7 +14,7 @@ const GlassesInfo = ({
     <div>
       <div className=" w-full">
         <IncrementDecrement
-          name={singleProductTexts?.choose.description}
+          name={singleProductTexts?.toChoose.description}
           stockQuantity={stockQuantity}
           onChangeCount={onChangeCount}
         />

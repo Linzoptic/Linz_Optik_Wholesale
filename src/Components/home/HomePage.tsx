@@ -8,7 +8,6 @@ import CartSkeleton from "../../skeleton/CartSkeleton";
 import { TfiFaceSad } from "react-icons/tfi";
 import useBaseProducts from "./hooks/useBaseProducts";
 import useHomePageTexts from "./hooks/useHomePageTexts";
-import useGetCategories from "./SingleProduct/hook/useGetCategories";
 import CategoriesHeader from "./components/CategoriesHeader";
 
 const HomePage: React.FC = () => {
@@ -97,7 +96,7 @@ const HomePage: React.FC = () => {
                 image_url={item.image_url}
                 sku={item.sku}
                 stock_status={item.stock_status}
-                notAvailable={homePageTexts?.notAvailable.description}
+                notAvailable={homePageTexts?.product.notInStock.description}
                 currencyName={currencyName}
               />
             ))

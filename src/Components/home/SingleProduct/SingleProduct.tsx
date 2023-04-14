@@ -46,8 +46,8 @@ const SingleProduct = () => {
     singleProduct
   );
   const { singleProductTexts } = useSIngleProductTexts();
-  const currency = singleProductTexts?.single_product_currency?.description;
-  const choose = singleProductTexts?.choose?.description;
+  const currency = singleProductTexts?.currency?.description;
+  const choose = singleProductTexts?.toChoose?.description;
   const postUrl = encodeURI(document.location.href);
 
   const onChangeCount = (count: number) => {
@@ -56,14 +56,14 @@ const SingleProduct = () => {
 
   return (
     <div className="mx-auto border-2 p-2 rounded-xl">
-      {!singleProductTexts?.go_products.description ? (
+      {!singleProductTexts ? (
         <div className="h-[30px] w-[150px] rounded-xl bg-gray-300 animate-pulse"></div>
       ) : (
         <Link
           to={PAGES.HOME}
           className="bg-[#384275] text-white px-3 py-1 rounded-xl flex items-center justify-center w-[150px]"
         >
-          {singleProductTexts?.go_products.description}
+          {singleProductTexts?.goHome.description}
           <TfiBackLeft />
         </Link>
       )}
@@ -95,7 +95,7 @@ const SingleProduct = () => {
             {singleProduct?.stock_status ===
               SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK && (
               <div className="absolute px-3 rounded-full text-center bg-red-500 left-1 top-1  flex items-center justify-center p-1 text-white z-10">
-                <p>{singleProductTexts?.notAvailable.description}</p>
+                <p>{singleProductTexts?.notInStock.description}</p>
               </div>
             )}
           </div>
@@ -143,7 +143,7 @@ const SingleProduct = () => {
                 )}
                 {singleProduct?.stock_quantity && (
                   <div className="flex font-[400]">
-                    <p>{singleProductTexts?.stockQuantity.description}</p>
+                    <p>{singleProductTexts?.count.description}</p>
                     <span className="ml-2 font-[500]">
                       {singleProduct?.stock_quantity}
                     </span>
@@ -198,7 +198,7 @@ const SingleProduct = () => {
                   >
                     <p>{singleProductTexts?.addToCart.description}</p>
                     <img
-                      src={singleProductTexts?.basket_icon.description}
+                      src={singleProductTexts?.cartIcon.description}
                       alt="basketIcon"
                       className="mx-2"
                     />
@@ -206,13 +206,13 @@ const SingleProduct = () => {
                   {addToCartCatchError?.data.message ===
                     ERROR_MASSEGE.NoMatchingVariation && (
                     <p className="text-red-500 font-[600]">
-                      {singleProductTexts?.fillAllFildes.description}
+                      {singleProductTexts?.fillAllFields.description}
                     </p>
                   )}
                   {addToCartCatchError?.data.message ===
                     ERROR_MASSEGE.ThisItemIsAreadyInCart && (
                     <p className="text-red-500 font-[600]">
-                      {singleProductTexts?.isAlradyInCart.description}
+                      {singleProductTexts?.alreadyInTheCart.description}
                     </p>
                   )}
                   {addToCartLoading && (
@@ -224,7 +224,7 @@ const SingleProduct = () => {
                 <div className="flex items-center justify-between mt-2 p-2 border-t border-t-cyan-800 lg:border-0 lg:mb-3">
                   <div>
                     <p className="text-[16px]">
-                      {singleProductTexts?.share.description}
+                      {singleProductTexts?.toShare.description}
                     </p>
                   </div>
                   <div className="flex justify-between">
@@ -238,7 +238,7 @@ const SingleProduct = () => {
           singleProduct?.description ? (
             <div>
               <span className="text-[24px] border-b-2 border-sky-800 py-2">
-                {singleProductTexts?.description.description}
+                {singleProductTexts?.description?.description}
               </span>
               <div
                 className="mt-4"
@@ -267,7 +267,7 @@ const SingleProduct = () => {
       <div>
         <SimilarProducts
           similar_product_title={
-            singleProductTexts?.similar_product_title.description
+            singleProductTexts?.relatedProducts.description
           }
           similarProducts={similarProducts}
           similarLoading={similarLoading}

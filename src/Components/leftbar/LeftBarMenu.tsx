@@ -56,8 +56,8 @@ const LeftBarMenu = ({
     <div>
       <div>
         <FillterTitle
-          filterIcon={homePageTexts?.filterIcon}
-          filter={homePageTexts?.filter}
+          filterIcon={homePageTexts?.filter.filterIcon.description}
+          filter={homePageTexts?.filter.title.description}
         />
         <LeftBarInfo
           attributes={attributes}

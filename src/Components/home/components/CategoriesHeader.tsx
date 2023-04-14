@@ -22,20 +22,20 @@ const CategoriesHeader = () => {
   return (
     <div className="relative">
       <div className="hidden md:flex items-center justify-between my-4 max-w-[1040px] mx-auto ">
-        {categories?.map((el, index) => (
+        {categories?.map((category, index) => (
           <div
             key={index}
-            className="cursor-pointer"
-            onClick={() => putCategorisParams(el.slug)}
+            className="cursor-pointer px-3"
+            onClick={() => putCategorisParams(category.slug)}
           >
             <p
               className={
-                categoryName === el.slug
+                categoryName === category.slug
                   ? "font-[400] text-[16px] text-[#384275] border-b border-[#384275]"
                   : "font-[400] text-[16px] text-[#2D2A2E] border-b border-transparent hover:border-[#384275] hover:text-[#384275] duration-150"
               }
             >
-              {el?.name}
+              {category?.name}
             </p>
           </div>
         ))}

@@ -7,29 +7,24 @@ import useGetBasket from "./utils/useGetBasket";
 import BasketSkeleton from "../../skeleton/BasketSkeleton";
 import BasketProductItem from "./BasketProductItem";
 import { MdDeleteOutline } from "react-icons/md";
-import { IBasketProduct, IBasketText } from "../../utils/interface";
 import { onRemoveAllBasket } from "./utils/onRemoveAllBasket";
 import Loader from "../../utils/loader/Loader";
 import useGetText from "./utils/useGetText";
 import BorderComponent from "../CheckOut/components/BorderComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { IBasketText } from "../../utils/interface";
+import { setCheckoutBasket } from "../../store/createSlice";
 
-const Basket = ({
-  setCheckoutBasket,
-  checkoutBasket,
-  basket,
-  setBasket,
-}: {
-  basket: IBasketProduct[];
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
-  setCheckoutBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>;
-  checkoutBasket: IBasketProduct[];
-}) => {
+const Basket = () => {
   const navigate = useNavigate();
-  const [basketRemoveLoading, setBasketRemoveLoading] =
-    useState<boolean>(false);
+  const [basketRemoveLoading, setBasketRemoveLoading] = useState<boolean>(false);
   const [allBasketItemPrice, setAllBasketItemPrice] = useState<number>(0);
-  const [basketText, setBasketText] = useState<IBasketText[] | undefined>();
-  const { basketError, basketLoading } = useGetBasket(setBasket);
+  const [basketText, setBasketText] = useState<IBasketText | undefined>();
+  const { basketError, basketLoading } = useGetBasket();
+  const basket = useSelector((state: RootState) => state.basket);
+  const checkoutBasket = useSelector((state: RootState) => state.checkoutBasket);
+  const dispatch = useDispatch();
 
   useGetText(setBasketText, BASKET_TEXTS);
 
@@ -45,24 +40,24 @@ const Basket = ({
       }
     }, 0);
     setAllBasketItemPrice(prices);
-  }, [basket]);
+  },[basket]);
 
   const onCheckBasketItem = (id: number) => {
     const findInsideBasket = basket.find((el) => el.id === id);
     const findInsideCheckoutBasket = checkoutBasket.find((el) => el.id === id);
     if (findInsideBasket && !findInsideCheckoutBasket) {
-      setCheckoutBasket([...checkoutBasket, findInsideBasket]);
+      dispatch(setCheckoutBasket([...checkoutBasket, findInsideBasket]));
     } else if (findInsideBasket && findInsideCheckoutBasket) {
       const newBasket = checkoutBasket.filter((el) => el.id !== id);
-      setCheckoutBasket(newBasket);
+      dispatch(setCheckoutBasket(newBasket));
     }
   };
 
   const onCheckCkeckOutBasket = () => {
     if (checkoutBasket.length === basket.length) {
-      setCheckoutBasket([]);
+      dispatch(setCheckoutBasket([]));
     } else {
-      setCheckoutBasket([...basket]);
+      dispatch(setCheckoutBasket([...basket]));
     }
   };
 
@@ -80,7 +75,7 @@ const Basket = ({
             <div className="w-32 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
             <div className="w-44 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
           </div>
-          <BasketSkeleton count={basket.length}/>
+          <BasketSkeleton count={basket.length} />
         </>
       ) : (
         <div>
@@ -109,15 +104,15 @@ const Basket = ({
                 <div
                   className="px-4 py-[3px] cursor-pointer bg-[#F1EFE8] rounded-2xl text-black flex items-center"
                   onClick={() =>
-                    onRemoveAllBasket(setBasket, setBasketRemoveLoading)
+                    onRemoveAllBasket(setBasketRemoveLoading)
                   }
                 >
-                  {basketText && <button>{basketText[4].description}</button>}
+                  {basketText && <button>{basketText?.["z-clear-basket"].description}</button>}
                   <MdDeleteOutline size={20} className="ml-[5px]" />
                 </div>
               ) : (
                 <div className="text-center text-[20px] font-[600]">
-                  <h1>{basketText && basketText[3].description}</h1>
+                  <h1>{basketText && basketText?.["z-basket-is-empty"].description}</h1>
                 </div>
               )}
             </div>
@@ -125,7 +120,7 @@ const Basket = ({
           {basketText && basket.length ? (
             <div className="mt-8">
               <p className="text-[#353535] text-[16px] md:text-[24px] font-[600]">
-                {basketText[0].description}
+                {basketText.basket.description}
               </p>
               <label className="flex items-center m-[20px_10px]">
                 <input
@@ -136,7 +131,7 @@ const Basket = ({
                   }
                   onChange={onCheckCkeckOutBasket}
                 />
-                {basketText[1].description}
+                {basketText["mark-all"].description}
               </label>
               <div className="my-4">
                 <BorderComponent bg={"bg-[#EFEFEF]"} />
@@ -145,7 +140,7 @@ const Basket = ({
           ) : null}
           <div>
             {basket.length
-              ? basket.map((elem, index) => (
+              ? basket.map((elem) => (
                   <BasketProductItem
                     key={elem.key}
                     itemKey={elem.key}
@@ -156,8 +151,7 @@ const Basket = ({
                     id={elem.id}
                     quantity={elem.quantity}
                     variation={elem.variation}
-                    count={basketText && basketText[2]?.description}
-                    setBasket={setBasket}
+                    count={basketText && basketText.quantity.description}
                     onCheckBasketItem={onCheckBasketItem}
                     checkoutBasket={checkoutBasket}
                   />
@@ -167,7 +161,7 @@ const Basket = ({
           {basket?.length && basketText && currency ? (
             <div className="flex items-center justify-between p-[5px] border rounded-xl">
               <div className="flex">
-                <p>{basketText[5].description}`</p>
+                <p>{basketText["z-full-products-price"].description}`</p>
                 <p className="ml-2 font-[600]">
                   {allBasketItemPrice.toLocaleString()}
                   <span>{currency[0]}</span>
@@ -176,7 +170,7 @@ const Basket = ({
               <div>
                 <Link to={PAGES.CHECKOUT}>
                   <button className="bg-[#F1EFE8] p-[5px_15px] rounded-xl">
-                    {basketText[6].description}
+                    {basketText["z-to-buy"].description}
                   </button>
                 </Link>
               </div>

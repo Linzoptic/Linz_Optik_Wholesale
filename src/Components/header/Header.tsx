@@ -4,11 +4,14 @@ import { LOCAL_STORAGE_KEYS, PAGES } from "../../utils/constants/constants";
 import HeaderSkeleton from "../../skeleton/HeaderSkeleton";
 import useHeaderTeaxts from "./components/hooks/useHeaderTexts";
 import SearchProduct from "./components/SearchProduct";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
-const Header = ({basketLength}:{basketLength: number}) => {
+const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>("");
   const [userInfo, setUserInfo] = useState<string>("");
+  const basket = useSelector((state: RootState) => state.basket);
 
   const onLogOutHandler = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.JWT_TOKEN);
@@ -21,10 +24,10 @@ const Header = ({basketLength}:{basketLength: number}) => {
       const userName = JSON.parse(user);
       setUserInfo(userName);
     }
-  }, []);
+  },[]);
 
   const { headerTexts } = useHeaderTeaxts();
-  
+
   return (
     <>
       {!headerTexts ? (
@@ -34,14 +37,14 @@ const Header = ({basketLength}:{basketLength: number}) => {
           <div className="block md:flex justify-between items-center relative">
             <div className="flex items-center justify-between">
               <div>
-                <img src={headerTexts?.logoIcon.description} alt="Logo" />
+                <img src={headerTexts?.logo.description} alt="Logo" />
               </div>
               <div className="flex items-center mb-2 md:mb-0">
                 <button
                   className="text-[13px] mr-2 px-[10px] py-[2px] bg-[#F1EFE8] border border-[#F1EFE8] text-[#384275] rounded-xl"
                   onClick={onLogOutHandler}
                 >
-                  {headerTexts?.logOut.description}
+                  {headerTexts?.toLogOut.description}
                 </button>
                 <div className="hidden md:flex">
                   <h1 className="text-[15px] text-[#384275] underline bg-[#F1EFE8] p-[2px_10px] rounded-xl">
@@ -70,7 +73,7 @@ const Header = ({basketLength}:{basketLength: number}) => {
                 <div className="flex mx-2">
                   <div className="bg-[#F1EFE8] flex items-center justify-center p-2 rounded-xl ml-1 cursor-pointer">
                     <img
-                      src={headerTexts?.lenguageIcon.description}
+                      src={headerTexts?.globusIcon.description}
                       alt="lenguage"
                       className="w-[26px]"
                     />
@@ -81,11 +84,13 @@ const Header = ({basketLength}:{basketLength: number}) => {
                   >
                     <div className="relative">
                       <img
-                        src={headerTexts?.basketIcon.description}
+                        src={headerTexts?.cartIcon.description}
                         alt="basket"
                         className="w-[26px]"
                       />
-                      <p className="absolute top-[-15px] right-[-20px] font-[700] text-[13px]">({basketLength})</p>
+                      <p className="absolute top-[-15px] right-[-20px] font-[700] text-[13px]">
+                        ({basket.length})
+                      </p>
                     </div>
                   </Link>
                 </div>
@@ -100,7 +105,7 @@ const Header = ({basketLength}:{basketLength: number}) => {
                 <SearchProduct
                   search={search}
                   setSearch={setSearch}
-                  notFoundProduct={headerTexts?.notFoundProduct.description}
+                  notFoundProduct={headerTexts?.searchNoProduct.description}
                 />
               </div>
             </div>

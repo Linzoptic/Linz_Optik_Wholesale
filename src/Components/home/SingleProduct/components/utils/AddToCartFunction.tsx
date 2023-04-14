@@ -1,5 +1,7 @@
 import React from "react";
 import { httpClient } from "../../../../../http-client/HttpClient";
+import { setBasket } from "../../../../../store/createSlice";
+import Store from "../../../../../store/store";
 import {
   CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
@@ -16,25 +18,25 @@ export const AddToCartFunction = async (
   setAddToCartCatchError: React.Dispatch<
     React.SetStateAction<ICatchError | undefined>
   >,
-  setAddToCartLoading: React.Dispatch<
-    React.SetStateAction<boolean>
-  >,
-  setAnimationCart:  React.Dispatch<
-  React.SetStateAction<boolean>
->,
+  setAddToCartLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setAnimationCart: React.Dispatch<React.SetStateAction<boolean>>,
   variationAdd: string | undefined,
   variationAttributes: IVariationAttributes[] | undefined
 ) => {
-  const data: { id?: number; quantity: number; variation?: IVariationAttributes[] | undefined } = {
+  const data: {
+    id?: number;
+    quantity: number;
+    variation?: IVariationAttributes[] | undefined;
+  } = {
     id: id,
     quantity: count,
   };
   if (variationAdd === SINGLE_PRODUCT_TYPES.IN_STOCK) {
-    data.variation = variationAttributes
-  };
+    data.variation = variationAttributes;
+  }
   try {
     setAddToCartLoading(true);
-    setAnimationCart(true)
+    setAnimationCart(true);
     if (!id) {
       return false;
     } else {
@@ -51,17 +53,18 @@ export const AddToCartFunction = async (
           },
         }
       );
-      if (response.status){
+      if (response.status) {
+        Store.dispatch(setBasket(response.data.items));
         setAddToCartLoading(false);
-        setAnimationCart(false)
-        setAddToCartCatchError(undefined)
+        setAnimationCart(false);
+        setAddToCartCatchError(undefined);
       }
     }
   } catch (error: any | undefined) {
     setAddToCartCatchError(error);
     setAddToCartLoading(false);
     setTimeout(() => {
-      setAddToCartCatchError(undefined)
-    },4000)
+      setAddToCartCatchError(undefined);
+    }, 4000);
   }
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { useSearchParams } from "react-router-dom";
 import { QUERY_PARAMS } from "../../../utils/constants/constants";
-import { IHomePageTexts, IGetTexts } from "../../../utils/interface";
+import { IHomePageTexts } from "../../../utils/interface";
 
 const ChooseComponent = ({
   homePageTexts,
@@ -10,8 +10,7 @@ const ChooseComponent = ({
   homePageTexts: IHomePageTexts | undefined;
 }) => {
   const [toggleShow, setToggleShow] = useState<boolean>(false);
-  const [sortingBy, setSortingBy] = useState<IGetTexts[] | undefined>();
-  const [showInfo, setShowInfo] = useState<IGetTexts[] | undefined>();
+  const [showInfo, setShowInfo] = useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
   
   const currentQueries = Object.fromEntries([...searchParams]);
@@ -24,36 +23,26 @@ const ChooseComponent = ({
   };
 
   useEffect(() => {
-    const sortTypes: IHomePageTexts["a_z"][] | undefined = Object.values({
-      ...homePageTexts,
-    });
-    const correctSort = sortTypes.slice(5, 10);
-    setSortingBy(correctSort);
-  }, [homePageTexts]);
-
-  useEffect(() => {
-    const showSelectedSort = sortingBy?.filter(
-      (elem) => elem.slug === selectedSort
-    );
+    const showSelectedSort = homePageTexts?.sort.sortBy && Object.values(homePageTexts?.sort.sortBy).filter(el => el.slug === selectedSort)
     setShowInfo(showSelectedSort);
-  }, [selectedSort, sortingBy]);
+  }, [homePageTexts?.sort.sortBy,selectedSort]);
 
   return (
     <>
-      {sortingBy?.length ? (
+      {homePageTexts?.sort ? (
         <div className="flex items-center relative ">
           <div className="block text-center md:flex items-center justify-center">
             <div>
               <p className="text-[#094570] font-[600] text-[10px]  uppercase md:text-[12px]">
-                {homePageTexts?.sortBy.description}:
+                {homePageTexts?.sort.title.description}:
               </p>
             </div>
             <div
               className="w-[150px] xs:w-[200px] border-2 border-[#384275] rounded-xl px-3 ml-2 text-[12px] md:text-[14px] cursor-pointer relative"
               onClick={() => setToggleShow(!toggleShow)}
             >
-              {showInfo?.map((el, i) => (
-                <h1 key={i}>{el.description}</h1>
+              {showInfo?.map((el:any, index: number) => (
+                <h1 key={index}>{el.description}</h1>
               ))}
             </div>
           </div>
@@ -69,7 +58,7 @@ const ChooseComponent = ({
             }
           >
             <ul>
-              {sortingBy?.map((sort, i) => (
+              {Object.values(homePageTexts.sort.sortBy)?.map((sort, i) => (
                 <li
                   key={i}
                   className="list-none text-center cursor-pointer text-[12px] md:text-[14px]"

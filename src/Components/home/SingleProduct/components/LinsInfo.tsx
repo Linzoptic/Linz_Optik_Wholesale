@@ -28,9 +28,9 @@ const LinsInfo = ({
   return (
     <div>
       <div className="flex items-center mb-3">
-        <img src={singleProductTexts?.worningIcon.description} alt="worning" />
+        <img src={singleProductTexts?.oneItemPriceIcon.description} alt="worning" />
         <p className="mx-2">
-          {singleProductTexts?.one_product_price.description}
+          {singleProductTexts?.oneItemPrice.description}
         </p>
       </div>
       {variation_attributes?.map((elem, index) => {

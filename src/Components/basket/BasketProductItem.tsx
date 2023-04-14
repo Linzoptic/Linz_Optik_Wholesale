@@ -6,19 +6,26 @@ import Loader from "../../utils/loader/Loader";
 import Utils from "./utils/Utils";
 
 const BasketProductItem = (props: IBasketProduct) => {
-  
   const [removeItemLoading, setRemoveItemLoading] = useState<boolean>(false);
 
   return (
     <div className="border my-3 p-6 rounded-2xl shadow-[0_4px_32px_rgba(141,141,141,.12)]">
       <div className="flex items-center justify-between flex-wrap">
-        <div className={!!props.variation?.length ? "flex items-center justify-between w-full md:w-[85%]" : "flex items-center justify-between w-full md:w-[55%]"}>
+        <div
+          className={
+            !!props.variation?.length
+              ? "flex items-center justify-between w-full md:w-[85%]"
+              : "flex items-center justify-between w-full md:w-[55%]"
+          }
+        >
           <div className="flex items-center justify-between">
             <div>
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 className="cursor-pointer"
-                checked={props.checkoutBasket.some(element => element.id === props.id)}
+                checked={props.checkoutBasket.some(
+                  (element) => element.id === props.id
+                )}
                 onChange={() => props.onCheckBasketItem(props.id)}
               />
             </div>
@@ -42,9 +49,14 @@ const BasketProductItem = (props: IBasketProduct) => {
             <div className="flex flex-wrap justify-between">
               <div className="grid grid-cols-2 md:grid-cols-4 mx-3">
                 {props.variation.map((elem, index) => (
-                  <div key={index} className="border p-[5px] rounded-xl mx-[4px] flex items-center">
+                  <div
+                    key={index}
+                    className="border p-[5px] rounded-xl mx-[4px] flex items-center"
+                  >
                     <p className="mx-2">{elem.attribute}</p>
-                    <span className="border p-[2px] rounded-xl inline">{elem.value}</span>
+                    <span className="border p-[2px] rounded-xl inline">
+                      {elem.value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -94,11 +106,7 @@ const BasketProductItem = (props: IBasketProduct) => {
           <div className="ml-4 cursor-pointer">
             <MdDeleteOutline
               onClick={() =>
-                onRemoveBasketItem(
-                  props.itemKey,
-                  props.setBasket,
-                  setRemoveItemLoading
-                )
+                onRemoveBasketItem(props.itemKey, setRemoveItemLoading)
               }
             />
           </div>

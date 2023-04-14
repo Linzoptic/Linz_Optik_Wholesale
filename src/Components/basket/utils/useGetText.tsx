@@ -3,7 +3,7 @@ import { httpClient } from "../../../http-client/HttpClient";
 import { IBasketText } from "../../../utils/interface";
 
 const useGetText = (
-  setStateText: React.Dispatch<React.SetStateAction<IBasketText[] | undefined>>,
+  setStateText: React.Dispatch<React.SetStateAction<IBasketText | undefined>>,
   url: string
 ) => {
   useEffect(() => {

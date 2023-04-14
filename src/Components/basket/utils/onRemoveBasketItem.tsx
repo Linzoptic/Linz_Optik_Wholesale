@@ -1,10 +1,10 @@
 import { httpClient } from "../../../http-client/HttpClient";
+import { setBasket } from "../../../store/createSlice";
+import Store from "../../../store/store";
 import { CONSUMER_KEY, LOCAL_STORAGE_KEYS } from "../../../utils/constants/constants";
-import { IBasketProduct } from "../../../utils/interface";
 
 export const onRemoveBasketItem = async (
   key: string | number,
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>,
   setRemoveItemLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setRemoveItemLoading(true);
@@ -24,7 +24,7 @@ export const onRemoveBasketItem = async (
     }
   );
   if (data) {
-    setBasket(data.items);
+    Store.dispatch(setBasket(data.items));
     setRemoveItemLoading(false);
   }
 };

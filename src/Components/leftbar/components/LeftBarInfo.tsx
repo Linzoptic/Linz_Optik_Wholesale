@@ -88,10 +88,6 @@ const LeftBarInfo = ({
                       />
                     </div>
                   )}
-                  <div
-                    className="w-[10px] h-[10px] rounded-full mr-[3px]"
-                    style={{ backgroundColor: elem.name.toLowerCase() }}
-                  ></div>
                   <p className="text-[12px]">{elem.name}</p>
                 </div>
                 <div>
@@ -107,7 +103,7 @@ const LeftBarInfo = ({
               className="underline text-[14px] md:text-base font-bold pt-4 cursor-pointer text-[#022e5a] hover:text-[#67839f] duration-100"
               onClick={() => setSearchParams()}
             >
-              {homePageTexts?.cleaer.description}
+              {homePageTexts?.filter.clear.description}
             </p>
           </div>
         </div>

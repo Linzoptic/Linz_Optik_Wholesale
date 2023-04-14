@@ -1,15 +1,19 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react'
 import { IAttributeCategory, IAttributes } from '../../../../utils/interface';
-import { BASE_URL } from '../../../../utils/constants/constants';
+import { BASE_URL, QUERY_PARAMS } from '../../../../utils/constants/constants';
+import { useSearchParams } from 'react-router-dom';
 
 const useAttributes = () => {
 
   const [attributes, setAttributes] = useState<IAttributes[]>([]);
+  const [searchParams] = useSearchParams ();
+
+  const categoryName = searchParams.get(QUERY_PARAMS.CATEGORY) || QUERY_PARAMS.FRAMES;
 
    useEffect(() => {
       (async () => {
-        const correctData = await axios.get(`${BASE_URL}/wholesale/attributes`);
+        const correctData = await axios.get(`${BASE_URL}/${categoryName}/attributes`);
         const attributesArray: IAttributes[] = [];
         if(correctData){
           for (const [key, value] of Object.entries(correctData?.data)) {
@@ -28,7 +32,7 @@ const useAttributes = () => {
         }
         setAttributes(attributesArray);
       })();
-    }, []);
+    }, [categoryName]);
   
    return {
       attributes

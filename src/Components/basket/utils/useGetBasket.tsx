@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { httpClient } from "../../../http-client/HttpClient";
+import { setBasket } from "../../../store/createSlice";
 import {
   CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
 } from "../../../utils/constants/constants";
-import { ICatchError, IBasketProduct } from "../../../utils/interface";
+import { ICatchError } from "../../../utils/interface";
+import {useDispatch} from "react-redux"
 
-const useGetBasket = (
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[]>>
-) => {
+const useGetBasket = () => {
   
   const [basketLoading, setBasketLoading] = useState<boolean>(false);
   const [basketError, setBasketError] = useState<ICatchError>();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     (async () => {
@@ -29,7 +30,7 @@ const useGetBasket = (
           }
         );
         if (data) {
-          setBasket(data);
+          dispatch(setBasket(data));
         }
       } catch (error: any | undefined) {
         setBasketError(error);
@@ -37,7 +38,7 @@ const useGetBasket = (
         setBasketLoading(false);
       }
     })();
-  }, [setBasket]);
+  }, [dispatch]);
 
   return {
     basketLoading,
