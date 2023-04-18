@@ -67,8 +67,6 @@ const Basket = () => {
       : navigate(`${PAGES.PRODUCT}/${producIds[0]}`);
   };
 
-  console.log(basket)
-
   return (
     <>
       {basketLoading ? (
