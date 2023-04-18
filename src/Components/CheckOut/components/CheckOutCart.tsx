@@ -79,14 +79,14 @@ const CheckOutCart = ({
                       </div>
                       {checkoutBasket.find((el) => el.variation) && (
                         <div className="flex flex-wrap">
-                          {el.variation?.map((el, i) => (
+                          {el.variation?.map((item, i) => (
                             <p
                               key={i}
                               className="text-[12px] [&:not(:first-child)]:ml-[5px] font-[600]"
                             >
-                              {el.attribute.split(" ")[1]}:
+                              {item.attribute.split(" ")[1]}:
                               <span className="mx-1 font-[500]">
-                                {el.value}
+                                {item.value}
                               </span>
                             </p>
                           ))}

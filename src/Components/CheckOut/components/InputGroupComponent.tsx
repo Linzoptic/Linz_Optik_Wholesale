@@ -1,4 +1,6 @@
-const InputComponent = ({
+import InputComponnent from "./InputComponnent";
+
+const InputGroupComponent = ({
   name,
   imgSrc,
   placeholder,
@@ -17,12 +19,10 @@ const InputComponent = ({
         {name}
         <img src={imgSrc} alt="mandatory" className="w-[8px] h-[8px]" />
       </div>
-      <input
-        type="text"
-        placeholder={placeholder}
-        name="firstName"
-        value={inputValue}
+      <InputComponnent
         className="w-full border outline-none mt-2"
+        placeholder={placeholder}
+        value={inputValue}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInputValue(e.target.value)
         }
@@ -31,4 +31,4 @@ const InputComponent = ({
   );
 };
 
-export default InputComponent;
+export default InputGroupComponent;

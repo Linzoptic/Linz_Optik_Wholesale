@@ -59,6 +59,6 @@ export const SendCheckoutOrder = async (
     setSendLoading(false);
   } catch (error: any | undefined) {
     setCheckOutSendError(error);
-    setSendLoading(true);
+    setSendLoading(false);
   }
 };

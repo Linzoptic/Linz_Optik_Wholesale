@@ -6,7 +6,7 @@ import { RootState } from "../../store/store";
 import { CHECKOUT_TEXTS } from "../../utils/constants/constants";
 import { ICatchError, ICheckOutText } from "../../utils/interface";
 import CheckOutCart from "./components/CheckOutCart";
-import InputComponent from "./components/InputComponent";
+import InputGroupComponent from "./components/InputGroupComponent";
 import { SendCheckoutOrder } from "./utils.tsx/SendCheckoutOrder";
 import { httpClient } from "../../http-client/HttpClient";
 
@@ -26,29 +26,33 @@ const CheckOut = () => {
   const [checkoutText, setCheckoutText] = useState<ICheckOutText | undefined>();
 
   useEffect(() => {
-   (async () => {
-     const { data } = await httpClient.get(CHECKOUT_TEXTS);
-     if (data) {
-      setCheckoutText(data);
-     }
-   })();
+  try {
+    (async () => {
+      const { data } = await httpClient.get(CHECKOUT_TEXTS);
+      if (data) {
+       setCheckoutText(data);
+      }
+    })();
+  } catch (error: any | undefined) {
+    setHasError(true)
+  }
  }, []);
 
 
-  const deleveriPrice = checkoutText && checkoutText?.["delivery-frames"].description;
+  const deleveriPrice = checkoutText?.["delivery-frames"]?.description;
   const checkoutBasket = useSelector(
     (state: RootState) => state.checkoutBasket
   );
   const navigate = useNavigate();
 
-  const productIds = checkoutBasket.map((el) => {
+  const productDetils = checkoutBasket.map((basketItem) => {
     return {
-      product_id: el.id,
-      quantity: el.quantity,
+      product_id: basketItem.id,
+      quantity: basketItem.quantity,
       total:
-        el.prices.sale_price !== "0"
-          ? ((+el.prices.sale_price * el.quantity) / 100).toString()
-          : ((+el.prices.regular_price * el.quantity) / 100).toString(),
+        basketItem.prices.sale_price !== "0"
+          ? ((+basketItem.prices.sale_price * basketItem.quantity) / 100).toString()
+          : ((+basketItem.prices.regular_price * basketItem.quantity) / 100).toString(),
     };
   });
 
@@ -69,8 +73,8 @@ const CheckOut = () => {
         userEmail,
         company,
         phoneNumber,
-        productIds,
-        checkoutText["address-region"].description,
+        productDetils,
+        checkoutText?.["address-region"]?.description,
         postAddress,
         setSendIsLoading,
         setCheckOutSendHasError,
@@ -81,7 +85,7 @@ const CheckOut = () => {
       setHasError(true);
     }
   };
-
+  
   return (
     <>
       {checkoutText && (
@@ -104,43 +108,43 @@ const CheckOut = () => {
                 {checkoutText?.["delivery-data"].description}
               </h1>
             </div>
-            <form className="w-full" onSubmit={(e) => e.preventDefault()}>
-              <InputComponent
+            <form className="w-full" onSubmit={(event) => event.preventDefault()}>
+              <InputGroupComponent
                 name={checkoutText?.name.description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["name-placeholder"].description}
                 inputValue={firstName}
                 setInputValue={setFirstName}
               />
-              <InputComponent
+              <InputGroupComponent
                 name={checkoutText?.["last-name"].description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["press-your-last-name"].description}
                 inputValue={lastName}
                 setInputValue={setLastName}
               />
-              <InputComponent
+              <InputGroupComponent
                 name={checkoutText?.phone.description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["phone-placeholder"].description}
                 inputValue={phoneNumber}
                 setInputValue={setPhoneNumber}
               />
-              <InputComponent
+              <InputGroupComponent
                 name={checkoutText?.email.description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["email-placeholder"].description}
                 inputValue={userEmail}
                 setInputValue={setUserEmail}
               />
-              <InputComponent
+              <InputGroupComponent
                 name={checkoutText?.["postal-code"].description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["postal-code"].description}
                 inputValue={postAddress}
                 setInputValue={setPostAddress}
               />
-              <InputComponent
+              <InputGroupComponent
                 name={checkoutText?.["company"].description}
                 imgSrc={checkoutText?.["required-red-icon"].description}
                 placeholder={checkoutText?.["press-company-name"].description}
@@ -149,7 +153,7 @@ const CheckOut = () => {
               />
               <div className="mt-4">
                 <div className="flex">
-                  <h2>{checkoutText?.name.description}</h2>
+                  <h2>{checkoutText?.address.description}</h2>
                   <img
                     src={checkoutText?.["required-red-icon"].description}
                     alt="mandatory"
@@ -184,6 +188,9 @@ const CheckOut = () => {
               sendIsLoading={sendIsLoading}
               deleveriPrice={deleveriPrice}
             />
+          {hasError && (
+            <div className="text-center my-5 text-red-900 font-[700]">Somthing went wrong</div>
+          )}
           </div>
         </div>
       )}

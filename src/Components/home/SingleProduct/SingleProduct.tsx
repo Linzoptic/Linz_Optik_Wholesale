@@ -152,7 +152,7 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="mt-2">
-              {!!singleProduct?.variation_attributes ? (
+              {singleProduct?.variation_attributes ? (
                 <LinsInfo
                   singleProductTexts={singleProductTexts}
                   variation_attributes={singleProduct?.variation_attributes}
