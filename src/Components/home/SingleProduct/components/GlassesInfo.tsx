@@ -3,14 +3,21 @@ import IncrementDecrement from "./utils/IncrementDecrement";
 
 const GlassesInfo = ({
   singleProductTexts,
+  stockQuantity,
+  onChangeCount,
 }: {
+  stockQuantity: number | undefined;
   singleProductTexts: ISinglePageTexts | undefined;
+  onChangeCount: (count: number) => void;
 }) => {
-  
   return (
     <div>
-      <div className=" w-full xs:max-w-[150px]">
-       <IncrementDecrement name={singleProductTexts?.choose.description}/>
+      <div className=" w-full">
+        <IncrementDecrement
+          name={singleProductTexts?.toChoose.description}
+          stockQuantity={stockQuantity}
+          onChangeCount={onChangeCount}
+        />
       </div>
     </div>
   );

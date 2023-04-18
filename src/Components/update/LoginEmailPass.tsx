@@ -4,8 +4,7 @@ import logo from "../../images/logo.svg";
 import { PAGES } from '../../utils/constants/constants';
 
 const LoginEmailPass = () => {
-
-  const BASE_URL = process.env.REACT_APP_BASE_URL as string;
+  
   const [username, setUsername] = useState<string>("")
 
   const fromHendler = async(event: React.SyntheticEvent<HTMLFormElement>) => {

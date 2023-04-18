@@ -1,30 +1,22 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FOOTER_CALL } from "../../utils/constants/constants";
 import FooterSkekelton from "../../skeleton/FooterSkekelton";
-import { CatchError, IFooterTexts } from "../../utils/interface";
+import { ICatchError, IFooterTexts } from "../../utils/interface";
+import { httpClient } from "../../http-client/HttpClient";
 
 const Footer = () => {
   const [footerInfo, setFooterInfo] = useState<IFooterTexts>();
   const [footerIsLoading, setFooterIsLoading] = useState<boolean>(false);
-  const [footerCatchError, setFooterCatchError] = useState<CatchError>();
+  const [footerCatchError, setFooterCatchError] = useState<ICatchError>();
 
   useEffect(() => {
     (async () => {
       setFooterIsLoading(true);
       try {
-        const correctData = await axios.get(FOOTER_CALL);
-        setFooterInfo({
-          address: correctData.data[0],
-          contact: correctData.data[3],
-          locationIcon: correctData.data[4],
-          phoneIcon: correctData.data[5],
-          phone: correctData.data[6],
-          phone1: correctData.data[7],
-          timeIcon: correctData.data[9],
-          time1: correctData.data[10],
-          time2: correctData.data[11],
-        });
+        const correctData = await httpClient.get(FOOTER_CALL);
+        if(correctData){
+          setFooterInfo(correctData.data)
+        }
       } catch (error: any | undefined) {
         setFooterCatchError(error);
       } finally {
@@ -39,54 +31,54 @@ const Footer = () => {
         <FooterSkekelton />
       ) : (
         <div className="mt-10 p-4 border-t-4 border-[#F1EFE8]">
-          <div className="md:flex justify-around flex-wrap ">
+          <div className="md:flex justify-around flex-wrap text-c">
             <div className="flex items-center text-center mt-2 p-2">
               <img
-                src={footerInfo?.locationIcon.description}
+                src={footerInfo?.contact.address.icon.description}
                 alt="#location"
                 className="w-5 h-5 mx-2"
               />
-              <h1>{footerInfo?.address.description}</h1>
+              <h1>{footerInfo?.contact.address.text.description}</h1>
             </div>
             <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
-              <img
-                src={footerInfo?.phoneIcon.description}
+              <img    
+                src={footerInfo?.contact.phone.icon.description}
                 alt="#phone"
                 className="w-6 h-6 mx-2"
               />
               <div>
                 <p className="hover:underline duration-150">
-                  <a href={`tel:${footerInfo?.phone.description}`}>
-                    {footerInfo?.phone.description}
+                  <a href={`tel:`}>
+                    {footerInfo?.contact.phone.phone1.description}
                   </a>
                 </p>
                 <p className="hover:underline duration-150">
-                  <a href={`tel:${footerInfo?.phone1.description}`}>
-                    {footerInfo?.phone1.description}
+                  <a href={`tel:`}>
+                    {footerInfo?.contact.phone.phone2.description}
                   </a>
                 </p>
               </div>
             </div>
             <div className="flex items-center mt-2 p-2 text-center border-t-2 md:border-0">
               <img
-                src={footerInfo?.timeIcon.description}
+                src={footerInfo?.contact.workhours.icon.description}
                 alt="#time"
                 className="w-6 h-6 mx-2"
               />
               <div>
-                <p>{footerInfo?.time1.description}</p>
-                <p>{footerInfo?.time2.description}</p>
+                <p>{footerInfo?.contact.workhours.workhours1.description}</p>
+                <p>{footerInfo?.contact.workhours.workhours2.description}</p>
               </div>
             </div>
           </div>
           <div className="mt-3">
             <p className="text-center text-[14px] text-gray-500">
-              {footerInfo?.contact.description}
+              {footerInfo?.copyright.description}
             </p>
           </div>
         </div>
       )}
-      {footerCatchError && <p>{footerCatchError?.response.data?.message}</p>}
+      {footerCatchError && <p>{footerCatchError?.data?.message}</p>}
     </>
   );
 };

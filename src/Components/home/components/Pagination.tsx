@@ -24,7 +24,7 @@ const Pagination = ({
   };
 
   const decrementPaginationCount = () => {
-    if (currentPage === paginationCount.length) {
+    if (currentPage === paginationCount.length){
       return false;
     } else {
       setCurrentPage(currentPage + COUNTS.ONE);
@@ -35,7 +35,7 @@ const Pagination = ({
     <div className="flex items-center justify-between mt-[10px] sm:mb-[15px]">
       <div className="flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          {!!paginationCount.length && (
+          {paginationCount.length > 1 && (
             <nav className="flex items-center justify-center text-[#091852]">
               <AiOutlineArrowLeft
                 size={13}

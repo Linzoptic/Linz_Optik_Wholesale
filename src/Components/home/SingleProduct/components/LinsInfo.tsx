@@ -1,25 +1,36 @@
 import {
   ISinglePageTexts,
   ISingleProductAttributes,
+  IVariationAttributes,
 } from "../../../../utils/interface";
-import SelectComponent from "./utils/SelectComponent";
 import IncrementDecrement from "./utils/IncrementDecrement";
+import SelectComponent from "./utils/SelectComponent";
 
 const LinsInfo = ({
   singleProductTexts,
   variation_attributes,
   choose,
+  setVariationAttributes,
+  variationAttributes,
+  stockQuantity,
+  onChangeCount,
 }: {
   singleProductTexts: ISinglePageTexts | undefined;
-  variation_attributes: ISingleProductAttributes[] | undefined;
+  variation_attributes: ISingleProductAttributes[];
   choose: string | undefined;
+  setVariationAttributes: React.Dispatch<
+    React.SetStateAction<IVariationAttributes[]>
+  >;
+  variationAttributes: IVariationAttributes[];
+  stockQuantity: number | undefined;
+  onChangeCount: (count: number) => void;
 }) => {
   return (
     <div>
       <div className="flex items-center mb-3">
-        <img src={singleProductTexts?.worningIcon.description} alt="worning" />
+        <img src={singleProductTexts?.oneItemPriceIcon.description} alt="worning" />
         <p className="mx-2">
-          {singleProductTexts?.one_product_price.description}
+          {singleProductTexts?.oneItemPrice.description}
         </p>
       </div>
       {variation_attributes?.map((elem, index) => {
@@ -31,8 +42,8 @@ const LinsInfo = ({
             }`}
           >
             <h1 className="text-[20px] font-[600]">{elem?.name}</h1>
-            <div className="block xs:flex items-center justify-between mt-2">
-              <div className="w-full mt-3 md:mt-0 md:max-w-[230px] flex justify-between">
+            <div className="">
+              <div className="mt-3 md:mt-0  xs:flex justify-between items-center">
                 {elem?.types.map((type, index) => {
                   return (
                     <SelectComponent
@@ -40,14 +51,18 @@ const LinsInfo = ({
                       name={type.name}
                       choose={choose}
                       options={type.options}
+                      setVariationAttributes={setVariationAttributes}
+                      variationAttributes={variationAttributes}
                     />
                   );
                 })}
-              </div>
-              <div className="w-full mt-3 md:mt-0 md:max-w-[150px]">
-                <IncrementDecrement
-                  name={singleProductTexts?.count.description}
-                />
+                <div className="mt-3 md:mt-0 xs:w-[120px]">
+                  <IncrementDecrement
+                    name={singleProductTexts?.count.description}
+                    stockQuantity={stockQuantity}
+                    onChangeCount={onChangeCount}
+                  />
+                </div>
               </div>
             </div>
           </div>

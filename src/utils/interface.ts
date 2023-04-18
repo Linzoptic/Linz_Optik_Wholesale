@@ -1,14 +1,14 @@
-
 export interface IOptionsAttributes {
-    name: string;
-    stock_quantity: number;
-    variation_id: number;
-};
-
+  name: string;
+  stock_quantity: number;
+  variation_id: number;
+  taxonomy: string;
+}
 
 ///////////////////////////////////
 export interface ISingleProductAttributes {
   name: string;
+  taxonomy: string;
   types: {
     name: string;
     options: IOptionsAttributes[];
@@ -32,6 +32,7 @@ export interface ISingleProducts {
   price_string: string;
   stock_status: string;
   quantity: number;
+  stock_quantity: number;
   description?: string | undefined;
   short_description?: string | undefined;
   related_ids: number[];
@@ -41,7 +42,7 @@ export interface ISingleProducts {
 
 //////////////////////////////
 
-export interface Products {
+export interface IProducts {
   id: number;
   name: string;
   sku: string;
@@ -54,7 +55,7 @@ export interface Products {
 }
 
 //////////////////////////////
-export interface AttributeCategory {
+export interface IAttributeCategory {
   term_id: number;
   name: string;
   taxonomy: string;
@@ -63,52 +64,53 @@ export interface AttributeCategory {
 
 export interface IAttributes {
   name: string;
-  name_category: AttributeCategory[];
+  name_category: IAttributeCategory[];
 }
 
 //////////////////////////////
 
-export interface CatchError {
-  response: {
-    data: {
-      message: string;
-    };
+export interface ICatchError {
+  data: {
+    message: string;
   };
 }
 
 ////////////////////////////////
 
-interface IFooterItem {
-  id: number;
-  description: string;
-  name: string;
-}
-
 export interface IFooterTexts {
-  address: IFooterItem;
-  contact: IFooterItem;
-  locationIcon: IFooterItem;
-  phoneIcon: IFooterItem;
-  phone: IFooterItem;
-  phone1: IFooterItem;
-  timeIcon: IFooterItem;
-  time1: IFooterItem;
-  time2: IFooterItem;
+  contact: {
+    address: {
+      icon: IGetTexts;
+      text: IGetTexts;
+    };
+    phone: {
+      icon: IGetTexts;
+      phone1: IGetTexts;
+      phone2: IGetTexts;
+    };
+    workhours: {
+      icon: IGetTexts;
+      workhours1: IGetTexts;
+      workhours2: IGetTexts;
+    };
+  };
+  copyright: IGetTexts;
 }
 
 ////////////////////////////////
 
+interface HeaderTextItem {
+  description: string;
+}
+
 export interface IHeaderTxts {
-  logOut: IFooterItem;
-  logoIcon: IFooterItem;
-  notFoundProduct: IFooterItem;
-  phone: IFooterItem;
-  phone1: IFooterItem;
-  phoneIcon: IFooterItem;
-  searchProduct: IFooterItem;
-  searchIcon: IFooterItem;
-  lenguageIcon: IFooterItem;
-  basketIcon: IFooterItem;
+  toLogOut: HeaderTextItem;
+  logo: HeaderTextItem;
+  searchProduct: HeaderTextItem;
+  searchNoProduct: HeaderTextItem;
+  searchIcon: HeaderTextItem;
+  globusIcon: HeaderTextItem;
+  cartIcon: HeaderTextItem;
 }
 
 ////////////////////////////////
@@ -116,50 +118,57 @@ export interface IHeaderTxts {
 export interface IGetTexts {
   description: string;
   slug: string;
-  name: string;
 }
 
+////////////////////////////////
+
 export interface IHomePageTexts {
-  filter: IGetTexts;
-  filterIcon: IGetTexts;
-  value: IGetTexts;
-  sortBy: IGetTexts;
-  cleaer: IGetTexts;
-  a_z: IGetTexts;
-  z_a: IGetTexts;
-  priceToHigh: IGetTexts;
-  priceToLow: IGetTexts;
-  bySaled: IGetTexts;
-  homePage: IGetTexts;
-  isAvailable: IGetTexts;
-  notAvailable: IGetTexts;
+  filter: {
+    title: IGetTexts;
+    filterIcon: IGetTexts;
+    noProduct: IGetTexts;
+    price: IGetTexts;
+    clear: IGetTexts;
+  };
+  sort: {
+    title: IGetTexts;
+    sortBy: {
+      byAZ: IGetTexts;
+      byZA: IGetTexts;
+      byDate: IGetTexts;
+      priceToHigh: IGetTexts;
+      priceToLow: IGetTexts;
+      bySaledCollection: IGetTexts;
+    };
+  };
+  product: {
+    addtocart: IGetTexts;
+    notInStock: IGetTexts;
+    inStock: IGetTexts;
+  };
 }
 
 //////////////////////////
 
 export interface ISinglePageTexts {
-  ADD: IGetTexts;
-  addToCart: IGetTexts;
-  advantage: IGetTexts;
+  goHome: IGetTexts;
+  toChoose: IGetTexts;
+  alreadyInTheCart: IGetTexts;
+  oneItemPrice: IGetTexts;
+  oneItemPriceIcon: IGetTexts;
+  currency: IGetTexts;
   count: IGetTexts;
+  toShare: IGetTexts;
+  notInStock: IGetTexts;
+  relatedProducts: IGetTexts;
+  facebookIcon: IGetTexts;
+  instagramIcon: IGetTexts;
+  linkedinIcon: IGetTexts;
+  cartIcon: IGetTexts;
+  addToCart: IGetTexts;
+  fillAllFields: IGetTexts;
   description: IGetTexts;
-  left: IGetTexts;
-  rigth: IGetTexts;
-  one_product_price: IGetTexts;
-  similar_product_title: IGetTexts;
-  wishList_icon: IGetTexts;
-  basket_icon: IGetTexts;
-  worningIcon: IGetTexts;
-  share: IGetTexts;
-  twitter_icon: IGetTexts;
-  fb_icon: IGetTexts;
-  instaIcon_icon: IGetTexts;
-  linkdin_icon: IGetTexts;
-  sph: IGetTexts;
-  single_product_currency: IGetTexts;
-  go_products: IGetTexts;
-  choose: IGetTexts;
-  notAvailable: IGetTexts;
+  advantage: IGetTexts;
 }
 
 ///////////////////////
@@ -181,11 +190,77 @@ export interface IBasketProduct {
     regular_price: string;
     sale_price: string;
   };
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>;
+  variation?: {
+    attribute: string;
+    value: string;
+  }[];
+  onCheckBasketItem: (id: number) => void;
+  checkoutBasket: IBasketProduct[];
 }
 
 //////////////////////
 
 export interface IBasketText {
-  description: string;
+  basket: IGetTexts;
+  quantity: IGetTexts;
+  "z-basket-is-empty": IGetTexts;
+  "mark-all": IGetTexts;
+  "z-clear-basket": IGetTexts;
+  "z-full-products-price": IGetTexts;
+  "z-to-buy": IGetTexts;
+}
+
+/////////////////////////
+
+export interface ICheckOutText {
+  backto: IGetTexts;
+  email: IGetTexts;
+  address: IGetTexts;
+  logo: IGetTexts;
+  name: IGetTexts;
+  phone: IGetTexts;
+  sale: IGetTexts;
+  total: IGetTexts;
+  "order-price": IGetTexts;
+  "delivery-price": IGetTexts;
+  "last-name": IGetTexts;
+  "company": IGetTexts;
+  "press-company-name": IGetTexts;
+  "press-your-last-name": IGetTexts;
+  "name-placeholder": IGetTexts;
+  "address-region": IGetTexts;
+  "confirm-order": IGetTexts;
+  "delivery-address": IGetTexts;
+  "delivery-data": IGetTexts;
+  "email-placeholder": IGetTexts;
+  "fill-all-fields": IGetTexts;
+  "required-red-icon": IGetTexts;
+  "phone-placeholder": IGetTexts;
+  "postal-code": IGetTexts;
+  "your-order": IGetTexts;
+  "quantity": IGetTexts;
+  "delivery-frames": IGetTexts;
+  "delivery-lenses": IGetTexts;
+}
+
+/////////////////////////
+
+export interface IVariationAttributes {
+  attribute: string;
+  value: string;
+}
+
+//////////////////////////
+
+export interface IProductIds {
+  product_id: number;
+  quantity: number;
+  total: string;
+}
+
+//////////////////////////
+
+export interface ICategories {
+  name: string;
+  slug: string;
 }

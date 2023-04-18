@@ -1,24 +1,25 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { httpClient } from "../../../http-client/HttpClient";
+import { setBasket } from "../../../store/createSlice";
 import {
-  BASE_URL,
   CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
 } from "../../../utils/constants/constants";
-import { CatchError, IBasketProduct } from "../../../utils/interface";
+import { ICatchError } from "../../../utils/interface";
+import {useDispatch} from "react-redux"
 
-const useGetBasket = (
-  setBasket: React.Dispatch<React.SetStateAction<IBasketProduct[] | undefined>>
-) => {
+const useGetBasket = () => {
+  
   const [basketLoading, setBasketLoading] = useState<boolean>(false);
-  const [basketError, setBasketError] = useState<CatchError>();
+  const [basketError, setBasketError] = useState<ICatchError>();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     (async () => {
       try {
         setBasketLoading(true);
-        const { data } = await axios.get(
-          `${BASE_URL}/wc/store/cart/items?${CONSUMER_KEY}`,
+        const { data } = await httpClient.get(
+          `/wc/store/cart/items?${CONSUMER_KEY}`,
           {
             headers: {
               "Content-Type": "application/json; charset=UTF-8",
@@ -29,7 +30,7 @@ const useGetBasket = (
           }
         );
         if (data) {
-          setBasket(data);
+          dispatch(setBasket(data));
         }
       } catch (error: any | undefined) {
         setBasketError(error);
@@ -37,7 +38,7 @@ const useGetBasket = (
         setBasketLoading(false);
       }
     })();
-  }, [setBasket]);
+  }, [dispatch]);
 
   return {
     basketLoading,

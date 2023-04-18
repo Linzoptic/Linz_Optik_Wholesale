@@ -28,7 +28,7 @@ const InformationBlock = ({
           {!!totolCountRef.current ? (
             <p className="text-[10px] text-[#094579] font-[700] underline xs:text-[13px]">
               {totolCountRef.current}
-              <span className="font-[600]"> :ITEMS</span>
+              <span className="font-[600]"> :items</span>
             </p>
           ) : (
             <div className="w-[80px] h-[20px] bg-gray-300 animate-pulse rounded-xl"></div>

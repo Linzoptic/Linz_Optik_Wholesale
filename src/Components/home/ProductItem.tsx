@@ -1,18 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PAGES, SINGLE_PRODUCT_TYPES } from "../../utils/constants/constants";
-import { Products } from "../../utils/interface";
+import { IProducts } from "../../utils/interface";
 
-const ProductItem = (props: Products) => {
+const ProductItem = (props: IProducts) => {
   return (
     <Link to={`${PAGES.PRODUCT}/${props.id}`}>
       <div
-        className="relative overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_1px] hover:scale-[101%] rounded-lg duration-150"
+        className="relative overflow-hidden cursor-pointer hover:shadow-[0_20px_40px_1px] hover:scale-[101%] border rounded-lg duration-150 "
       >
         <figure className="flex items-center justify-center rounded-tl-lg rounded-tr-lg bg-gradient-to-b to-[#d1cfcb] from-[#F1EFE8] w-full h-[150px] md:h-[300px] sm:h-[200px]">
           {props?.stock_status === SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK && (
             <div
-              className="absolute w-36 bg-red-500 top-3 xs:top-4 right-[-48px] xs:right-[-40px] rotate-[45deg] flex items-center justify-center p-1 text-white text-[12px] xs:text-[16px]"
+              className="absolute w-36 bg-[#890000] top-3 xs:top-4 right-[-48px] xs:right-[-40px] rotate-[45deg] flex items-center justify-center p-1 text-white text-[12px] xs:text-[16px]"
             >
               <p>{props?.notAvailable}</p>
             </div>

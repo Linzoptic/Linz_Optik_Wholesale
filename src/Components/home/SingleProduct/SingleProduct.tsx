@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ISingleProducts,
-  IGetTexts,
-  CatchError,
+  ICatchError,
+  IVariationAttributes,
 } from "../../../utils/interface";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
@@ -14,71 +14,68 @@ import SimilarProducts from "../components/SimilarProducts";
 import useSingleProduct from "./hook/useSingleProduct";
 import useSimiliarProducts from "./hook/useSimiliarProducts";
 import {
+  ERROR_MASSEGE,
   PAGES,
   SINGLE_PRODUCT_TYPES,
-  SOCIAL_MEDIA,
   SWIPER_SINGLE_CONFIG,
 } from "../../../utils/constants/constants";
 import SingleProductSkeleton from "../../../skeleton/SingleProductSkeleton";
 import useSIngleProductTexts from "./hook/useSIngleProductTexts";
 import GlassesInfo from "./components/GlassesInfo";
 import LinsInfo from "./components/LinsInfo";
-import ClipLoader from "react-spinners/ClipLoader";
 import { TfiBackLeft } from "react-icons/tfi";
-import { AddToCartFunctionCom } from "./components/utils/AddToCartFunctionCom";
+import { AddToCartFunction } from "./components/utils/AddToCartFunction";
 import Loader from "../../../utils/loader/Loader";
+import SocialMediaIcons from "../../social/SocialMediaIcons";
 
 const SingleProduct = () => {
-  const [productCount, setProductCount] = useState<number>(8);
-  const [addToCartCatchError, setAddToCartCatchError] = useState<CatchError>();
-  const [addToCartLoading, setAddToCartLoading] = useState<boolean>();
+  const [variationAttributes, setVariationAttributes] = useState<
+    IVariationAttributes[]
+  >([]);
+  const [addToCartCatchError, setAddToCartCatchError] = useState<ICatchError>();
+  const [addToCartLoading, setAddToCartLoading] = useState<boolean>(false);
+  const [animationCart, setAnimationCart] = useState<boolean>(false);
   const [singleProduct, setSingleProduct] = useState<ISingleProducts>();
-  const [socialIcons, setSocialIcons] = useState<IGetTexts[] | undefined>();
+  const [productCount, setProductCount] = useState<number>(1);
   const [similarProducts, setSimilarProducts] = useState<
     ISingleProducts[] | undefined
   >();
-
   const { isError, isLoading } = useSingleProduct(setSingleProduct);
   const { similarLoading } = useSimiliarProducts(
     setSimilarProducts,
     singleProduct
   );
   const { singleProductTexts } = useSIngleProductTexts();
-  const currency = singleProductTexts?.single_product_currency?.description;
-  const choose = singleProductTexts?.choose?.description;
+  const currency = singleProductTexts?.currency?.description;
+  const choose = singleProductTexts?.toChoose?.description;
+  const postUrl = encodeURI(document.location.href);
 
-  useEffect(() => {
-    const socialMediaTexts: IGetTexts[] | undefined = Object.values({
-      ...singleProductTexts,
-    });
-    const nextSocialMediaTexts = socialMediaTexts.filter((el) =>
-      el.name.includes(SOCIAL_MEDIA.SOCIAL)
-    );
-    setSocialIcons(nextSocialMediaTexts);
-  }, [singleProductTexts, setSocialIcons]);
+  const onChangeCount = (count: number) => {
+    setProductCount(count + 1);
+  };
 
   return (
-    <div className="mx-auto">
-      {!singleProductTexts?.go_products.description ? (
+    <div className="mx-auto border-2 p-2 rounded-xl">
+      {!singleProductTexts ? (
         <div className="h-[30px] w-[150px] rounded-xl bg-gray-300 animate-pulse"></div>
       ) : (
         <Link
           to={PAGES.HOME}
           className="bg-[#384275] text-white px-3 py-1 rounded-xl flex items-center justify-center w-[150px]"
         >
-          {singleProductTexts?.go_products.description}
+          {singleProductTexts?.goHome.description}
           <TfiBackLeft />
         </Link>
       )}
       {isError && (
         <div className="text-center">
-          <h1>{isError.response.data.message}</h1>
+          <h1>{isError.data.message}</h1>
         </div>
       )}
       {isLoading ? (
         <SingleProductSkeleton />
       ) : (
-        <div className="mx-auto grid  grid-cols-1 gap-5 md:grid-cols-2 my-5 border rounded-xl p-2">
+        <div className="relative mx-auto grid  grid-cols-1 gap-5 md:grid-cols-2 my-5 border rounded-xl p-2">
           <div className="relative flex items-center justify-center overflow-hidden">
             <Swiper
               {...SWIPER_SINGLE_CONFIG}
@@ -98,9 +95,22 @@ const SingleProduct = () => {
             {singleProduct?.stock_status ===
               SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK && (
               <div className="absolute px-3 rounded-full text-center bg-red-500 left-1 top-1  flex items-center justify-center p-1 text-white z-10">
-                <p>{singleProductTexts?.notAvailable.description}</p>
+                <p>{singleProductTexts?.notInStock.description}</p>
               </div>
             )}
+          </div>
+          <div
+            className={
+              animationCart
+                ? "w-full h-full z-[-1] absolute top-[20%] left-[-100px] opacity-0"
+                : "w-[0px] z-20 absolute top-[-130px] right-[20px] opacity-1 duration-[1.2s] animate-pulse"
+            }
+          >
+            <img
+              src={singleProduct?.images[0].src}
+              alt="images"
+              className="w-[200px] md:w-[400px] object-contain"
+            />
           </div>
           <div>
             <div>
@@ -111,69 +121,99 @@ const SingleProduct = () => {
                     {singleProduct?.name}
                   </h1>
                 </div>
-                <div className="w-8 h-8 flex justify-center items-center border border-sky-900 text-sky-900 rounded-lg cursor-pointer">
-                  <img
-                    src={singleProductTexts?.wishList_icon.description}
-                    alt="wishlistIcon"
-                    className="w-4"
-                  />
-                </div>
               </div>
-              <div>
+              <div className="flex justify-between items-center">
                 {singleProduct?.sale_price_string ? (
                   <div className="flex items-center justify-between">
-                    <p className="text-[20px] md:text-[25px] font-[600]">
-                      {singleProduct?.sale_price_string} <span>{currency}</span>
+                    <p className="text-[18px] md:text-[24px] lg:text-[32px] font-[600]">
+                      {singleProduct?.sale_price_string}
+                      <span>{currency}</span>
                     </p>
-                    <p className="line-through  text-[16px] md:text-[20px] font-[600]">
+                    <p className="line-through ml-2 text-[18px] md:text-[24px] lg:text-[32px] font-[600]">
                       {singleProduct?.regular_price_string}
                       <span>{currency}</span>
                     </p>
                   </div>
                 ) : (
-                  <p className="text-[20px] md:text-[25px] font-[600]">
-                    {singleProduct?.price_string} <span>{currency}</span>
-                  </p>
+                  <div>
+                    <p className="text-[20px] md:text-[25px] font-[600]">
+                      {singleProduct?.price_string} <span>{currency}</span>
+                    </p>
+                  </div>
+                )}
+                {singleProduct?.stock_quantity && (
+                  <div className="flex font-[400]">
+                    <p>{singleProductTexts?.count.description}</p>
+                    <span className="ml-2 font-[500]">
+                      {singleProduct?.stock_quantity}
+                    </span>
+                  </div>
                 )}
               </div>
             </div>
             <div className="mt-2">
-              {singleProduct?.type === SINGLE_PRODUCT_TYPES.VARIABLE ? (
+              {singleProduct?.variation_attributes ? (
                 <LinsInfo
                   singleProductTexts={singleProductTexts}
                   variation_attributes={singleProduct?.variation_attributes}
                   choose={choose}
+                  setVariationAttributes={setVariationAttributes}
+                  variationAttributes={variationAttributes}
+                  stockQuantity={singleProduct?.stock_quantity}
+                  onChangeCount={onChangeCount}
                 />
               ) : (
-                <GlassesInfo singleProductTexts={singleProductTexts} />
+                <GlassesInfo
+                  singleProductTexts={singleProductTexts}
+                  stockQuantity={singleProduct?.stock_quantity}
+                  onChangeCount={onChangeCount}
+                />
               )}
-              <div className="mt-2 lg:mt-4 lg:flex justify-between  items-center">
+              <div className="mt-2 lg:mt-4 lg:flex justify-between items-center">
                 <div>
-                  <div
+                  <button
+                    disabled={
+                      singleProduct?.stock_status ===
+                      SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK
+                        ? true
+                        : false
+                    }
                     onClick={() =>
-                      AddToCartFunctionCom(
+                      AddToCartFunction(
                         singleProduct?.id,
                         productCount,
                         setAddToCartCatchError,
-                        setAddToCartLoading
+                        setAddToCartLoading,
+                        setAnimationCart,
+                        singleProduct?.stock_status,
+                        variationAttributes
                       )
                     }
-                    className="border-2 text-[#384275] border-[#384275] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px] flex items-center justify-center hover:border-cyan-700 cursor-pointer duration-150"
+                    className={
+                      singleProduct?.stock_status ===
+                      SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK
+                        ? "flex border-2 font-[600] text-[#a4a8a9] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px]  items-center justify-center"
+                        : "border-2 text-[#384275] font-[600] border-[#384275] rounded-xl bg-transparent text-[14px] xs:text-[16px] px-5 py-[5px] flex items-center justify-center hover:border-cyan-700 cursor-pointer duration-150"
+                    }
                   >
                     <p>{singleProductTexts?.addToCart.description}</p>
                     <img
-                      src={singleProductTexts?.basket_icon.description}
+                      src={singleProductTexts?.cartIcon.description}
                       alt="basketIcon"
                       className="mx-2"
                     />
-                  </div>
-                  {addToCartCatchError?.response.data.message && (
-                    <div
-                      className="text-red-500"
-                      dangerouslySetInnerHTML={{
-                        __html: addToCartCatchError?.response.data.message,
-                      }}
-                    />
+                  </button>
+                  {addToCartCatchError?.data.message ===
+                    ERROR_MASSEGE.NoMatchingVariation && (
+                    <p className="text-red-500 font-[600]">
+                      {singleProductTexts?.fillAllFields.description}
+                    </p>
+                  )}
+                  {addToCartCatchError?.data.message ===
+                    ERROR_MASSEGE.ThisItemIsAreadyInCart && (
+                    <p className="text-red-500 font-[600]">
+                      {singleProductTexts?.alreadyInTheCart.description}
+                    </p>
                   )}
                   {addToCartLoading && (
                     <div className="flex items-center justify-center">
@@ -184,18 +224,11 @@ const SingleProduct = () => {
                 <div className="flex items-center justify-between mt-2 p-2 border-t border-t-cyan-800 lg:border-0 lg:mb-3">
                   <div>
                     <p className="text-[16px]">
-                      {singleProductTexts?.share.description}
+                      {singleProductTexts?.toShare.description}
                     </p>
                   </div>
                   <div className="flex justify-between">
-                    {socialIcons?.map((el, i) => (
-                      <img
-                        key={i}
-                        src={el.description}
-                        alt="icon"
-                        className="ml-10 cursor-pointer"
-                      />
-                    ))}
+                    <SocialMediaIcons postUrl={postUrl} />
                   </div>
                 </div>
               </div>
@@ -205,7 +238,7 @@ const SingleProduct = () => {
           singleProduct?.description ? (
             <div>
               <span className="text-[24px] border-b-2 border-sky-800 py-2">
-                {singleProductTexts?.description.description}
+                {singleProductTexts?.description?.description}
               </span>
               <div
                 className="mt-4"
@@ -234,7 +267,7 @@ const SingleProduct = () => {
       <div>
         <SimilarProducts
           similar_product_title={
-            singleProductTexts?.similar_product_title.description
+            singleProductTexts?.relatedProducts.description
           }
           similarProducts={similarProducts}
           similarLoading={similarLoading}

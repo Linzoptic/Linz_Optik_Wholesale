@@ -3,7 +3,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import { Link } from "react-router-dom";
 import SimilarProductSkeleton from "../../../skeleton/SimilarProductSkeleton";
-import { COUNTS, PAGES, SCREENS, SWIPER_SIMILAR_CONFIG } from "../../../utils/constants/constants";
+import {
+  COUNTS,
+  PAGES,
+  SCREENS,
+  SWIPER_SIMILAR_CONFIG,
+} from "../../../utils/constants/constants";
 
 const SimilarProducts = ({
   similarProducts,
@@ -16,25 +21,23 @@ const SimilarProducts = ({
   similar_product_title: string | undefined;
   currency: string | undefined;
 }) => {
-  
-
-  const SkeletonCount  = (): number => {
+  const SkeletonCount = (): number => {
     let count: number = 0;
-      if (window.innerWidth >= SCREENS.LOPTOP) {
-        count = COUNTS.FOUR; 
-      }
-      if (
-        window.innerWidth < SCREENS.LOPTOP &&
-        window.innerWidth > SCREENS.TABLET
-      ) {
-        count = COUNTS.TWO;
-      }
-      if (window.innerWidth < SCREENS.TABLET) {
-        count = COUNTS.ONE;
-      }
+    if (window.innerWidth >= SCREENS.LOPTOP) {
+      count = COUNTS.FOUR;
+    }
+    if (
+      window.innerWidth < SCREENS.LOPTOP &&
+      window.innerWidth > SCREENS.TABLET
+    ) {
+      count = COUNTS.TWO;
+    }
+    if (window.innerWidth < SCREENS.TABLET) {
+      count = COUNTS.ONE;
+    }
     return count;
   };
-  
+
   return (
     <div>
       {similarLoading ? (
@@ -47,7 +50,11 @@ const SimilarProducts = ({
             <h1>{similar_product_title}</h1>
           </div>
           <div className="pt-3">
-            <Swiper {...SWIPER_SIMILAR_CONFIG} modules={[Pagination]}>
+            <Swiper
+              {...SWIPER_SIMILAR_CONFIG}
+              modules={[Pagination]}
+              autoplay={true}
+            >
               {similarProducts?.map((product, i) => (
                 <SwiperSlide key={i} className="p-3">
                   <Link to={`${PAGES.PRODUCT}/${product.id}`}>

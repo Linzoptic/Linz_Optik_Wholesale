@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
-import { AttributeCategory, IHomePageTexts } from "../../utils/interface";
+import { IAttributeCategory, IHomePageTexts } from "../../utils/interface";
 import FillterTitle from "./components/FillterTitle";
 import LeftBarInfo from "./components/LeftBarInfo";
 import LeftBarItem from "./components/LeftBarItem";
@@ -16,7 +16,7 @@ const LeftBarMenu = ({
   setPricesRange: Dispatch<SetStateAction<{ [key: string]: number | null }[]>>;
   homePageTexts: IHomePageTexts | undefined;
 }) => {
-  const [filterItemList, setFilterItemList] = useState<AttributeCategory[]>();
+  const [filterItemList, setFilterItemList] = useState<IAttributeCategory[]>();
   const [searchparams, setSearchParams] = useSearchParams();
 
   const { attributes } = useAttributes();
@@ -56,8 +56,8 @@ const LeftBarMenu = ({
     <div>
       <div>
         <FillterTitle
-          filterIcon={homePageTexts?.filterIcon}
-          filter={homePageTexts?.filter}
+          filterIcon={homePageTexts?.filter.filterIcon.description}
+          filter={homePageTexts?.filter.title.description}
         />
         <LeftBarInfo
           attributes={attributes}

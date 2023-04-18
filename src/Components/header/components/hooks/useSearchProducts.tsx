@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { CatchError, ISingleProducts } from "../../../../utils/interface";
-import { BASE_URL, WC_V3, CONSUMER_KEY, PRODUCTS, UNMOUNT_TIMEOUT_VALUE } from "../../../../utils/constants/constants";
+import { ICatchError, ISingleProducts } from "../../../../utils/interface";
+import { WC_V3, CONSUMER_KEY, PRODUCTS, UNMOUNT_TIMEOUT_VALUE } from "../../../../utils/constants/constants";
+import { httpClient } from "../../../../http-client/HttpClient";
 
 const useSearchProducts = (
   setSearchProduct: React.Dispatch<
@@ -11,14 +11,14 @@ const useSearchProducts = (
 ) => {
    
   const [isSrearchLoading, setIsSrearchLoading] = useState<boolean>(false);
-  const [searchCatch, setSearchCatch] = useState<CatchError>();
+  const [searchCatch, setSearchCatch] = useState<ICatchError>();
 
   useEffect(() => {
     setIsSrearchLoading(true);
     const searchTime = setTimeout(async () => {
       try {
-        const correncSearch = await axios.get(
-          `${BASE_URL}/${WC_V3}/${PRODUCTS}&search=${search}&${CONSUMER_KEY}`
+        const correncSearch = await httpClient.get(
+          `/${WC_V3}/${PRODUCTS}&search=${search}&${CONSUMER_KEY}`
         );
         if (correncSearch.data) {
           setSearchProduct(correncSearch.data);
