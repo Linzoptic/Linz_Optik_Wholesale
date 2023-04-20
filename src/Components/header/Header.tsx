@@ -71,13 +71,6 @@ const Header = () => {
                   />
                 </div>
                 <div className="flex mx-2">
-                  <div className="bg-[#F1EFE8] flex items-center justify-center p-2 rounded-xl ml-1 cursor-pointer">
-                    <img
-                      src={headerTexts?.globusIcon.description}
-                      alt="lenguage"
-                      className="w-[26px]"
-                    />
-                  </div>
                   <Link
                     to={PAGES.BASKET}
                     className="bg-[#F1EFE8] flex items-center justify-center p-2 rounded-xl ml-2 cursor-pointer"

@@ -29,7 +29,7 @@ const BasketProductItem = (props: IBasketProduct) => {
                 onChange={() => props.onCheckBasketItem(props.id)}
               />
             </div>
-            <div className="w-[80px] md:w-[120px] h-[80px] md:h-[120px] flex items-center justify-center">
+            <div className="w-[80px] md:w-[120px] h-[80px] md:h-[120px] mx-2 flex items-center justify-center">
               <img
                 src={props?.images[0]?.src}
                 alt="glasses"

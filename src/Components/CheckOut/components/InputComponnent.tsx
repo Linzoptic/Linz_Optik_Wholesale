@@ -4,7 +4,14 @@ const InputComponnent = ({
   placeholder,
   ...rest
 }: React.InputHTMLAttributes<HTMLInputElement>) => {
-  return <input value={value} onChange={onChange} {...rest} />;
+  return (
+    <input
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      {...rest}
+    />
+  );
 };
 
 export default InputComponnent;
