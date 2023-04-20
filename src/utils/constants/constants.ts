@@ -5,14 +5,14 @@ export const LOGIN_URL = "/jwt-auth/v1/token";
 export const WC_V3 = "wc/v3";
 export const BASE_PRODUCT = "wholesale/products?filter[pa_market]=446";
 export const PRODUCTS = "products?attribute=38&attribute_term=446";
-export const FOOTER_CALL = "https://tiknikstyle.10web.site/wp-json/footer/texts";
-export const HOME_PAGE_TEXTS = "https://tiknikstyle.10web.site/wp-json/shop_page/texts";
-export const SINGLE_PRODUCT_TEXTS = "https://tiknikstyle.10web.site/wp-json/single_product/texts";
-export const HEADER_TEXTS = "https://tiknikstyle.10web.site/wp-json/header/texts";
+export const FOOTER_CALL = `${process.env.REACT_APP_BASE_URL}/footer/texts`;
+export const HOME_PAGE_TEXTS = `${process.env.REACT_APP_BASE_URL}/shop_page/texts`;
+export const SINGLE_PRODUCT_TEXTS = `${process.env.REACT_APP_BASE_URL}/single_product/texts`;
+export const HEADER_TEXTS = `${process.env.REACT_APP_BASE_URL}/header/texts`;
 export const SEND_CHECKOUT = "/wc/v3/orders?";
-export const CHECKOUT_TEXTS = "https://tiknikstyle.10web.site/wp-json/checkout/texts";
-export const BASKET_TEXTS = "https://tiknikstyle.10web.site/wp-json/cart_page/texts";
-export const GET_CATEGORIES = "https://tiknikstyle.10web.site/wp-json/product/categories";
+export const CHECKOUT_TEXTS = `${process.env.REACT_APP_BASE_URL}/checkout/texts`;
+export const BASKET_TEXTS = `${process.env.REACT_APP_BASE_URL}/cart_page/texts`;
+export const GET_CATEGORIES = `${process.env.REACT_APP_BASE_URL}/product/categories`;
 
 export const PAGES = {
   HOME: "/home",
