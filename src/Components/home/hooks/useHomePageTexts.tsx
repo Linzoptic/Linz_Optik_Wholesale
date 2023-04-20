@@ -5,11 +5,11 @@ import { IHomePageTexts } from "../../../utils/interface";
 
 const useHomePageTexts = () => {
   
-  const [homePageTexts, setHomePageTexts] = useState<IHomePageTexts | undefined>();
+  const [homePageTexts, setHomePageTexts] = useState<IHomePageTexts>();
 
   useEffect(() => {
     (async () => {
-      const correctData = await httpClient.get("https://tiknikstyle.10web.site/wp-json/shop_page/texts");
+      const correctData = await httpClient.get(HOME_PAGE_TEXTS);
       if (correctData) {
         setHomePageTexts(correctData.data)
       }

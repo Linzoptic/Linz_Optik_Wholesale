@@ -104,6 +104,7 @@ const HomePage: React.FC = () => {
             <div className="flex">
               <h1 className="w-full">
                 <TfiFaceSad size={24} />
+                {homePageTexts?.filter?.noProduct?.description}
               </h1>
             </div>
           )}

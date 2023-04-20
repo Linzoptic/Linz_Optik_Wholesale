@@ -1,7 +1,8 @@
 import { httpClient } from "../../../http-client/HttpClient";
 import {
+  CONSUMER_KEY,
   LOCAL_STORAGE_KEYS,
-  SEND_CHEKOUT,
+  SEND_CHECKOUT,
 } from "../../../utils/constants/constants";
 import { ICatchError, IProductIds } from "../../../utils/interface";
 
@@ -24,7 +25,7 @@ export const SendCheckoutOrder = async (
   try {
     setSendLoading(true);
     await httpClient.post(
-      SEND_CHEKOUT,
+      `${SEND_CHECKOUT}${CONSUMER_KEY}`,
       JSON.stringify({
         line_items: productIds,
         billing: {
