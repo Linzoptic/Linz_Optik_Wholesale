@@ -37,8 +37,6 @@ const LoginForm: React.FC = () => {
           JSON.stringify(username)
         );
         navigate(PAGES.HOME);
-      }else{
-        navigate(PAGES.LOGIN);
       }
     } catch (error: any) {
       setLoginError(error);

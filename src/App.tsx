@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, redirect } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS, PAGES } from "./utils/constants/constants";
 import NotFoundPage from "./Components/home/components/NotFoundPage";
 import SingleProduct from "./Components/home/SingleProduct/SingleProduct";
@@ -14,12 +14,13 @@ import Store from "./store/store";
 import { useEffect } from "react";
 
 function App() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.JWT_TOKEN)) {
-      navigate(PAGES.LOGIN);
-    }
-  },[navigate]);
+
+    useEffect(() => {
+      if (!localStorage.getItem(LOCAL_STORAGE_KEYS.JWT_TOKEN)) {
+        redirect(PAGES.LOGIN);
+      }
+    },[]);
+
   return (
     <div className="container mx-auto px-5">
       <Provider store={Store}>
