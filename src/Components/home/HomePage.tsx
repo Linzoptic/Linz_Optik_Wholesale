@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <div className="border">
+      <div className="border rounded-md">
         <CategoriesHeader />
       </div>
       <div className="flex flex-col items-center justify-center">

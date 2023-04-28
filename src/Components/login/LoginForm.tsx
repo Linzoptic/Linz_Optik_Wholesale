@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Photo from "../../images/Rectangle.svg";
 import {
@@ -37,6 +37,8 @@ const LoginForm: React.FC = () => {
           JSON.stringify(username)
         );
         navigate(PAGES.HOME);
+      }else{
+        navigate(PAGES.LOGIN);
       }
     } catch (error: any) {
       setLoginError(error);

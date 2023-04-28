@@ -7,7 +7,7 @@ const FillterTitle = ({
   filter: string | undefined,
 }) => {
   return (
-    <div className='border'>
+    <div className='border rounded-tl-md rounded-tr-md'>
       <div className="px-3 py-2 flex items-center">
           <img src={filterIcon} alt="icon" className='w-5 h-4'/>
           <h1 className="uppercase text-[20px] font-[600] ml-3">{filter}</h1>

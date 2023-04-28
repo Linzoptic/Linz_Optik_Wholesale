@@ -55,8 +55,8 @@ const SimilarProducts = ({
               modules={[Pagination]}
               autoplay={true}
             >
-              {similarProducts?.map((product, i) => (
-                <SwiperSlide key={i} className="p-3">
+              {similarProducts?.map((product, index) => (
+                <SwiperSlide key={index} className="p-3">
                   <Link to={`${PAGES.PRODUCT}/${product.id}`}>
                     <div className="flex items-center justify-center border rounded-xl bg-[#F1EFE8]  duration-150 hover:shadow-[0_5px_20px]">
                       <img

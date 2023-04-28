@@ -111,6 +111,7 @@ export interface IHeaderTxts {
   searchIcon: HeaderTextItem;
   globusIcon: HeaderTextItem;
   cartIcon: HeaderTextItem;
+  currency?: HeaderTextItem;
 }
 
 ////////////////////////////////

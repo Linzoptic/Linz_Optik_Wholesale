@@ -14,13 +14,11 @@ import { setCheckoutBasket } from "../../../store/createSlice";
 const CheckOutCart = ({
   checkoutText,
   onSubmitForm,
-  hasError,
   sendIsLoading,
   deleveriPrice,
 }: {
   checkoutText: ICheckOutText | undefined;
   onSubmitForm: () => void;
-  hasError: boolean;
   sendIsLoading: boolean;
   deleveriPrice: string | undefined;
 }) => {
@@ -66,7 +64,7 @@ const CheckOutCart = ({
                         className="object-cover"
                       />
                       <div
-                        className="absolute left-[-20px] top-[-20px] p-[10px] rounded-full bg-white cursor-pointer"
+                        className="absolute left-[-15px] top-[-15px] p-[8px] rounded-full bg-white cursor-pointer"
                         onClick={() => onDelelteItem(el.id)}
                       >
                         <GrClose size={14} />
@@ -160,11 +158,7 @@ const CheckOutCart = ({
                   </p>
                   <p className="ml-1">{currency[0]}</p>
                 </div>
-                {hasError && (
-                  <p className="text-red-900 font-bold mt-3">
-                    {checkoutText?.["fill-all-fields"].description}
-                  </p>
-                )}
+            
                 {sendIsLoading && <Loader loading={sendIsLoading} size={30} />}
                 <div
                   className="mt-3 bg-[#384275] px-7 py-2 rounded-xl text-white cursor-pointer text-center"

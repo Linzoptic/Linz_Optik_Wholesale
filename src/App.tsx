@@ -1,5 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { PAGES } from "./utils/constants/constants";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { LOCAL_STORAGE_KEYS, PAGES } from "./utils/constants/constants";
 import NotFoundPage from "./Components/home/components/NotFoundPage";
 import SingleProduct from "./Components/home/SingleProduct/SingleProduct";
 import HomePage from "./Components/home/HomePage";
@@ -11,8 +11,15 @@ import Basket from "./Components/basket/Basket";
 import CheckOut from "./Components/CheckOut/CheckOut";
 import { Provider } from "react-redux";
 import Store from "./store/store";
+import { useEffect } from "react";
 
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem(LOCAL_STORAGE_KEYS.JWT_TOKEN)) {
+      navigate(PAGES.LOGIN);
+    }
+  },[navigate]);
   return (
     <div className="container mx-auto px-5">
       <Provider store={Store}>

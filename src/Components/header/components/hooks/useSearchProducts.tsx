@@ -18,7 +18,7 @@ const useSearchProducts = (
     const searchTime = setTimeout(async () => {
       try {
         const correncSearch = await httpClient.get(
-          `/${WC_V3}/${PRODUCTS}&search=${search}&${CONSUMER_KEY}`
+          `/${WC_V3}/${PRODUCTS}?search=${search}&${CONSUMER_KEY}`
         );
         if (correncSearch.data) {
           setSearchProduct(correncSearch.data);

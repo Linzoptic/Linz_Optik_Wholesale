@@ -3,7 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
-import { CHECKOUT_TEXTS } from "../../utils/constants/constants";
+import { CHECKOUT_TEXTS, ERROR_MASSEGE } from "../../utils/constants/constants";
 import { ICatchError, ICheckOutText } from "../../utils/interface";
 import CheckOutCart from "./components/CheckOutCart";
 import InputGroupComponent from "./components/InputGroupComponent";
@@ -85,7 +85,7 @@ const CheckOut = () => {
       setHasError(true);
     }
   };
-  
+
   return (
     <>
       {checkoutText && (
@@ -179,18 +179,21 @@ const CheckOut = () => {
                 </div>
               </div>
             </form>
+            {hasError && (
+              <div className="text-center mt-10">
+                <p className="text-red-900 font-bold mt-3">
+                  {checkoutText?.["fill-all-fields"].description}
+                </p>
+              </div>
+            )}
           </div>
           <div className="bg-[#F1EFE8] h-screen px-[20px]">
             <CheckOutCart
               checkoutText={checkoutText}
               onSubmitForm={onSubmitForm}
-              hasError={hasError}
               sendIsLoading={sendIsLoading}
               deleveriPrice={deleveriPrice}
             />
-          {hasError && (
-            <div className="text-center my-5 text-red-900 font-[700]">Somthing went wrong</div>
-          )}
           </div>
         </div>
       )}

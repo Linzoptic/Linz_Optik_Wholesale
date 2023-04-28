@@ -102,10 +102,22 @@ class HttpClient {
             }
           }
         }
-
         break;
       }
+
       case StatusCode.Unauthorized: {
+        const originalRequest = error.config;
+        if (!originalRequest._retry) {
+          originalRequest._retry = true;
+          if (code === "woocommerce_rest_missing_nonce") {
+            const { data } = await this.get(`${BASE_URL}/nonce/header`);
+            if (this.instance) {
+              originalRequest.headers["nonce"] = data[0];
+              localStorage.setItem(LOCAL_STORAGE_KEYS.NONCE, data[0]);
+              return this.instance?.request(originalRequest);
+            }
+          }
+        }
         break;
       }
       case StatusCode.TooManyRequests: {
