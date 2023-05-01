@@ -28,8 +28,8 @@ const Basket = () => {
 
   useGetText(setBasketText, BASKET_TEXTS);
 
-  const currency = basket?.map((el) => el.prices.currency_code);
-  const producIds = basket?.map((el) => el.id);
+  const currency = basket?.map(el => el.prices.currency_code);
+  const producIds = basket?.map(el => el.id);
 
   useEffect(() => {
     let prices = basket.reduce((acc, elem) => {
@@ -140,17 +140,17 @@ const Basket = () => {
           ) : null}
           <div>
             {basket.length
-              ? basket.map((elem) => (
+              ? basket.map((nasketItem) => (
                   <BasketProductItem
-                    key={elem.key}
-                    itemKey={elem.key}
-                    name={elem.name}
-                    sku={elem.sku}
-                    images={elem.images}
-                    prices={elem.prices}
-                    id={elem.id}
-                    quantity={elem.quantity}
-                    variation={elem.variation}
+                    key={nasketItem.key}
+                    itemKey={nasketItem.key}
+                    name={nasketItem.name}
+                    sku={nasketItem.sku}
+                    images={nasketItem.images}
+                    prices={nasketItem.prices}
+                    id={nasketItem.id}
+                    quantity={nasketItem.quantity}
+                    variation={nasketItem.variation}
                     count={basketText && basketText.quantity.description}
                     onCheckBasketItem={onCheckBasketItem}
                     checkoutBasket={checkoutBasket}

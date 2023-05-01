@@ -23,6 +23,7 @@ export const AddToCartFunction = async (
   variationAdd: string | undefined,
   variationAttributes: IVariationAttributes[] | undefined
 ) => {
+  
   const data: {
     id?: number;
     quantity: number;

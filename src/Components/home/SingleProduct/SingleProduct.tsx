@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ISingleProducts,
   ICatchError,
@@ -49,6 +49,7 @@ const SingleProduct = () => {
   const currency = singleProductTexts?.currency?.description;
   const choose = singleProductTexts?.toChoose?.description;
   const postUrl = encodeURI(document.location.href);
+  const navigate = useNavigate()
 
   const onChangeCount = (count: number) => {
     setProductCount(count + 1);
@@ -67,14 +68,10 @@ const SingleProduct = () => {
           <TfiBackLeft />
         </Link>
       )}
-      {isError && (
-        <div className="text-center">
-          <h1>{isError.data.message}</h1>
-        </div>
-      )}
-      {isLoading ? (
-        <SingleProductSkeleton />
-      ) : (
+
+      {isLoading && <SingleProductSkeleton />}
+      {!isLoading && singleProduct?.images && (
+    <>
         <div className="relative mx-auto grid  grid-cols-1 gap-5 md:grid-cols-2 my-5 border rounded-xl p-2">
           <div className="relative flex items-center justify-center overflow-hidden">
             <Swiper
@@ -82,15 +79,16 @@ const SingleProduct = () => {
               modules={[Autoplay, Pagination, Navigation]}
               className="rounded-xl"
             >
-              {singleProduct?.images.map((el, i) => (
-                <SwiperSlide key={i} className="bg-[#F1EFE8]">
-                  <img
-                    src={el?.src}
-                    alt="products"
-                    className="w-full h-[330px] md:h-[400px] lg:h-[500px] object-contain"
-                  />
-                </SwiperSlide>
-              ))}
+              {!!singleProduct?.images?.length &&
+                singleProduct?.images.map((el, i) => (
+                  <SwiperSlide key={i} className="bg-[#F1EFE8]">
+                    <img
+                      src={el?.src}
+                      alt="products"
+                      className="w-full h-[330px] md:h-[400px] lg:h-[500px] object-contain"
+                    />
+                  </SwiperSlide>
+                ))}
             </Swiper>
             {singleProduct?.stock_status ===
               SINGLE_PRODUCT_TYPES.OUT_OFF_STOCK && (
@@ -106,11 +104,13 @@ const SingleProduct = () => {
                 : "w-[0px] z-20 absolute top-[-130px] right-[20px] opacity-1 duration-[1.2s] animate-pulse"
             }
           >
-            <img
-              src={singleProduct?.images[0].src}
-              alt="images"
-              className="w-[200px] md:w-[400px] object-contain"
-            />
+            {singleProduct?.images?.length && (
+              <img
+                src={singleProduct?.images[0]?.src}
+                alt="images"
+                className="w-[200px] md:w-[400px] object-contain"
+              />
+            )}
           </div>
           <div>
             <div>
@@ -263,7 +263,6 @@ const SingleProduct = () => {
             </div>
           ) : null}
         </div>
-      )}
       <div>
         <SimilarProducts
           similar_product_title={
@@ -274,6 +273,13 @@ const SingleProduct = () => {
           currency={currency}
         />
       </div>
+    </>
+      )}
+      {isError && (
+        <div className="text-center">
+          <h1>{isError.data.message}</h1>
+        </div>
+      )}
     </div>
   );
 };
