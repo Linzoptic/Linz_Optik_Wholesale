@@ -179,13 +179,13 @@ const CheckOut = () => {
                 </div>
               </div>
             </form>
-            {hasError && (
+            {hasError ? (
               <div className="text-center mt-10">
                 <p className="text-red-900 font-bold mt-3">
                   {checkoutText?.["fill-all-fields"].description}
                 </p>
               </div>
-            )}
+            ) : null}
           </div>
           <div className="bg-[#F1EFE8] h-screen px-[20px]">
             <CheckOutCart
