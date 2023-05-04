@@ -22,28 +22,28 @@ const Basket = () => {
   const [allBasketItemPrice, setAllBasketItemPrice] = useState<number>(0);
   const [basketText, setBasketText] = useState<IBasketText | undefined>();
   const { basketError, basketLoading } = useGetBasket();
-  const basket = useSelector((state: RootState) => state.basket);
+  const basketProducts = useSelector((state: RootState) => state.basket);
   const checkoutBasket = useSelector((state: RootState) => state.checkoutBasket);
   const dispatch = useDispatch();
 
   useGetText(setBasketText, BASKET_TEXTS);
 
-  const currency = basket?.map((el) => el.prices.currency_code);
-  const producIds = basket?.map((el) => el.id);
+  const currency = basketProducts?.map(el => el.prices.currency_code);
+  const producIds = basketProducts?.map(basketProductsItem => basketProductsItem.id);
 
   useEffect(() => {
-    let prices = basket.reduce((acc, elem) => {
-      if (elem.prices.sale_price !== "0") {
-        return acc + (+elem.prices.sale_price / 100) * elem.quantity;
+    let prices = basketProducts.reduce((acc, basketItem) => {
+      if (basketItem.prices.sale_price !== "0") {
+        return acc + (+basketItem.prices.sale_price / 100) * basketItem.quantity;
       } else {
-        return acc + (+elem.prices.regular_price / 100) * elem.quantity;
+        return acc + (+basketItem.prices.regular_price / 100) * basketItem.quantity;
       }
     }, 0);
     setAllBasketItemPrice(prices);
-  },[basket]);
+  },[basketProducts]);
 
   const onCheckBasketItem = (id: number) => {
-    const findInsideBasket = basket.find((el) => el.id === id);
+    const findInsideBasket = basketProducts.find((el) => el.id === id);
     const findInsideCheckoutBasket = checkoutBasket.find((el) => el.id === id);
     if (findInsideBasket && !findInsideCheckoutBasket) {
       dispatch(setCheckoutBasket([...checkoutBasket, findInsideBasket]));
@@ -54,10 +54,10 @@ const Basket = () => {
   };
 
   const onCheckCkeckOutBasket = () => {
-    if (checkoutBasket.length === basket.length) {
+    if (checkoutBasket.length === basketProducts.length) {
       dispatch(setCheckoutBasket([]));
     } else {
-      dispatch(setCheckoutBasket([...basket]));
+      dispatch(setCheckoutBasket([...basketProducts]));
     }
   };
 
@@ -75,7 +75,7 @@ const Basket = () => {
             <div className="w-32 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
             <div className="w-44 h-8 animate-bounce rounded-2xl bg-gray-300"></div>
           </div>
-          <BasketSkeleton count={basket.length} />
+          <BasketSkeleton count={basketProducts.length} />
         </>
       ) : (
         <div>
@@ -100,7 +100,7 @@ const Basket = () => {
                   <Loader loading={basketRemoveLoading} size={20} />
                 </div>
               )}
-              {basket.length ? (
+              {basketProducts.length ? (
                 <div
                   className="px-4 py-[3px] cursor-pointer bg-[#F1EFE8] rounded-2xl text-black flex items-center"
                   onClick={() =>
@@ -117,7 +117,7 @@ const Basket = () => {
               )}
             </div>
           </div>
-          {basketText && basket.length ? (
+          {basketText && basketProducts.length ? (
             <div className="mt-8">
               <p className="text-[#353535] text-[16px] md:text-[24px] font-[600]">
                 {basketText.basket.description}
@@ -127,7 +127,7 @@ const Basket = () => {
                   type="checkbox"
                   className="mx-2"
                   checked={
-                    checkoutBasket.length === basket.length ? true : false
+                    checkoutBasket.length === basketProducts.length ? true : false
                   }
                   onChange={onCheckCkeckOutBasket}
                 />
@@ -139,18 +139,18 @@ const Basket = () => {
             </div>
           ) : null}
           <div>
-            {basket.length
-              ? basket.map((elem) => (
+            {basketProducts.length
+              ? basketProducts.map((basketItem) => (
                   <BasketProductItem
-                    key={elem.key}
-                    itemKey={elem.key}
-                    name={elem.name}
-                    sku={elem.sku}
-                    images={elem.images}
-                    prices={elem.prices}
-                    id={elem.id}
-                    quantity={elem.quantity}
-                    variation={elem.variation}
+                    key={basketItem.key}
+                    itemKey={basketItem.key}
+                    name={basketItem.name}
+                    sku={basketItem.sku}
+                    images={basketItem.images}
+                    prices={basketItem.prices}
+                    id={basketItem.id}
+                    quantity={basketItem.quantity}
+                    variation={basketItem.variation}
                     count={basketText && basketText.quantity.description}
                     onCheckBasketItem={onCheckBasketItem}
                     checkoutBasket={checkoutBasket}
@@ -158,7 +158,7 @@ const Basket = () => {
                 ))
               : null}
           </div>
-          {basket?.length && basketText && currency ? (
+          {basketProducts?.length && basketText && currency ? (
             <div className="flex items-center justify-between p-[5px] border rounded-xl">
               <div className="flex">
                 <p>{basketText["z-full-products-price"].description}`</p>

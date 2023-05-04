@@ -9,10 +9,12 @@ const SearchProduct = ({
   search,
   notFoundProduct,
   setSearch,
+  currency,
 }: {
   search: string;
   notFoundProduct: string | undefined;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  currency: string | undefined;
 }) => {
 
   const [ searchProduct, setSearchProduct ] = useState<ISingleProducts[]>();
@@ -56,14 +58,14 @@ const SearchProduct = ({
                       <div className="flex items-center justify-between">
                         <p className="text-[12px] lg:text-[14px] font-[600]">
                           {product?.sale_price}
-                          <span className="text-[12px] lg:text-[14px]">
-                            AMD
+                          <span className="text-[12px] lg:text-[14px] ml-[2px]">
+                            {currency}
                           </span>
                         </p>
-                        <p className="text-[12px] lg:text-[14px] line-through">
+                        <p className="text-[12px] lg:text-[14px] line-through mx-2">
                           {product?.regular_price}
-                          <span className="text-[12px] lg:text-[14px]">
-                            AMD
+                          <span className="text-[12px] lg:text-[14px] ml-[2px]">
+                            {currency}
                           </span>
                         </p>
                       </div>
@@ -71,8 +73,8 @@ const SearchProduct = ({
                       <div>
                         <p className="text-[12px] lg:text-[14px] font-[600]">
                           {product?.regular_price}
-                          <span className="text-[12px] lg:text-[14px]">
-                            AMD
+                          <span className="text-[12px] lg:text-[14px] ml-[2px]">
+                            {currency}
                           </span>
                         </p>
                       </div>

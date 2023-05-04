@@ -18,7 +18,7 @@ const useSimiliarProducts = (
     (async () => {
       try {
         const products = await httpClient.get(
-          `/${WC_V3}/${PRODUCTS}/?include=${productsIds}&${CONSUMER_KEY}`
+          `/${WC_V3}/${PRODUCTS}?include=${productsIds}&${CONSUMER_KEY}`
         );
         if (products) {
           setSimilarProducts(products.data);

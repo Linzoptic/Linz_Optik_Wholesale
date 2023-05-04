@@ -21,7 +21,7 @@ const CategoriesHeader = () => {
 
   return (
     <div className="relative">
-      <div className="hidden md:flex items-center justify-between my-4 max-w-[1040px] mx-auto ">
+      <div className="hidden md:flex items-center justify-between my-4 max-w-[1040px] mx-auto">
         {categories?.map((category, index) => (
           <div
             key={index}

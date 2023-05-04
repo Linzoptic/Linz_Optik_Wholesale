@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import Store from "./store/store";
 
 function App() {
+
   return (
     <div className="container mx-auto px-5">
       <Provider store={Store}>

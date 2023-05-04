@@ -27,7 +27,7 @@ const Header = () => {
   },[]);
 
   const { headerTexts } = useHeaderTeaxts();
-
+  
   return (
     <>
       {!headerTexts ? (
@@ -99,6 +99,7 @@ const Header = () => {
                   search={search}
                   setSearch={setSearch}
                   notFoundProduct={headerTexts?.searchNoProduct.description}
+                  currency={headerTexts?.currency?.description}
                 />
               </div>
             </div>
